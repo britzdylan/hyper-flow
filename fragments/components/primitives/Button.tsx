@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '#fragments/lib/utils'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center    whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -28,12 +28,28 @@ const buttonVariants = cva(
   }
 )
 
-interface ButtonProps extends VariantProps<typeof buttonVariants> {}
+interface ButtonProps extends VariantProps<typeof buttonVariants> {
+  'class'?: string
+  'id'?: string
+  'type'?: 'button' | 'submit' | 'reset'
+  'disabled'?: boolean
+  'aria-label'?: string
+  'name'?: string
+}
 
 function Button({ children, ...props }: PropsWithChildren<ButtonProps>) {
-  const { variant, size } = props
+  const { variant, size, id, type, disabled, name, class : className, ...rest } = props
   return (
-    <button class={cn(buttonVariants({ variant, size }))} {...props} safe>
+    <button
+      aria-label={props['aria-label'] || ''}
+      class={[cn(buttonVariants({ variant, size })), className]}
+      safe
+      id={id}
+      type={type}
+      disabled={disabled}
+      name={name}
+      {...rest}
+    >
       {children}
     </button>
   )
