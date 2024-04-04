@@ -13,8 +13,8 @@ declare global {
       ['x-ref']: string
       ['x-spread']: string
       ['x-cloak']: string
-      ['@click']: string
-      [':class']: string
+      ['x-on:keydown.space.prevent']: string
+      ['x-on:keyup.space.prevent']: string
     }
   }
 }
