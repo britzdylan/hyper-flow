@@ -18,10 +18,7 @@ function AccordionContent({
 }: PropsWithChildren<AccordionContentProps>): JSX.Element {
   const { self = false, class: className } = props
 
-  const classes = cn(
-    'overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down',
-    className
-  )
+  const classes = cn('overflow-hidden text-sm transition-all', className)
 
   const sharedProps = {
     'class': classes,
