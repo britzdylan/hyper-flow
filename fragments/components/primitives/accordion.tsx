@@ -1,8 +1,8 @@
 import { PropsWithChildren } from 'adonisjsx'
 import { cn } from '#fragments/lib/utils'
-import { ClassProps } from '#fragments/lib/types'
+import { JsxElementProps } from '#fragments/lib/types'
 
-interface AccordionContentProps extends ClassProps {
+interface AccordionContentProps extends JsxElementProps {
   self?: boolean
 }
 
@@ -48,7 +48,7 @@ function AccordionContent({
   )
 }
 
-interface AccordionTriggerProps extends ClassProps {
+interface AccordionTriggerProps extends JsxElementProps {
   icon?: string
   self?: boolean
 }
@@ -123,7 +123,7 @@ function AccordionTrigger({
   )
 }
 
-interface AccordionItemProps extends ClassProps {
+interface AccordionItemProps extends JsxElementProps {
   self?: boolean
   active?: boolean
 }
@@ -167,7 +167,7 @@ function AccordionItem({ children, ...props }: PropsWithChildren<AccordionItemPr
   }
 }
 
-interface AccordionRootProps extends ClassProps {
+interface AccordionRootProps extends JsxElementProps {
   type: 'single' | 'multiple'
   activeAccordion?: string
 }
