@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'adonisjsx'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '#fragments/lib/utils'
+import type { JsxElementProps } from '#fragments/lib/types'
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
@@ -28,28 +29,14 @@ const buttonVariants = cva(
   }
 )
 
-interface ButtonProps extends VariantProps<typeof buttonVariants> {
-  'class'?: string
-  'id'?: string
-  'type'?: 'button' | 'submit' | 'reset'
-  'disabled'?: boolean
-  'aria-label'?: string
-  'name'?: string
+interface ButtonProps extends VariantProps<typeof buttonVariants>, JsxElementProps {
+  type?: 'button' | 'submit' | 'reset'
 }
 
 function Button({ children, ...props }: PropsWithChildren<ButtonProps>) {
-  const { variant, size, id, type, disabled, name, class : className, ...rest } = props
+  const { variant, size, class: className, ...rest } = props
   return (
-    <button
-      aria-label={props['aria-label'] || ''}
-      class={[cn(buttonVariants({ variant, size })), className]}
-      safe
-      id={id}
-      type={type}
-      disabled={disabled}
-      name={name}
-      {...rest}
-    >
+    <button class={[cn(buttonVariants({ variant, size })), className]} safe {...rest}>
       {children}
     </button>
   )
