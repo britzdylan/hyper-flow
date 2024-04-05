@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'adonisjsx'
 import { cn } from '#fragments/lib/utils'
-import type { ClassProps } from '#fragments/lib/types'
+import type { JsxElementProps } from '#fragments/lib/types'
 
 interface SwitchRootProps {
   checked: boolean
@@ -8,7 +8,7 @@ interface SwitchRootProps {
   name: string
 }
 
-interface SwitchThumbProps extends ClassProps {
+interface SwitchThumbProps extends JsxElementProps {
   id: string
 }
 
@@ -19,12 +19,14 @@ interface SwitchProps {
 }
 
 function Root({ children, ...props }: PropsWithChildren<SwitchRootProps>) {
-  const { checked } = props
+  const { checked, id, name, ...rest } = props
 
   return (
-    <div x-data={`{ active: ${checked} }`}>
+    <div x-data={`{ active: ${checked} }`} {...rest}>
       <input
-        {...props}
+        id={id}
+        name={name}
+        checked={checked}
         aria-hidden
         type="checkbox"
         style={{
@@ -44,7 +46,7 @@ function Root({ children, ...props }: PropsWithChildren<SwitchRootProps>) {
   )
 }
 
-function Slide({ children, ...props }: PropsWithChildren<ClassProps>) {
+function Slide({ children, ...props }: PropsWithChildren<JsxElementProps>) {
   const { class: className } = props
   return (
     <div
@@ -79,10 +81,14 @@ function Thumb({ ...props }: SwitchThumbProps) {
 }
 
 function Switch({ ...props }: SwitchProps) {
-  const { input, thumbClass, trackClass } = props
-
+  const { input, thumbClass, trackClass, ...rest } = props
+  
+  const rootProps = {
+    ...input,
+    ...rest,
+  }
   return (
-    <Root {...input}>
+    <Root {...rootProps}>
       <Slide class={trackClass}>
         <Thumb id={input.id} class={thumbClass} />
       </Slide>
