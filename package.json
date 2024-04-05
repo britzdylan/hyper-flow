@@ -75,6 +75,7 @@
     "@adonisjs/shield": "^8.1.1",
     "@adonisjs/static": "^1.1.1",
     "@adonisjs/vite": "^2.0.2",
+    "@alpinejs/collapse": "^3.13.8",
     "@vinejs/vine": "^1.8.0",
     "adonisjsx": "^0.2.0",
     "alpinejs": "^3.13.7",
