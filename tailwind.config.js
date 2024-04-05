@@ -26,7 +26,7 @@ export default {
         'ring': 'hsl(var(--ring) / <alpha-value>)',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Geist', 'Inter', 'system-ui', 'sans-serif'],
       },
     },
   },
