@@ -12,7 +12,7 @@ interface SwitchThumbProps extends JsxElementProps {
   id: string
 }
 
-interface SwitchProps {
+interface SwitchProps extends JsxElementProps {
   input: SwitchRootProps
   thumbClass?: string
   trackClass?: string
@@ -80,9 +80,9 @@ function Thumb({ ...props }: SwitchThumbProps) {
   )
 }
 
-function Switch({ ...props }: SwitchProps) {
+function Switch({ ...props }: SwitchProps): JSX.Element {
   const { input, thumbClass, trackClass, ...rest } = props
-  
+
   const rootProps = {
     ...input,
     ...rest,
