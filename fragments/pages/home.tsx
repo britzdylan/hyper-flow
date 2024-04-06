@@ -4,7 +4,9 @@ import {
   AccordionTrigger,
   AccordionContent,
   Button,
-  Switch,
+  Alert,
+  AlertDescription,
+  AlertTitle,
 } from '#components'
 
 export default function Home() {
@@ -50,35 +52,15 @@ export default function Home() {
           </AccordionRoot>
         </div>
         <div>
-          <h1>Accordion Multiple</h1>
-          <AccordionRoot class="w-[300px]" type="multiple">
-            <AccordionItem self active>
-              <AccordionTrigger self>
-                <h3 class="accordion-title">Accordion Item 3</h3>
-              </AccordionTrigger>
-
-              <AccordionContent self>
-                <p class="pb-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In et nulla nec metus
-                  sollicitudin tempor. Nullam at eros nec metus sollicitudin tempor. Nullam at eros
-                  nec metus sollicitudin tempor.
-                </p>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem self>
-              <AccordionTrigger self>
-                <h3 class="accordion-title">Accordion Item 4</h3>
-              </AccordionTrigger>
-
-              <AccordionContent self>
-                <p class="pb-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In et nulla nec metus
-                  sollicitudin tempor. Nullam at eros nec metus sollicitudin tempor. Nullam at eros
-                  nec metus sollicitudin tempor.
-                </p>
-              </AccordionContent>
-            </AccordionItem>
-          </AccordionRoot>
+          <Alert variant="destructive">
+            <svg class="h-4 w-4">
+              <use xlink:href="tabler-sprite.svg#tabler-alert-circle" />
+            </svg>
+            <AlertTitle>Heads up!</AlertTitle>
+            <AlertDescription>
+              You can add components and dependencies to your app using the cli.
+            </AlertDescription>
+          </Alert>
         </div>
       </div>
     </div>

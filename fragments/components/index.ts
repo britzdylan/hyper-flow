@@ -6,5 +6,16 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from '#primitives/accordion'
+import { Alert, AlertDescription, AlertTitle } from '#primitives/alert'
 
-export { Button, Switch, AccordionRoot, AccordionItem, AccordionTrigger, AccordionContent }
+export {
+  Button,
+  Switch,
+  AccordionRoot,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+  Alert,
+  AlertDescription,
+  AlertTitle,
+}
