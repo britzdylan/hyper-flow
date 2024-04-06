@@ -33,7 +33,13 @@ interface ButtonProps extends VariantProps<typeof buttonVariants>, JsxElementPro
   type?: 'button' | 'submit' | 'reset'
 }
 
-function Button({ children, ...props }: PropsWithChildren<ButtonProps>) {
+/**
+ * Renders a button component.
+ *
+ * @param {PropsWithChildren<ButtonProps>} props - The props for the button component.
+ * @returns {JSX.Element} The rendered button component.
+ */
+function Button({ children, ...props }: PropsWithChildren<ButtonProps>): JSX.Element {
   const { variant, size, class: className, ...rest } = props
   return (
     <button class={[cn(buttonVariants({ variant, size })), className]} safe {...rest}>
