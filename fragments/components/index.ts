@@ -7,6 +7,17 @@ import {
   AccordionContent,
 } from '#primitives/accordion'
 import { Alert, AlertDescription, AlertTitle } from '#primitives/alert'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '#primitives/alert-dialog'
 
 export {
   Button,
@@ -18,4 +29,13 @@ export {
   Alert,
   AlertDescription,
   AlertTitle,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 }
