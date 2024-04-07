@@ -7,6 +7,15 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogTrigger,
 } from '#components'
 
 export default function Home() {
@@ -21,35 +30,27 @@ export default function Home() {
           </p>
         </div>
         <div>
-          <h1>Accordion Single</h1>
-          <AccordionRoot activeAccordion="accordion-2" class="w-[300px]" type="single">
-            <AccordionItem>
-              <AccordionTrigger>
-                <h3 class="accordion-title">Accordion Item 1</h3>
-              </AccordionTrigger>
-
-              <AccordionContent>
-                <p class="pb-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In et nulla nec metus
-                  sollicitudin tempor. Nullam at eros nec metus sollicitudin tempor. Nullam at eros
-                  nec metus sollicitudin tempor.
-                </p>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem>
-              <AccordionTrigger>
-                <h3 class="accordion-title">Accordion Item 2</h3>
-              </AccordionTrigger>
-
-              <AccordionContent>
-                <p class="pb-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In et nulla nec metus
-                  sollicitudin tempor. Nullam at eros nec metus sollicitudin tempor. Nullam at eros
-                  nec metus sollicitudin tempor.
-                </p>
-              </AccordionContent>
-            </AccordionItem>
-          </AccordionRoot>
+          <AlertDialog>
+            <AlertDialogTrigger>
+              <Button>Open Dialog</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Alert Dialog</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This is a description for the alert dialog.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>
+                  <Button variant="outline">Cancel</Button>
+                </AlertDialogCancel>
+                <AlertDialogAction>
+                  <Button>Ok</Button>
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
         <div>
           <Alert variant="destructive">
