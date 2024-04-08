@@ -18,8 +18,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '#primitives/alert-dialog'
-
 import { Avatar, AvatarFallback, AvatarImage } from '#primitives/avatar'
+import { Badge } from '#primitives/badge'
 
 export {
   Button,
@@ -43,4 +43,5 @@ export {
   Avatar,
   AvatarFallback,
   AvatarImage,
+  Badge,
 }
