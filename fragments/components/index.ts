@@ -19,6 +19,8 @@ import {
   AlertDialogTrigger,
 } from '#primitives/alert-dialog'
 
+import { Avatar, AvatarFallback, AvatarImage } from '#primitives/avatar'
+
 export {
   Button,
   Switch,
@@ -38,4 +40,7 @@ export {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
 }
