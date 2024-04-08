@@ -31,6 +31,7 @@ const buttonVariants = cva(
 
 interface ButtonProps extends VariantProps<typeof buttonVariants>, JsxElementProps {
   type?: 'button' | 'submit' | 'reset'
+  asChild?: boolean
 }
 
 /**
@@ -40,7 +41,11 @@ interface ButtonProps extends VariantProps<typeof buttonVariants>, JsxElementPro
  * @returns {JSX.Element} The rendered button component.
  */
 function Button({ children, ...props }: PropsWithChildren<ButtonProps>): JSX.Element {
-  const { variant, size, class: className, ...rest } = props
+  const { variant, size, class: className, asChild, ...rest } = props
+
+  if (asChild) {
+    return <div class={[cn(buttonVariants({ variant, size })), className]}>{children}</div>
+  }
   return (
     <button class={[cn(buttonVariants({ variant, size })), className]} safe {...rest}>
       {children}
