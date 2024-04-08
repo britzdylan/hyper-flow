@@ -16,6 +16,10 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogTrigger,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Badge,
 } from '#components'
 
 export default function Home() {
@@ -24,7 +28,9 @@ export default function Home() {
       <div class="flex flex-col items-center py-24 z-10 relative">
         <h2 class="text-lg font-semibold leading-8  ">AlpineJs Example</h2>
         <div class="py-4 inline-flex gap-2 items-center mx-auto" x-data="{ count: 0 }">
-          <Button x-on:click="count++">Increment</Button>
+          <Button variant="link" x-on:click="count++" asChild>
+            <a href="login">Login</a>
+          </Button>
           <p>
             Count: <span x-text="count"></span>
           </p>
@@ -62,6 +68,14 @@ export default function Home() {
               You can add components and dependencies to your app using the cli.
             </AlertDescription>
           </Alert>
+          <Avatar>
+            <AvatarImage alt="shadcn" src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <Badge variant="default">Default</Badge>
+          <Badge variant="secondary">Secondary</Badge>
+          <Badge variant="destructive">Destructive</Badge>
+          <Badge variant="outline">Outline</Badge>
         </div>
       </div>
     </div>
