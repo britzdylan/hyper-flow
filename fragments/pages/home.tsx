@@ -23,6 +23,7 @@ import {
   CardDescription,
   CardTitle,
   Switch,
+  CheckBox,
 } from '#components'
 
 export default function Home() {
@@ -98,6 +99,16 @@ export default function Home() {
               <Button class="w-full">Mark all as read</Button>
             </CardFooter>
           </Card>
+
+          <div class="flex items-center space-x-2">
+            <CheckBox id="terms" />
+            <label
+              for="terms"
+              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Accept terms and conditions
+            </label>
+          </div>
         </div>
       </div>
     </div>
