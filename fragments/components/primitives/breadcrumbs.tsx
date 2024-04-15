@@ -1,5 +1,4 @@
 import { PropsWithChildren } from 'adonisjsx'
-import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '#fragments/lib/utils'
 import type { JsxElementProps } from '#fragments/lib/types'
 
