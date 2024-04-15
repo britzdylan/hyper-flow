@@ -1,0 +1,41 @@
+- Todo:
+-- Dialog
+-- Drawer
+-- Dropdown Menu
+-- Form
+-- Hover Card
+-- Input
+-- Menubar
+-- Navigation Menu
+-- Pagination
+-- Popover
+-- Progress
+-- Radio Group
+-- Scroll Area
+-- Select
+-- Skeleton
+-- Slider
+-- Table
+-- Tabs
+-- Text Area
+-- Toast
+-- Toggle
+-- Toggle Group
+-- Tooltip
+
+- Special Components (in consideration):
+-- Calendar
+-- Carousel
+-- Context Menu
+-- Combo box
+-- Command
+-- Date Picker
+-- Data table
+
+
+- Not implementing:
+-- Aspect Ratio
+-- Resizable
+-- Separator
+-- Sonner
+
