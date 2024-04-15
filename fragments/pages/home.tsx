@@ -16,10 +16,13 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogTrigger,
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Badge,
+  Breadcrumb,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
 } from '#components'
 
 export default function Home() {
@@ -59,23 +62,25 @@ export default function Home() {
           </AlertDialog>
         </div>
         <div>
-          <Alert variant="destructive">
-            <svg class="h-4 w-4">
-              <use xlink:href="tabler-sprite.svg#tabler-alert-circle" />
-            </svg>
-            <AlertTitle>Heads up!</AlertTitle>
-            <AlertDescription>
-              You can add components and dependencies to your app using the cli.
-            </AlertDescription>
-          </Alert>
-          <Avatar>
-            <AvatarImage alt="shadcn" src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <Badge variant="default">Default</Badge>
-          <Badge variant="secondary">Secondary</Badge>
-          <Badge variant="destructive">Destructive</Badge>
-          <Badge variant="outline">Outline</Badge>
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbEllipsis />
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
       </div>
     </div>

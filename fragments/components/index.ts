@@ -20,6 +20,15 @@ import {
 } from '#primitives/alert-dialog'
 import { Avatar, AvatarFallback, AvatarImage } from '#primitives/avatar'
 import { Badge } from '#primitives/badge'
+import {
+  Breadcrumb,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '#primitives/breadcrumbs'
 
 export {
   Button,
@@ -44,4 +53,11 @@ export {
   AvatarFallback,
   AvatarImage,
   Badge,
+  Breadcrumb,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
 }
