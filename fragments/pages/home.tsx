@@ -31,8 +31,11 @@ export default function Home() {
       <div class="flex flex-col items-center py-24 z-10 relative">
         <h2 class="text-lg font-semibold leading-8  ">AlpineJs Example</h2>
         <div class="py-4 inline-flex gap-2 items-center mx-auto" x-data="{ count: 0 }">
-          <Button variant="link" x-on:click="count++" asChild>
-            <a href="login">Login</a>
+          <Button variant="outline" x-on:click="count++">
+            <svg class="h-4 w-4 mr-2">
+              <use xlink:href="tabler-sprite.svg#tabler-chevron-right" />
+            </svg>
+            With Icon
           </Button>
           <p>
             Count: <span x-text="count"></span>

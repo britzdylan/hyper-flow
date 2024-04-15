@@ -47,7 +47,7 @@ function Button({ children, ...props }: PropsWithChildren<ButtonProps>): JSX.Ele
     return <div class={[cn(buttonVariants({ variant, size })), className]}>{children}</div>
   }
   return (
-    <button class={[cn(buttonVariants({ variant, size })), className]} safe {...rest}>
+    <button class={[cn(buttonVariants({ variant, size })), className]} {...rest}>
       {children}
     </button>
   )
