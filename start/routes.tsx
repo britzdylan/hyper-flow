@@ -8,10 +8,10 @@
 */
 
 import router from '@adonisjs/core/services/router'
-import Home from '#pages/home'
 import { Button } from '#components'
+import UsersController from '#controllers/users_controller'
 
-router.get('/', async ({ jsx }) => jsx(Home)) // Render full pages - required in order to load all the necessary scripts and styles
+router.get('/', [UsersController, 'index']) // Render full pages - required in order to load all the necessary scripts and styles
 
 router.get('/api', () => {
   return <Button variant="destructive">Incremented</Button> // only use when swapping content with HTMX
