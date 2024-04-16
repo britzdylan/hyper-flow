@@ -71,6 +71,39 @@ export default function Home() {
                   <DrawerTitle>Are you absolutely sure?</DrawerTitle>
                   <DrawerDescription>This action cannot be undone.</DrawerDescription>
                 </DrawerHeader>
+                <Card class="w-[380px]">
+                  <CardHeader>
+                    <CardTitle>Notifications</CardTitle>
+                    <CardDescription>You have 3 unread messages.</CardDescription>
+                  </CardHeader>
+                  <CardContent class="grid gap-4">
+                    <div class=" flex items-center space-x-4 rounded-md border p-4">
+                      <div class="flex-1 space-y-1">
+                        <p class="text-sm font-medium leading-none">Push Notifications</p>
+                        <p class="text-sm text-muted-foreground">Send notifications to device.</p>
+                      </div>
+                      <Switch
+                        input={{
+                          id: 'id',
+                          name: 'name',
+                          checked: true,
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <div class="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+                        <span class="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+                        <div class="space-y-1">
+                          <p class="text-sm font-medium leading-none">Title</p>
+                          <p class="text-sm text-muted-foreground">description</p>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button class="w-full">Mark all as read</Button>
+                  </CardFooter>
+                </Card>
                 <DrawerFooter>
                   <Button>Submit</Button>
                   <DrawerClose>

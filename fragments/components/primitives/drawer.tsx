@@ -22,7 +22,7 @@ function Drawer({ children: [trigger, content], ...props }: DrawerProps): JSX.El
         {trigger}
         <template x-teleport="body">
           <div
-            x-bind:class="{ 'opacity-0 !-z-10': !open, 'opacity-100': open }"
+            x-bind:class="{ 'opacity-0 !-z-10 delay-300': !open, 'opacity-100 delay-0': open }"
             x-cloak
             x-trap="open"
             style="pointer-events: auto;"
