@@ -23,11 +23,13 @@ import {
   CardDescription,
   CardTitle,
   Switch,
-  CheckBox,
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-  Icon,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogDescription,
 } from '#components'
 
 export default function Home() {
@@ -104,22 +106,36 @@ export default function Home() {
             </CardFooter>
           </Card>
 
-          <Collapsible class="w-[350px] space-y-2">
-            <div class="flex items-center justify-between space-x-4 px-4">
-              <h4 class="text-sm font-semibold">@peduarte starred 3 repositories</h4>
-              <CollapsibleTrigger>
-                <Button variant="ghost" size="sm" class="w-9 p-0">
-                  <Icon i="selector" class="h-4 w-4" />
-                  <span class="sr-only">Toggle</span>
-                </Button>
-              </CollapsibleTrigger>
-            </div>
-            <div class="rounded-md border px-4 py-3 font-mono text-sm">@radix-ui/primitives</div>
-            <CollapsibleContent class="space-y-2">
-              <div class="rounded-md border px-4 py-3 font-mono text-sm">@radix-ui/colors</div>
-              <div class="rounded-md border px-4 py-3 font-mono text-sm">@stitches/react</div>
-            </CollapsibleContent>
-          </Collapsible>
+          <Dialog>
+            <DialogTrigger>
+              <Button variant="outline">Edit Profile</Button>
+            </DialogTrigger>
+            <DialogContent class="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Edit profile</DialogTitle>
+                <DialogDescription>
+                  Make changes to your profile here. Click save when you're done.
+                </DialogDescription>
+              </DialogHeader>
+              <div class="grid gap-4 py-4">
+                <div class="grid grid-cols-4 items-center gap-4">
+                  <label for="name" class="text-right">
+                    Name
+                  </label>
+                  <input id="name" value="Pedro Duarte" class="col-span-3" />
+                </div>
+                <div class="grid grid-cols-4 items-center gap-4">
+                  <label for="username" class="text-right">
+                    Username
+                  </label>
+                  <input id="username" value="@peduarte" class="col-span-3" />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="submit">Save changes</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>
