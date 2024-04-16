@@ -1,21 +1,5 @@
 import {
-  AccordionRoot,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
   Button,
-  Alert,
-  AlertDescription,
-  AlertTitle,
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogTitle,
-  AlertDialogHeader,
-  AlertDialogFooter,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogTrigger,
   Card,
   CardContent,
   CardFooter,
@@ -23,13 +7,14 @@ import {
   CardDescription,
   CardTitle,
   Switch,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogDescription,
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+  DrawerDescription,
+  DrawerClose,
 } from '#components'
 
 export default function Home() {
@@ -42,29 +27,7 @@ export default function Home() {
             Count: <span x-text="count"></span>
           </p>
         </div>
-        <div>
-          <AlertDialog>
-            <AlertDialogTrigger>
-              <Button>Open Dialog</Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Alert Dialog</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This is a description for the alert dialog.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>
-                  <Button variant="outline">Cancel</Button>
-                </AlertDialogCancel>
-                <AlertDialogAction>
-                  <Button>Ok</Button>
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </div>
+        <div></div>
         <div>
           <Card class="w-[380px]">
             <CardHeader>
@@ -100,36 +63,25 @@ export default function Home() {
             </CardFooter>
           </Card>
 
-          <Dialog>
-            <DialogTrigger>
-              <Button variant="outline">Edit Profile</Button>
-            </DialogTrigger>
-            <DialogContent class="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>Edit profile</DialogTitle>
-                <DialogDescription>
-                  Make changes to your profile here. Click save when you're done.
-                </DialogDescription>
-              </DialogHeader>
-              <div class="grid gap-4 py-4">
-                <div class="grid grid-cols-4 items-center gap-4">
-                  <label for="name" class="text-right">
-                    Name
-                  </label>
-                  <input id="name" value="Pedro Duarte" class="col-span-3" />
-                </div>
-                <div class="grid grid-cols-4 items-center gap-4">
-                  <label for="username" class="text-right">
-                    Username
-                  </label>
-                  <input id="username" value="@peduarte" class="col-span-3" />
-                </div>
+          <Drawer>
+            <DrawerTrigger>Open</DrawerTrigger>
+            <DrawerContent>
+              <div class="mx-auto w-full max-w-sm">
+                <DrawerHeader>
+                  <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+                  <DrawerDescription>This action cannot be undone.</DrawerDescription>
+                </DrawerHeader>
+                <DrawerFooter>
+                  <Button>Submit</Button>
+                  <DrawerClose>
+                    <Button class="w-full" variant="outline">
+                      Cancel
+                    </Button>
+                  </DrawerClose>
+                </DrawerFooter>
               </div>
-              <DialogFooter>
-                <Button type="submit">Save changes</Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+            </DrawerContent>
+          </Drawer>
         </div>
       </div>
     </div>
