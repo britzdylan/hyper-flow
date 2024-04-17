@@ -1,6 +1,4 @@
 - Todo:
--- Hover Card
--- Input
 -- Menubar
 -- Navigation Menu
 -- Pagination
@@ -21,6 +19,7 @@
 
 - Special Components (in consideration):
 -- Form
+-- Input OTP
 -- Calendar
 -- Carousel
 -- Context Menu

@@ -22,6 +22,7 @@ import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
+  Input,
 } from '#components'
 
 export default function Home() {
@@ -170,6 +171,7 @@ export default function Home() {
               </div>
             </HoverCardContent>
           </HoverCard>
+          <Input placeholder="Email" type="email" />
         </div>
       </div>
     </div>
