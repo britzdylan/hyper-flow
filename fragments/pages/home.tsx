@@ -19,6 +19,9 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
 } from '#components'
 
 export default function Home() {
@@ -61,22 +64,22 @@ export default function Home() {
             </DropdownMenuItem>
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
-                {/* <UserPlus className="mr-2 h-4 w-4" /> */}
+                {/* <UserPlus class="mr-2 h-4 w-4" /> */}
                 <span>Invite users</span>
               </DropdownMenuSubTrigger>
 
               <DropdownMenuSubContent>
                 <DropdownMenuItem>
-                  {/* <Mail className="mr-2 h-4 w-4" /> */}
+                  {/* <Mail class="mr-2 h-4 w-4" /> */}
                   <span>Email</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  {/* <MessageSquare className="mr-2 h-4 w-4" /> */}
+                  {/* <MessageSquare class="mr-2 h-4 w-4" /> */}
                   <span>Message</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  {/* <PlusCircle className="mr-2 h-4 w-4" /> */}
+                  {/* <PlusCircle class="mr-2 h-4 w-4" /> */}
                   <span>More...</span>
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
@@ -150,6 +153,23 @@ export default function Home() {
               <Button class="w-full">Mark all as read</Button>
             </CardFooter>
           </Card>
+
+          <HoverCard>
+            <HoverCardTrigger>
+              <Button variant="link">@nextjs</Button>
+            </HoverCardTrigger>
+            <HoverCardContent class="w-80">
+              <div class="flex justify-between space-x-4">
+                <div class="space-y-1">
+                  <h4 class="text-sm font-semibold">@nextjs</h4>
+                  <p class="text-sm">The React Framework – created and maintained by @vercel.</p>
+                  <div class="flex items-center pt-2">
+                    <span class="text-xs text-muted-foreground">Joined December 2021</span>
+                  </div>
+                </div>
+              </div>
+            </HoverCardContent>
+          </HoverCard>
         </div>
       </div>
     </div>
