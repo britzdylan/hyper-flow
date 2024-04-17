@@ -5,7 +5,14 @@ import { Icon } from '#components'
 
 function DropdownMenu({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   return (
-    <div x-data="{ open : false }" {...props}>
+    <div
+      x-data="{ open : false }"
+      attrs={{
+        'x-on:click.away': 'open=false',
+        'x-on:keydown.escape': 'open=false',
+      }}
+      {...props}
+    >
       {children}
     </div>
   )
@@ -165,13 +172,7 @@ function DropdownMenuSubContent({
     'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg absolute  top-0 right-[-60%] hidden group-hover:block'
 
   return (
-    <div
-      x-transition
-      role="menu"
-      tabindex={-1}
-      class={cn(styles, className)}
-      {...rest}
-    >
+    <div x-transition role="menu" tabindex={-1} class={cn(styles, className)} {...rest}>
       {children}
     </div>
   )
