@@ -24,6 +24,19 @@ import {
   HoverCardTrigger,
   Input,
   Label,
+  Menubar,
+  MenubarContent,
+  MenubarTrigger,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarCheckboxItem,
+  MenubarShortcut,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
 } from '#components'
 
 export default function Home() {
@@ -155,7 +168,50 @@ export default function Home() {
               <Button class="w-full">Mark all as read</Button>
             </CardFooter>
           </Card>
-
+          <Menubar>
+            <MenubarMenu>
+              <MenubarTrigger>File</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>
+                  New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+                </MenubarItem>
+                <MenubarItem>
+                  New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                </MenubarItem>
+                <MenubarItem disabled>New Incognito Window</MenubarItem>
+                <MenubarSeparator />
+                <MenubarSub>
+                  <MenubarSubTrigger>Share</MenubarSubTrigger>
+                  <MenubarSubContent>
+                    <MenubarItem>Email link</MenubarItem>
+                    <MenubarItem>Messages</MenubarItem>
+                    <MenubarItem>Notes</MenubarItem>
+                  </MenubarSubContent>
+                </MenubarSub>
+                <MenubarSeparator />
+                <MenubarItem>
+                  Print... <MenubarShortcut>⌘P</MenubarShortcut>
+                </MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+            <MenubarMenu>
+              <MenubarTrigger>Edit</MenubarTrigger>
+              <MenubarContent>
+                <MenubarCheckboxItem>Always Show Bookmarks Bar</MenubarCheckboxItem>
+                <MenubarCheckboxItem checked>Always Show Full URLs</MenubarCheckboxItem>
+              </MenubarContent>
+            </MenubarMenu>
+            <MenubarMenu>
+              <MenubarTrigger>View</MenubarTrigger>
+              <MenubarContent>
+                <MenubarRadioGroup value="benoit">
+                  <MenubarRadioItem value="andy">Andy</MenubarRadioItem>
+                  <MenubarRadioItem value="benoit">Benoit</MenubarRadioItem>
+                  <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>
+                </MenubarRadioGroup>
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
           <HoverCard>
             <HoverCardTrigger>
               <Button variant="link">@nextjs</Button>
