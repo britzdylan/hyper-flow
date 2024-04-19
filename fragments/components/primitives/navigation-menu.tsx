@@ -115,6 +115,25 @@ function NavigationMenuList({
   )
 }
 
+function NavigationMenuIndicator({
+  children,
+  ...props
+}: PropsWithChildren<JsxElementProps>): JSX.Element {
+  const { class: className, ...rest } = props
+  return (
+    <span
+      class={cn(
+        'top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden data-[state=visible]:animate-in data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:fade-in',
+        className
+      )}
+      {...rest}
+    >
+      {children}
+      <div class="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md" />
+    </span>
+  )
+}
+
 export {
   NavigationMenu,
   NavigationMenuList,
@@ -122,4 +141,5 @@ export {
   NavigationMenuTrigger,
   NavigationMenuContent,
   NavigationMenuLink,
+  NavigationMenuIndicator,
 }
