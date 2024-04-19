@@ -37,11 +37,79 @@ import {
   MenubarSub,
   MenubarSubContent,
   MenubarSubTrigger,
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
+  NavigationMenuLink,
 } from '#components'
 
 export default function Home() {
   return (
     <div class="relative  ">
+      <NavigationMenu class="w-full mx-auto z-50">
+        <NavigationMenuList>
+          <NavigationMenuItem id="home">
+            <NavigationMenuTrigger>
+              <a href="#">Home</a>
+            </NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul class="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                <li class="row-span-3">
+                  {/* <NavigationMenuLink asChild> */}
+                  <a
+                    class="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                    href="/"
+                  >
+                    <div class="mb-2 mt-4 text-lg font-medium">shadcn/ui</div>
+                    <p class="text-sm leading-tight text-muted-foreground">
+                      Beautifully designed components that you can copy and paste into your apps.
+                      Accessible. Customizable. Open Source.
+                    </p>
+                  </a>
+                  {/* </NavigationMenuLink> */}
+                </li>
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem id="away">
+            <NavigationMenuTrigger>
+              <a href="#">Away</a>
+            </NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul class="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                <li class="row-span-3">
+                  {/* <NavigationMenuLink asChild> */}
+                  <a
+                    class="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                    href="/"
+                  >
+                    <div class="mb-2 mt-4 text-lg font-medium">awau/ui</div>
+                  </a>
+                  {/* </NavigationMenuLink> */}
+                </li>
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem id="about">
+            <NavigationMenuLink href="#" title="link">
+              About
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem id="services">
+            <NavigationMenuLink href="#" title="link">
+              Services
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem id="contact">
+            <NavigationMenuLink href="#" title="link">
+              {' '}
+              Contact
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Button variant="outline">Open</Button>
