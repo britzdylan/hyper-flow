@@ -1,4 +1,4 @@
-import { PopoverDemo, ProgressDemo } from '#components'
+import { PopoverDemo, ProgressDemo, RadioGroupDemo } from '#components'
 
 export default function Home() {
   return (
@@ -13,6 +13,7 @@ export default function Home() {
         <div class="flex flex-col gap-10 w-full justify-center items-center">
           <PopoverDemo />
           <ProgressDemo />
+          <RadioGroupDemo />
         </div>
       </div>
     </div>
