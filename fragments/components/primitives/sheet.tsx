@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'adonisjsx'
 import { cn } from '#fragments/lib/utils'
 import { JsxElementProps } from '#fragments/lib/types'
 import { Icon } from '#components'
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 
 interface SheetProps extends JsxElementProps {
   children: [JSX.Element, JSX.Element]
@@ -228,7 +228,7 @@ function SheetDemo() {
   return (
     <Sheet>
       <SheetTrigger>Open Sheet</SheetTrigger>
-      <SheetContent side='left'>
+      <SheetContent side="left">
         <SheetHeader>
           <SheetTitle>Sheet Title</SheetTitle>
         </SheetHeader>

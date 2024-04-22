@@ -1,7 +1,6 @@
 import { PropsWithChildren } from 'adonisjsx'
 import { cn } from '#fragments/lib/utils'
 import { JsxElementProps } from '#fragments/lib/types'
-import { Icon } from '#components'
 
 interface DrawerProps extends JsxElementProps {
   children: [JSX.Element, JSX.Element]

@@ -5,7 +5,11 @@ import type { JsxElementProps } from '#fragments/lib/types'
 function Card({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   const styles = 'rounded-lg border bg-card text-card-foreground shadow-sm'
-  return <div class={cn(styles, className)}>{children}</div>
+  return (
+    <div class={cn(styles, className)} {...rest}>
+      {children}
+    </div>
+  )
 }
 
 function CardHeader({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {

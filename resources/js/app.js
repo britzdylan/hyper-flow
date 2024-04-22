@@ -2,6 +2,7 @@ import Alpine from 'alpinejs'
 import collapse from '@alpinejs/collapse'
 import focus from '@alpinejs/focus'
 import anchor from '@alpinejs/anchor'
+import '../css/app.css'
 import { radioGroup, tabsData } from '../../fragments/components/index'
 
 import htmx from 'htmx.org'

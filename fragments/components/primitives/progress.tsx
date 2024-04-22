@@ -1,4 +1,3 @@
-import { PropsWithChildren } from 'adonisjsx'
 import { cn } from '#fragments/lib/utils'
 import { JsxElementProps } from '#fragments/lib/types'
 

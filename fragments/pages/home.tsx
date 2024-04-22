@@ -6,6 +6,7 @@ import {
   SheetDemo,
   TableDemo,
   TabsDemo,
+  TextArea,
 } from '#components'
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
           <SheetDemo />
           <TableDemo />
           <TabsDemo />
+          <TextArea disabled />
         </div>
       </div>
     </div>
