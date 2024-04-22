@@ -1,4 +1,12 @@
-import { PopoverDemo, ProgressDemo, RadioGroupDemo, SelectDemo, SheetDemo } from '#components'
+import {
+  PopoverDemo,
+  ProgressDemo,
+  RadioGroupDemo,
+  SelectDemo,
+  SheetDemo,
+  TableDemo,
+  TabsDemo,
+} from '#components'
 
 export default function Home() {
   return (
@@ -16,6 +24,8 @@ export default function Home() {
           <RadioGroupDemo />
           <SelectDemo />
           <SheetDemo />
+          <TableDemo />
+          <TabsDemo />
         </div>
       </div>
     </div>

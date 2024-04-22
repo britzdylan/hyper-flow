@@ -2,7 +2,8 @@ import Alpine from 'alpinejs'
 import collapse from '@alpinejs/collapse'
 import focus from '@alpinejs/focus'
 import anchor from '@alpinejs/anchor'
-import { radioGroup } from '../../fragments/components/index'
+import { radioGroup, tabsData } from '../../fragments/components/index'
+
 import htmx from 'htmx.org'
 
 window.htmx = htmx
@@ -54,6 +55,7 @@ const progressInterval = (initValue = 0, endValue = 100, delay = 500, step = 10)
 Alpine.data('progress', progress)
 Alpine.data('progressInterval', progressInterval)
 Alpine.data('radioGroup', radioGroup)
+Alpine.data('tabsData', tabsData)
 
 Alpine.start()
 
