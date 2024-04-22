@@ -1,57 +1,4 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardDescription,
-  CardTitle,
-  Switch,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  // DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-  Input,
-  Label,
-  Menubar,
-  MenubarContent,
-  MenubarTrigger,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarCheckboxItem,
-  MenubarShortcut,
-  MenubarRadioGroup,
-  MenubarRadioItem,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuTrigger,
-  NavigationMenuContent,
-  NavigationMenuLink,
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-  PopoverDemo,
-} from '#components'
+import { PopoverDemo, ProgressDemo } from '#components'
 
 export default function Home() {
   return (
@@ -62,7 +9,10 @@ export default function Home() {
           <p>
             Count: <span x-text="count"></span>
           </p>
+        </div>
+        <div class="flex flex-col gap-10 w-full justify-center items-center">
           <PopoverDemo />
+          <ProgressDemo />
         </div>
       </div>
     </div>
