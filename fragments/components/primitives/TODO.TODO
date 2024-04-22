@@ -1,7 +1,4 @@
 - Todo:
--- Radio Group
--- Scroll Area
--- Select
 -- Skeleton
 -- Slider
 -- Table
@@ -21,11 +18,12 @@
 -- Command
 -- Date Picker
 -- Data table
+-- Scroll Area
 
 
 
 
-- Not implementing:
+- Not implementing (yet):
 -- Aspect Ratio
 -- Resizable
 -- Separator

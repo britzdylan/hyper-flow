@@ -32,7 +32,7 @@ function RadioGroupItem({ ...props }: RadioGroupItemProps): JSX.Element {
   const { class: className, value, id, ...rest } = props
   return (
     <button
-      x-on:click="setValue($event.target.value)"
+      x-on:click={`setValue('${value}')`}
       role="radio"
       aria-checked="false"
       id={id}
@@ -77,6 +77,7 @@ const radioGroup = (initValue: string) => ({
   value: '',
   setValue(value: string) {
     this.value = value
+    console.log(value, 'value radio group')
   },
   getValue() {
     return this.value
