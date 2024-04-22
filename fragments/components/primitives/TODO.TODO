@@ -1,6 +1,4 @@
 - Todo:
--- Skeleton
--- Slider
 -- Table
 -- Tabs
 -- Text Area
@@ -24,6 +22,7 @@
 
 
 - Not implementing (yet):
+-- Slider
 -- Aspect Ratio
 -- Resizable
 -- Separator
