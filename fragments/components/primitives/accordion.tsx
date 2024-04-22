@@ -6,12 +6,6 @@ interface AccordionContentProps extends JsxElementProps {
   self?: boolean
 }
 
-/**
- * Renders the content of an accordion component.
- *
- * @param {PropsWithChildren<AccordionContentProps>} props - The props for the AccordionContent component.
- * @returns {JSX.Element} The rendered AccordionContent component.
- */
 function AccordionContent({
   children,
   ...props
@@ -53,12 +47,6 @@ interface AccordionTriggerProps extends JsxElementProps {
   self?: boolean
 }
 
-/**
- * Renders an accordion trigger button.
- *
- * @param {PropsWithChildren<AccordionTriggerProps>} props - The props for the AccordionTrigger component.
- * @returns {JSX.Element} The rendered AccordionTrigger component.
- */
 function AccordionTrigger({
   children,
   ...props
@@ -128,14 +116,6 @@ interface AccordionItemProps extends JsxElementProps {
   active?: boolean
 }
 
-/**
- * Renders an accordion item component.
- *
- * @param {PropsWithChildren<AccordionItemProps>} props - The component props.
- * @returns {JSX.Element} The rendered accordion item.
- * @throws {Error} If the prop "self" is not of type "boolean".
- */
-
 function AccordionItem({ children, ...props }: PropsWithChildren<AccordionItemProps>): JSX.Element {
   const { self = false, active = false, class: className } = props
 
@@ -171,14 +151,6 @@ interface AccordionRootProps extends JsxElementProps {
   type: 'single' | 'multiple'
   activeAccordion?: string
 }
-
-/**
- * Renders the root component for an accordion.
- *
- * @param {PropsWithChildren<AccordionRootProps>} props - The props for the AccordionRoot component.
- * @returns {JSX.Element} The rendered AccordionRoot component.
- * @throws {Error} If the prop "type" is neither "single" nor "multiple".
- */
 
 function AccordionRoot({ children, ...props }: PropsWithChildren<AccordionRootProps>): JSX.Element {
   const { type, activeAccordion, class: className } = props

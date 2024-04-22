@@ -2,12 +2,6 @@ import { PropsWithChildren } from 'adonisjsx'
 import { cn } from '#fragments/lib/utils'
 import type { JsxElementProps } from '#fragments/lib/types'
 
-/**
- * Renders a fallback avatar component.
- *
- * @param {PropsWithChildren<JsxElementProps>} props - The component props.
- * @returns {JSX.Element} The rendered fallback avatar component.
- */
 function AvatarFallback({ children, ...props }: PropsWithChildren<JsxElementProps>) {
   const { class: className } = props
   return (
@@ -24,23 +18,11 @@ interface AvatarImageProps extends JsxElementProps {
   alt: string
 }
 
-/**
- * Renders an avatar image.
- *
- * @param {PropsWithChildren<AvatarImageProps>} props - The props for the AvatarImage component.
- * @returns {JSX.Element} The rendered AvatarImage component.
- */
 function AvatarImage({ children, ...props }: PropsWithChildren<AvatarImageProps>) {
   const { class: className, src, alt, ...rest } = props
   return <img src={src} alt={alt} class={cn('aspect-square h-full w-full', className)} {...rest} />
 }
 
-/**
- * Renders an avatar component.
- *
- * @param {PropsWithChildren<JsxElementProps>} props - The props for the Avatar component.
- * @returns {JSX.Element} The rendered Avatar component.
- */
 function Avatar({ children, ...props }: PropsWithChildren<JsxElementProps>) {
   const { class: className } = props
   return (
