@@ -53,5 +53,5 @@ function Button({ children, ...props }: PropsWithChildren<ButtonProps>): JSX.Ele
   )
 }
 
-export { Button }
+export { Button, buttonVariants }
 export type { ButtonProps }
