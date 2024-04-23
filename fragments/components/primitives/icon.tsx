@@ -1,8 +1,8 @@
 import { cn } from '#fragments/lib/utils'
-import type { JsxElementProps } from '#fragments/lib/types'
+import type { IconNames, JsxElementProps } from '#fragments/lib/types'
 
 interface IconProps extends JsxElementProps {
-  i: string
+  i: IconNames
 }
 
 // function Icon({ i, ...props }: IconProps): JSX.Element {
