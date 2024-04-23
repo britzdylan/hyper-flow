@@ -1,21 +1,27 @@
 import { PropsWithChildren } from 'adonisjsx'
 import { cn } from '#fragments/lib/utils'
-import { JsxElementProps } from '#fragments/lib/types'
+import { JsxElementProps, IconNames } from '#fragments/lib/types'
 
 interface AccordionContentProps extends JsxElementProps {
   self?: boolean
 }
-
+/**
+ * @component AccordionContent (Required)
+ * @param {boolean} props.self - Controls the behavior of the accordion, If true then the accordion handles its own state, if false then the parent component handles the state.
+ * @param {children} props.children - The content to show and hide.
+ * @returns {JSX.Element} The rendered component.
+ *
+ * @description This is the content element for the AccordionItem component, and is responsible for showing or hiding the accordion content.
+ * @example <AccordionContent><p>Home content</p></AccordionContent>
+ */
 function AccordionContent({
   children,
   ...props
 }: PropsWithChildren<AccordionContentProps>): JSX.Element {
   const { self = false, class: className } = props
 
-  const classes = cn('overflow-hidden text-sm transition-all', className)
-
   const sharedProps = {
-    'class': classes,
+    'class': cn('overflow-hidden text-sm transition-all', className),
     'role': 'region',
     'x-bind:id': "$id('accordion')",
     'x-collapse': true,
@@ -23,12 +29,15 @@ function AccordionContent({
     'x-bind:aria-labelledby': "'accordion-header-' + $id('accordion')",
   }
 
+  // IF the self prop is set to false, the accordion is controlled by the parent component.
   if (!self) {
     return (
       <div
         {...sharedProps}
-        x-show="activeAccordion==$id('accordion')"
-        x-bind:aria-hidden="activeAccordion==$id('accordion')"
+        attrs={{
+          'x-show': "activeAccordion==$id('accordion')",
+          'x-bind:aria-hidden': "activeAccordion==$id('accordion')",
+        }}
       >
         {children}
       </div>
@@ -36,29 +45,43 @@ function AccordionContent({
   }
 
   return (
-    <div {...sharedProps} x-show="isOpen" x-bind:aria-hidden="isOpen">
+    <div
+      {...sharedProps}
+      attrs={{
+        'x-show': 'isOpen',
+        'x-bind:aria-hidden': '!isOpen',
+      }}
+    >
       {children}
     </div>
   )
 }
 
 interface AccordionTriggerProps extends JsxElementProps {
-  icon?: string
+  icon?: IconNames
   self?: boolean
 }
 
+/**
+ * @component AccordionTrigger (Required)
+ * @param {boolean} props.self - Controls the behavior of the accordion, If true then the accordion handles its own state, if false then the parent component handles the state.
+ * @param {IconNames} props.icon - The name of the icon. Default is 'nav-arrow-down'.
+ * @param {children} props.children - The content of the trigger.
+ * @returns {JSX.Element} The rendered component.
+ *
+ * @description This is the header element for the AccordionItem component, and is responsible for toggling the accordion content.
+ * @example    <AccordionTrigger icon="home">Home</AccordionTrigger>
+ */
 function AccordionTrigger({
   children,
   ...props
 }: PropsWithChildren<AccordionTriggerProps>): JSX.Element {
-  const { self = false, icon = 'chevron-down', class: className } = props
+  const { self = false, icon = 'nav-arrow-down', class: className } = props
 
   const classes = cn(
     'flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline w-full',
     className
   )
-
-  const finalIcon = 'tabler-sprite.svg#tabler-' + icon
 
   const sharedButtonProps = {
     'class': classes,
@@ -71,13 +94,20 @@ function AccordionTrigger({
     'aria-hidden': true,
   }
 
+  function Icon() {
+    return <i class={[cn('before:w-4 before:h-4'), className, `iconoir-${icon} `]}></i> //call a custom Icon here to avoid dependency
+  }
+
+  // If the self prop is set to false, the accordion is controlled by the parent component.
   if (!self) {
     return (
       <button
         {...sharedButtonProps}
-        x-bind:aria-expanded="activeAccordion==$id('accordion')"
-        x-on:click="setActiveAccordion($id('accordion'))"
-        x-bind:aria-controls="$id('accordion')"
+        attrs={{
+          'x-bind:aria-expanded': "activeAccordion==$id('accordion')",
+          'x-bind:aria-controls': "$id('accordion')",
+          'x-on:click': "setActiveAccordion($id('accordion'))",
+        }}
       >
         {children}
 
@@ -85,9 +115,7 @@ function AccordionTrigger({
           {...sharedIconProps}
           x-bind:class="{ 'rotate-180': activeAccordion === $id('accordion') }"
         >
-          <svg class="h-4 w-4">
-            <use xlink:href={finalIcon} />
-          </svg>
+          <Icon />
         </span>
       </button>
     )
@@ -96,16 +124,16 @@ function AccordionTrigger({
   return (
     <button
       {...sharedButtonProps}
-      x-bind:aria-expanded="isOpen"
-      x-on:click="toggleAccordion()"
-      x-bind:aria-controls="$id('accordion')"
+      attrs={{
+        'x-bind:aria-expanded': 'isOpen',
+        'x-on:click': 'toggleAccordion()',
+        'x-bind:aria-controls': "$id('accordion')",
+      }}
     >
       {children}
 
       <span {...sharedIconProps} x-bind:class="{ 'rotate-180': isOpen }">
-        <svg class="h-4 w-4">
-          <use xlink:href={finalIcon} />
-        </svg>
+        <Icon />
       </span>
     </button>
   )
@@ -116,20 +144,28 @@ interface AccordionItemProps extends JsxElementProps {
   active?: boolean
 }
 
+/**
+ * @component AccordionItem (Required)
+ * @param {boolean} props.self - Controls the behavior of the accordion, If true then the accordion handles its own state, if false then the parent component handles the state.
+ * @param {boolean} props.active - If true then the accordion is open by default.
+ * @requires AccordionTrigger || AccordionContent
+ * @returns {JSX.Element} The rendered component.
+ *
+ * @description This is the main control element for the Accordion and the direct child of the Accordion component.
+ * @example   <AccordionItem self active>...</AccordionItem>
+ */
 function AccordionItem({ children, ...props }: PropsWithChildren<AccordionItemProps>): JSX.Element {
   const { self = false, active = false, class: className } = props
 
-  const clientFunc = `{
+  const dataObj = `{
     isOpen: ${active},
     toggleAccordion() {
       this.isOpen = !this.isOpen
-    }
+    },
   }`
 
-  const classes = cn('border-b', className)
-
   const sharedProps = {
-    'class': classes,
+    'class': cn('border-b', className),
     'x-id': "['accordion']",
   }
 
@@ -138,7 +174,7 @@ function AccordionItem({ children, ...props }: PropsWithChildren<AccordionItemPr
       return <div {...sharedProps}>{children}</div>
     case true:
       return (
-        <div {...sharedProps} x-data={clientFunc}>
+        <div {...sharedProps} x-data={dataObj}>
           {children}
         </div>
       )
@@ -152,25 +188,34 @@ interface AccordionRootProps extends JsxElementProps {
   activeAccordion?: string
 }
 
-function AccordionRoot({ children, ...props }: PropsWithChildren<AccordionRootProps>): JSX.Element {
+/**
+ * @component Accordion (Required)
+ * @param {'single' | 'multiple'} props.type - Controls the behavior of the accordion.
+ * @param {string} props.activeAccordion - The id of the active accordion. See AccordionItem.
+ * @requires AccordionItem[]
+ * @returns {JSX.Element} The rendered accordion component.
+ *
+ * @description This is the main root element for the Accordion.
+ * @example  <Accordion type="single" activeAccordion="accordion-1">...</Accordion>
+ */
+function Accordion({ children, ...props }: PropsWithChildren<AccordionRootProps>): JSX.Element {
   const { type, activeAccordion, class: className } = props
 
-  const clientFunc = `{
+  const sharedProps = {
+    class: cn('w-full', className),
+  }
+
+  const dataObj = `{
     activeAccordion: '${activeAccordion}',
     setActiveAccordion(id) {
       this.activeAccordion = this.activeAccordion == id ? '' : id
     },
   }`
-  const classes = cn('w-full', className)
-
-  const sharedProps = {
-    class: classes,
-  }
 
   switch (type) {
     case 'single':
       return (
-        <div x-data={clientFunc} {...sharedProps}>
+        <div x-data={dataObj} {...sharedProps}>
           {children}
         </div>
       )
@@ -181,4 +226,55 @@ function AccordionRoot({ children, ...props }: PropsWithChildren<AccordionRootPr
   }
 }
 
-export { AccordionRoot, AccordionItem, AccordionTrigger, AccordionContent }
+function AccordionDemo() {
+  return (
+    <Accordion type="single" activeAccordion="accordion-1">
+      <AccordionItem active>
+        <AccordionTrigger icon="home">Home</AccordionTrigger>
+        <AccordionContent>
+          <p>Home content</p>
+        </AccordionContent>
+      </AccordionItem>
+
+      <AccordionItem>
+        <AccordionTrigger icon="settings">Settings</AccordionTrigger>
+        <AccordionContent>
+          <p>Settings content</p>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  )
+}
+
+function AccordionSelfDemo() {
+  return (
+    <Accordion type="multiple">
+      <AccordionItem self active>
+        <AccordionTrigger self icon="home">
+          Home
+        </AccordionTrigger>
+        <AccordionContent self>
+          <p>Home content</p>
+        </AccordionContent>
+      </AccordionItem>
+
+      <AccordionItem self>
+        <AccordionTrigger self icon="settings">
+          Settings
+        </AccordionTrigger>
+        <AccordionContent self>
+          <p>Settings content</p>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  )
+}
+
+export {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+  AccordionDemo,
+  AccordionSelfDemo,
+}

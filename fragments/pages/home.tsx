@@ -6,6 +6,8 @@ import {
   SheetDemo,
   TableDemo,
   TabsDemo,
+  AccordionDemo,
+  AccordionSelfDemo,
   TextArea,
 } from '#components'
 
@@ -19,7 +21,7 @@ export default function Home() {
             Count: <span x-text="count"></span>
           </p>
         </div>
-        <div class="flex flex-col gap-10 w-full justify-center items-center">
+        <div class="flex flex-col gap-10 w-full justify-center items-center max-w-screen-lg mx-auto">
           <PopoverDemo />
           <ProgressDemo />
           <RadioGroupDemo />
@@ -28,6 +30,8 @@ export default function Home() {
           <TableDemo />
           <TabsDemo />
           <TextArea disabled />
+          <AccordionDemo />
+          <AccordionSelfDemo />
         </div>
       </div>
     </div>
