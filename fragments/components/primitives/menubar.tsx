@@ -212,7 +212,7 @@ function MenubarRadioItem({
         x-show={`selected === '${value}'`}
         class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center"
       >
-        <Icon i="point" class="h-4 w-4" />
+        <div class="h-4 w-4 bg-black rounded-full" />
       </span>
 
       {children}

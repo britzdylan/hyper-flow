@@ -39,7 +39,7 @@ function SelectTrigger({ children, ...props }: PropsWithChildren<JsxElementProps
       {...rest}
     >
       <span x-text="value || 'Choose an option'" class="line-clamp-1" />
-      <Icon i="chevron-down" class="h-4 w-4 opacity-50" />
+      <Icon i="nav-arrow-down" class="h-4 w-4 opacity-50" />
     </button>
   )
 }

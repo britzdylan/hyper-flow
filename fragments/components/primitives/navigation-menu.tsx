@@ -30,7 +30,7 @@ function NavigationMenuTrigger({
     <button class={cn(style, className)} {...rest}>
       {children}
       <Icon
-        i="chevron-down"
+        i="nav-arrow-down"
         class="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-hover:rotate-180"
         aria-hidden="true"
       />

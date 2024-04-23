@@ -99,7 +99,7 @@ function SheetContent({ children, ...props }: PropsWithChildren<SheetContentProp
         x-on:click="open=false"
         class="cursor-pointer absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary"
       >
-        <Icon i="x" />
+        <Icon i="xmark" />
         <span class="sr-only">Close</span>
       </div>
       {children}

@@ -85,7 +85,7 @@ function PaginationPrevious({
       class={cn('gap-1 pl-2.5', className)}
       {...rest}
     >
-      <Icon i="chevron-left" class="h-4 w-4" />
+      <Icon i="nav-arrow-left" class="h-4 w-4" />
       <span>Previous</span>
     </PaginationLink>
   )
@@ -105,7 +105,7 @@ function PaginationNext({
       {...rest}
     >
       <span>Next</span>
-      <Icon i="chevron-right" class="h-4 w-4" />
+      <Icon i="nav-arrow-right" class="h-4 w-4" />
     </PaginationLink>
   )
 }

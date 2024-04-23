@@ -157,7 +157,7 @@ function DropdownMenuSubTrigger({
       {...rest}
     >
       {children}
-      <Icon i="chevron-right" class="ml-auto h-4 w-4" />
+      <Icon i="nav-arrow-right" class="ml-auto h-4 w-4" />
     </div>
   )
 }

@@ -145,7 +145,7 @@ function DialogHeader({ children, ...props }: PropsWithChildren<DialogHeaderProp
       class={cn('flex flex-col space-y-2 text-center sm:text-left relative', className)}
       {...rest}
     >
-      <Icon class="absolute right-0 top-0 cursor-pointer" x-on:click="open=false" i="x" />
+      <Icon class="absolute right-0 top-0 cursor-pointer" x-on:click="open=false" i="xmark" />
 
       {children}
     </div>
