@@ -5,16 +5,15 @@ interface IconProps extends JsxElementProps {
   i: IconNames
 }
 
-// function Icon({ i, ...props }: IconProps): JSX.Element {
-//   const { class: className, ...rest } = props
-//   const finalIcon = 'tabler-sprite.svg#tabler-' + i
-//   return (
-//     <svg class={[cn('w-4 h-4'), className]} {...rest}>
-//       <use xlink:href={finalIcon} />
-//     </svg>
-//   )
-// }
-
+/**
+ * @component Icon
+ * @description Renders a component for Iconoir icons.
+ * @description To target the icon target the :before pseudo-element.
+ * @example <Icon i="home" class="before:text-red-500" />
+ * @param {IconNames} props.i - The name of the icon.
+ * @returns {JSX.Element} The rendered icon component.
+ * @link https://iconoir.com/
+ */
 function Icon({ i, ...props }: IconProps): JSX.Element {
   const { class: className, ...rest } = props
 
