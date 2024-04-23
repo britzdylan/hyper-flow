@@ -90,7 +90,7 @@ function AccordionTrigger({
   }
 
   const sharedIconProps = {
-    'class': 'h-4 w-4 shrink-0 transition-transform duration-200',
+    'class': 'h-4 w-4 shrink-0 transition-transform duration-200 data-[show=true]:rotate-180',
     'aria-hidden': true,
   }
 
@@ -113,7 +113,9 @@ function AccordionTrigger({
 
         <span
           {...sharedIconProps}
-          x-bind:class="{ 'rotate-180': activeAccordion === $id('accordion') }"
+          attrs={{
+            'x-bind:data-show': "activeAccordion==$id('accordion')",
+          }}
         >
           <Icon />
         </span>
@@ -132,7 +134,12 @@ function AccordionTrigger({
     >
       {children}
 
-      <span {...sharedIconProps} x-bind:class="{ 'rotate-180': isOpen }">
+      <span
+        {...sharedIconProps}
+        attrs={{
+          'x-bind:data-show': 'isOpen',
+        }}
+      >
         <Icon />
       </span>
     </button>
@@ -230,14 +237,14 @@ function AccordionDemo() {
   return (
     <Accordion type="single" activeAccordion="accordion-1">
       <AccordionItem active>
-        <AccordionTrigger icon="home">Home</AccordionTrigger>
+        <AccordionTrigger icon="nav-arrow-down">Home</AccordionTrigger>
         <AccordionContent>
           <p>Home content</p>
         </AccordionContent>
       </AccordionItem>
 
       <AccordionItem>
-        <AccordionTrigger icon="settings">Settings</AccordionTrigger>
+        <AccordionTrigger icon="nav-arrow-down">Settings</AccordionTrigger>
         <AccordionContent>
           <p>Settings content</p>
         </AccordionContent>
@@ -250,7 +257,7 @@ function AccordionSelfDemo() {
   return (
     <Accordion type="multiple">
       <AccordionItem self active>
-        <AccordionTrigger self icon="home">
+        <AccordionTrigger self icon="nav-arrow-down">
           Home
         </AccordionTrigger>
         <AccordionContent self>
@@ -259,7 +266,7 @@ function AccordionSelfDemo() {
       </AccordionItem>
 
       <AccordionItem self>
-        <AccordionTrigger self icon="settings">
+        <AccordionTrigger self icon="nav-arrow-down">
           Settings
         </AccordionTrigger>
         <AccordionContent self>
