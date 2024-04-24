@@ -9,6 +9,7 @@ import {
   AccordionDemo,
   AccordionSelfDemo,
   TextArea,
+  AlertDialogDemo,
 } from '#components'
 
 export default function Home() {
@@ -32,6 +33,7 @@ export default function Home() {
           <TextArea disabled />
           <AccordionDemo />
           <AccordionSelfDemo />
+          <AlertDialogDemo />
         </div>
       </div>
     </div>
