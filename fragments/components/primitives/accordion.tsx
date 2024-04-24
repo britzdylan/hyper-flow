@@ -164,10 +164,6 @@ interface AccordionItemProps extends JsxElementProps {
 function AccordionItem({ children, ...props }: PropsWithChildren<AccordionItemProps>): JSX.Element {
   const { self = false, active = false, class: className } = props
 
-  if (!Boolean(self) && !Boolean(active)) {
-    throw new Error('Prop: "self" must be of type "boolean"')
-  }
-
   const sharedProps = {
     'class': cn('border-b', className),
     'x-id': "['accordion']",
