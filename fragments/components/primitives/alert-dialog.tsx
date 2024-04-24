@@ -7,11 +7,12 @@ interface AlertDialogProps extends JsxElementProps {
 }
 
 /**
- * Renders an alert dialog component.
- *
- * @param {AlertDialogProps} props - The props for the AlertDialog component.
+ * @component AlertDialog (Required)
+ * @requires children: [trigger, content] - The trigger and content elements for the AlertDialog, expects exactly two children.
  * @returns {JSX.Element} The rendered AlertDialog component.
- * @throws {Error} If the AlertDialog component does not have exactly two children.
+ *
+ * @description This is the main root element for the AlertDialog.
+ * @example  <AlertDialog>...</AlertDialog>
  */
 function AlertDialog({ children: [trigger, content], ...props }: AlertDialogProps): JSX.Element {
   const { class: className, ...rest } = props
@@ -39,38 +40,41 @@ function AlertDialog({ children: [trigger, content], ...props }: AlertDialogProp
 }
 
 /**
- * Renders an action element for the AlertDialog component.
+ * @component AlertDialogAction (Required)
+ * @requires children - Any element that will be used as the action button.
+ * @returns {JSX.Element} The rendered AlertDialogAction component.
  *
- * @param {PropsWithChildren} props - The component props.
- * @returns {JSX.Element} The rendered action element.
+ * @description  This is the action element for the AlertDialog, and is responsible for handling the action when the user clicks on it.
+ * @example  <AlertDialogAction>...</AlertDialogAction>
  */
 function AlertDialogAction({ children }: PropsWithChildren): JSX.Element {
   return <span x-on:click="open=!open">{children}</span>
 }
 
 /**
- * Renders a cancel button for the alert dialog.
+ * @component AlertDialogCancel (Required)
+ * @requires children - Any element that will be used as the cancel button.
+ * @returns {JSX.Element} The rendered AlertDialogCancel component.
  *
- * @param children - The content to be displayed inside the cancel button.
- * @returns The JSX element representing the cancel button.
+ * @description   This is the cancel element for the AlertDialog, and is responsible for closing the AlertDialog when the user clicks on it.
+ * @example  <AlertDialogCancel>...</AlertDialogCancel>
  */
 function AlertDialogCancel({ children }: PropsWithChildren): JSX.Element {
   return <span x-on:click="open=!open">{children}</span>
 }
 
-interface AlertDialogContentProps extends JsxElementProps {}
-
 /**
- * Renders the content of an alert dialog.
- *
- * @component
- * @param {PropsWithChildren<AlertDialogContentProps>} props - The props for the AlertDialogContent component.
+ * @component AlertDialogContent (Required)
+ * @requires children - <AlertDialogHeader>, <AlertDialogDescription>, <AlertDialogFooter>
  * @returns {JSX.Element} The rendered AlertDialogContent component.
+ *
+ * @description This is the content element for the AlertDialog, and is responsible for displaying the content of the AlertDialog.
+ * @example  <AlertDialogContent>...</AlertDialogContent>
  */
 function AlertDialogContent({
   children,
   ...props
-}: PropsWithChildren<AlertDialogContentProps>): JSX.Element {
+}: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
     <div
@@ -91,51 +95,42 @@ function AlertDialogContent({
   )
 }
 
-interface AlertDialogDescriptionProps extends JsxElementProps {}
-
 /**
- * Renders the description for an alert dialog.
+ * @component AlertDialogDescription (Required)
+ * @requires children - Text content for the description.
+ * @returns {JSX.Element} The rendered AlertDialogDescription component.
  *
- * @component
- * @example
- * ```tsx
- * <AlertDialogDescription>
- *   This is the description for the alert dialog.
- * </AlertDialogDescription>
- * ```
- *
- * @param {PropsWithChildren<AlertDialogDescriptionProps>} props - The component props.
- * @returns {JSX.Element} The rendered component.
+ * @description This is the description element for the AlertDialog, and is responsible for displaying most of the content of the AlertDialog.
+ * @example  <AlertDialogDescription>...</AlertDialogDescription>
  */
 function AlertDialogDescription({
   children,
   ...props
-}: PropsWithChildren<AlertDialogDescriptionProps>): JSX.Element {
+}: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
     <p
       x-bind:id="idDialogDescription"
       class={cn('text-sm text-muted-foreground', className)}
       {...rest}
-      safe
     >
       {children}
     </p>
   )
 }
 
-interface AlertDialogFooterProps extends JsxElementProps {}
-
 /**
- * Renders the footer of an alert dialog.
- *
- * @param {PropsWithChildren<AlertDialogFooterProps>} props - The props for the AlertDialogFooter component.
+ * @component AlertDialogFooter (Required)
+ * @requires children - <AlertDialogAction>, <AlertDialogCancel>
  * @returns {JSX.Element} The rendered AlertDialogFooter component.
+ *
+ * @description This is the footer element for the AlertDialog, and is responsible for displaying the footer content of the AlertDialog.
+ * @example  <AlertDialogFooter>...</AlertDialogFooter>
  */
 function AlertDialogFooter({
   children,
   ...props
-}: PropsWithChildren<AlertDialogFooterProps>): JSX.Element {
+}: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
     <div
@@ -147,18 +142,18 @@ function AlertDialogFooter({
   )
 }
 
-interface AlertDialogHeaderProps extends JsxElementProps {}
-
 /**
- * Renders the header of an alert dialog.
+ * @component AlertDialogHeader (Required)
+ * @requires children - <AlertDialogTitle>
+ * @returns {JSX.Element} The rendered AlertDialogHeader component.
  *
- * @param {PropsWithChildren<AlertDialogHeaderProps>} props - The component props.
- * @returns {JSX.Element} The rendered component.
+ * @description  This is the header element for the AlertDialog, and is responsible for displaying the header content of the AlertDialog.
+ * @example  <AlertDialogHeader>...</AlertDialogHeader>
  */
 function AlertDialogHeader({
   children,
   ...props
-}: PropsWithChildren<AlertDialogHeaderProps>): JSX.Element {
+}: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
 
   return (
@@ -168,46 +163,58 @@ function AlertDialogHeader({
   )
 }
 
-interface AlertDialogTitleProps extends JsxElementProps {}
-
 /**
- * Renders the title of an alert dialog.
+ * @component AlertDialogTitle (Required)
+ * @requires children - Text content for the title.
+ * @returns {JSX.Element} The rendered AlertDialogTitle component.
  *
- * @component
- * @example
- * ```tsx
- * <AlertDialogTitle>This is the title</AlertDialogTitle>
- * ```
+ * @description This is the title element for the AlertDialog, and is responsible for displaying the title of the AlertDialog.
+ * @example  <AlertDialogTitle>...</AlertDialogTitle>
  */
-function AlertDialogTitle({
-  children,
-  ...props
-}: PropsWithChildren<AlertDialogTitleProps>): JSX.Element {
+function AlertDialogTitle({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
-    <h2 x-bind:id="idDialogTitle" class={cn('text-lg font-semibold', className)} {...rest} safe>
+    <h2 x-bind:id="idDialogTitle" class={cn('text-lg font-semibold', className)} {...rest}>
       {children}
     </h2>
   )
 }
 
-interface AlertDialogTriggerProps extends JsxElementProps {}
-
 /**
- * Renders a trigger element for the AlertDialog component.
+ * @component AlertDialogTrigger (Required)
+ * @requires children - Any element that will be used as the trigger.
+ * @returns {JSX.Element} The rendered AlertDialogTrigger component.
  *
- * @param {PropsWithChildren<AlertDialogTriggerProps>} props - The component props.
- * @returns {JSX.Element} The rendered trigger element.
+ * @description This is the trigger element for the AlertDialog, and is responsible for opening the AlertDialog when the user clicks on it.
+ * @example  <AlertDialogTrigger>...</AlertDialogTrigger>
  */
 function AlertDialogTrigger({
   children,
   ...props
-}: PropsWithChildren<AlertDialogTriggerProps>): JSX.Element {
+}: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
     <span x-on:click="open=!open" class={cn('cursor-pointer', className)} {...rest}>
       {children}
     </span>
+  )
+}
+
+function AlertDialogDemo() {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger>Trigger</AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Title</AlertDialogTitle>
+        </AlertDialogHeader>
+        <AlertDialogDescription>Description</AlertDialogDescription>
+        <AlertDialogFooter>
+          <AlertDialogAction>Action</AlertDialogAction>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }
 
@@ -221,4 +228,5 @@ export {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
+  AlertDialogDemo,
 }
