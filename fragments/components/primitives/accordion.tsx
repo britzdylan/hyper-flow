@@ -164,30 +164,30 @@ interface AccordionItemProps extends JsxElementProps {
 function AccordionItem({ children, ...props }: PropsWithChildren<AccordionItemProps>): JSX.Element {
   const { self = false, active = false, class: className } = props
 
-  const dataObj = `{
-    isOpen: ${active},
-    toggleAccordion() {
-      this.isOpen = !this.isOpen
-    },
-  }`
+  if (!Boolean(self) && !Boolean(active)) {
+    throw new Error('Prop: "self" must be of type "boolean"')
+  }
 
   const sharedProps = {
     'class': cn('border-b', className),
     'x-id': "['accordion']",
   }
 
-  switch (self) {
-    case false:
-      return <div {...sharedProps}>{children}</div>
-    case true:
-      return (
-        <div {...sharedProps} x-data={dataObj}>
-          {children}
-        </div>
-      )
-    default:
-      throw new Error('Prop: "self" must be of type "boolean"')
+  if (self) {
+    const dataObj = `{
+      isOpen: ${active},
+      toggleAccordion() {
+        this.isOpen = !this.isOpen
+      },
+    }`
+    return (
+      <div {...sharedProps} x-data={dataObj}>
+        {children}
+      </div>
+    )
   }
+
+  return <div {...sharedProps}>{children}</div>
 }
 
 interface AccordionRootProps extends JsxElementProps {
@@ -206,31 +206,32 @@ interface AccordionRootProps extends JsxElementProps {
  * @example  <Accordion type="single" activeAccordion="accordion-1">...</Accordion>
  */
 function Accordion({ children, ...props }: PropsWithChildren<AccordionRootProps>): JSX.Element {
-  const { type, activeAccordion, class: className } = props
+  const { type = 'single', activeAccordion = '', class: className } = props
+
+  if (type !== 'single' && type !== 'multiple') {
+    throw new Error('Prop: "type" must be either "single" or "multiple"')
+  }
 
   const sharedProps = {
     class: cn('w-full', className),
   }
 
-  const dataObj = `{
-    activeAccordion: '${activeAccordion}',
-    setActiveAccordion(id) {
-      this.activeAccordion = this.activeAccordion == id ? '' : id
-    },
-  }`
-
-  switch (type) {
-    case 'single':
-      return (
-        <div x-data={dataObj} {...sharedProps}>
-          {children}
-        </div>
-      )
-    case 'multiple':
-      return <div {...sharedProps}>{children}</div>
-    default:
-      throw new Error('Prop: "type" must be either "single" or "multiple"')
+  if (type === 'multiple') {
+    return <div {...sharedProps}>{children}</div>
   }
+
+  const dataObj = `{
+      activeAccordion: '${activeAccordion}',
+      setActiveAccordion(id) {
+        this.activeAccordion = this.activeAccordion == id ? '' : id
+      },
+    }`
+
+  return (
+    <div x-data={dataObj} {...sharedProps}>
+      {children}
+    </div>
+  )
 }
 
 function AccordionDemo() {
