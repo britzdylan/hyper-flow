@@ -27,10 +27,12 @@ interface BadgeProps extends VariantProps<typeof badgeVariants>, JsxElementProps
 }
 
 /**
- * Renders a badge component.
+ * @component Badge (Required)
+ * @requires children: - The text content for the Badge.
+ * @returns {JSX.Element} The rendered Badge component.
  *
- * @param {PropsWithChildren<BadgeProps>} props - The props for the badge component.
- * @returns {JSX.Element} The rendered badge component.
+ * @description This is the Badge element for the Badge, and is responsible for displaying the Badge.
+ * @example  <Badge>...</Badge>
  */
 function Badge({ children, ...props }: PropsWithChildren<BadgeProps>): JSX.Element {
   const { variant, class: className } = props
@@ -41,4 +43,15 @@ function Badge({ children, ...props }: PropsWithChildren<BadgeProps>): JSX.Eleme
   )
 }
 
-export { Badge }
+function BadgeDemo() {
+  return (
+    <div class="flex gap-4">
+      <Badge>Default</Badge>
+      <Badge variant="secondary">Secondary</Badge>
+      <Badge variant="destructive">Destructive</Badge>
+      <Badge variant="outline">Outline</Badge>
+    </div>
+  )
+}
+
+export { Badge, BadgeDemo }
