@@ -10,6 +10,10 @@ import {
   AccordionSelfDemo,
   TextArea,
   AlertDialogDemo,
+  AlertDemo,
+  AvatarDemo,
+  BadgeDemo,
+  BreadcrumbDemo,
 } from '#components'
 
 export default function Home() {
@@ -24,6 +28,8 @@ export default function Home() {
         </div>
         <div class="flex flex-col gap-10 w-full justify-center items-center max-w-screen-lg mx-auto">
           <PopoverDemo />
+          <BadgeDemo />
+          <AvatarDemo />
           <ProgressDemo />
           <RadioGroupDemo />
           <SelectDemo />
@@ -34,6 +40,8 @@ export default function Home() {
           <AccordionDemo />
           <AccordionSelfDemo />
           <AlertDialogDemo />
+          <AlertDemo />
+          <BreadcrumbDemo />
         </div>
       </div>
     </div>

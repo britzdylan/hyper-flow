@@ -2,6 +2,14 @@ import { PropsWithChildren } from 'adonisjsx'
 import { cn } from '#fragments/lib/utils'
 import type { JsxElementProps } from '#fragments/lib/types'
 
+/**
+ * @component Breadcrumb (Required)
+ * @requires children: - The Parent element for the Breadcrumb.
+ * @returns {JSX.Element} The rendered Breadcrumb component.
+ *
+ * @description This is the required parent element for the Breadcrumb.
+ * @example  <Breadcrumb>...</Breadcrumb>
+ */
 function Breadcrumb({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
 
@@ -12,6 +20,14 @@ function Breadcrumb({ children, ...props }: PropsWithChildren<JsxElementProps>):
   )
 }
 
+/**
+ * @component BreadcrumbList (Required)
+ * @requires children: - The <BreadcrumbItem /> element for the BreadcrumbList.
+ * @returns {JSX.Element} The rendered BreadcrumbList component. <ol> element.
+ *
+ * @description This is the required child element for the <Breadcrumb />.
+ * @example  <BreadcrumbList>...</BreadcrumbList>
+ */
 function BreadcrumbList({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   const styles =
@@ -23,6 +39,14 @@ function BreadcrumbList({ children, ...props }: PropsWithChildren<JsxElementProp
   )
 }
 
+/**
+ * @component BreadcrumbItem (Required)
+ * @requires children: - any element to be displayed as a BreadcrumbItem.
+ * @returns {JSX.Element} The rendered BreadcrumbItem component. <li> element.
+ *
+ * @description This is the required child element for the <BreadcrumbList />.
+ * @example  <BreadcrumbItem>...</BreadcrumbItem>
+ */
 function BreadcrumbItem({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   const styles = 'inline-flex items-center gap-1.5'
@@ -38,6 +62,16 @@ interface BreadcrumbLinkProps extends JsxElementProps {
   asChild?: boolean
 }
 
+/**
+ * @component BreadcrumbLink (Required)
+ * @param href: - The URL for the BreadcrumbLink.
+ * @param asChild: - The boolean value to a custom element instead of an anchor element.
+ * @requires children: - The text content for the BreadcrumbLink.
+ * @returns {JSX.Element} The rendered BreadcrumbLink component. <a> element.
+ *
+ * @description This is the required child element for the <BreadcrumbItem />.
+ * @example  <BreadcrumbLink>...</BreadcrumbLink>
+ */
 function BreadcrumbLink({
   children,
   ...props
@@ -60,6 +94,14 @@ function BreadcrumbLink({
   )
 }
 
+/**
+ * @component BreadcrumbPage (Required)
+ * @requires children: - The text content for the BreadcrumbPage.
+ * @returns {JSX.Element} The rendered BreadcrumbPage component.
+ *
+ * @description This is the required child element for the <BreadcrumbItem />.
+ * @example  <BreadcrumbPage>...</BreadcrumbPage>
+ */
 function BreadcrumbPage({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   const styles = 'font-normal text-foreground'
@@ -77,19 +119,32 @@ function BreadcrumbPage({ children, ...props }: PropsWithChildren<JsxElementProp
   )
 }
 
+/**
+ * @component BreadcrumbEllipsis (Required)
+ * @returns {JSX.Element} The rendered BreadcrumbEllipsis component.
+ *
+ * @description This is the required child element for the <BreadcrumbList />.
+ * @example  <BreadcrumbEllipsis />
+ */
 function BreadcrumbEllipsis({ ...props }: JsxElementProps): JSX.Element {
   const { class: className, ...rest } = props
   const styles = 'flex h-9 w-9 items-center justify-center'
   return (
     <span role="presentation" aria-hidden="true" class={cn(styles, className)} {...rest}>
-      <svg class="h-4 w-4">
-        <use xlink:href="tabler-sprite.svg#tabler-dots" />
-      </svg>
+      <i class="before:w-4 before:h-4 iconoir-more-horiz"></i>
       <span class="sr-only">More</span>
     </span>
   )
 }
 
+/**
+ * @component BreadcrumbSeparator (Required)
+ * @props children: - The custom element for the BreadcrumbSeparator. Default is an arrow icon.
+ * @returns {JSX.Element} The rendered BreadcrumbSeparator component.
+ *
+ * @description This is the required child element for the <BreadcrumbList />.
+ * @example  <BreadcrumbSeparator />  <BreadcrumbSeparator>...</BreadcrumbSeparator>
+ */
 function BreadcrumbSeparator({
   children,
   ...props
@@ -98,12 +153,28 @@ function BreadcrumbSeparator({
 
   return (
     <li role="presentation" aria-hidden="true" class={cn('[&>svg]:size-3.5', className)} {...rest}>
-      {children ?? (
-        <svg class="h-4 w-4">
-          <use xlink:href="tabler-sprite.svg#tabler-chevron-right" />
-        </svg>
-      )}
+      {children ?? <i class="before:w-4 before:h-4 iconoir-nav-arrow-right"></i>}
     </li>
+  )
+}
+
+function BreadcrumbDemo() {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/about">About</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Team</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
   )
 }
 
@@ -115,4 +186,5 @@ export {
   BreadcrumbPage,
   BreadcrumbEllipsis,
   BreadcrumbSeparator,
+  BreadcrumbDemo,
 }
