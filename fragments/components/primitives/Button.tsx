@@ -35,10 +35,16 @@ interface ButtonProps extends VariantProps<typeof buttonVariants>, JsxElementPro
 }
 
 /**
- * Renders a button component.
+ * @component Button (Required)
+ * @param {variant} props.variant - The variant of the button. Default is 'default'.
+ * @param {size} props.size - The size of the button. Default is 'default'.
+ * @param {asChild} props.asChild - If true, the button will be rendered as a div element. Default is false.
+ * @param {type} props.type - The type of the button. Default is 'button'.
+ * @requires children: - The content to be displayed inside the Button.
+ * @returns {JSX.Element} The rendered Button component.
  *
- * @param {PropsWithChildren<ButtonProps>} props - The props for the button component.
- * @returns {JSX.Element} The rendered button component.
+ * @description The Button component is used to create a clickable button element, with 6 different variants & 4 different sizes.
+ * @example  <Button>...</Button>
  */
 function Button({ children, ...props }: PropsWithChildren<ButtonProps>): JSX.Element {
   const { variant, size, class: className, asChild, ...rest } = props
