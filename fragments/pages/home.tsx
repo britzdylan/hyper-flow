@@ -14,6 +14,7 @@ import {
   AvatarDemo,
   BadgeDemo,
   BreadcrumbDemo,
+  CardDemo,
 } from '#components'
 
 export default function Home() {
@@ -42,6 +43,7 @@ export default function Home() {
           <AlertDialogDemo />
           <AlertDemo />
           <BreadcrumbDemo />
+          <CardDemo />
         </div>
       </div>
     </div>

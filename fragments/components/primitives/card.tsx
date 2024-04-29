@@ -115,4 +115,21 @@ function CardFooter({ children, ...props }: PropsWithChildren<JsxElementProps>):
   )
 }
 
-export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
+function CardDemo() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Card Title</CardTitle>
+        <CardDescription>Card Description</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>Card Content</p>
+      </CardContent>
+      <CardFooter>
+        <p>Card Footer</p>
+      </CardFooter>
+    </Card>
+  )
+}
+
+export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, CardDemo }
