@@ -2,6 +2,13 @@ import { PropsWithChildren } from 'adonisjsx'
 import { cn } from '#fragments/lib/utils'
 import { JsxElementProps } from '#fragments/lib/types'
 
+/**
+ * @component Popover (Required)
+ * @returns {JSX.Element} The rendered Popover component element.
+ *
+ * @description The Popover component is a wrapper for the popover.
+ * @example <Popover>...</Popover>
+ */
 function Popover({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -11,6 +18,13 @@ function Popover({ children, ...props }: PropsWithChildren<JsxElementProps>): JS
   )
 }
 
+/**
+ * @component PopoverTrigger (Required)
+ * @returns {JSX.Element} The rendered PopoverTrigger component element.
+ *
+ * @description The PopoverTrigger component is a trigger for the popover.
+ * @example <PopoverTrigger>...</PopoverTrigger>
+ */
 function PopoverTrigger({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -20,6 +34,13 @@ function PopoverTrigger({ children, ...props }: PropsWithChildren<JsxElementProp
   )
 }
 
+/**
+ * @component PopoverContent (Required)
+ * @returns {JSX.Element} The rendered PopoverContent component element.
+ *
+ * @description The PopoverContent component is a content for the popover.
+ * @example <PopoverContent>...</PopoverContent>
+ */
 function PopoverContent({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
