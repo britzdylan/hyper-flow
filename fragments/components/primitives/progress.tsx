@@ -22,20 +22,15 @@ interface ProgressProps extends JsxElementProps {
  */
 function Progress(props: ProgressProps): JSX.Element {
   const { class: className, value = 0, delay = 500, step = 10, interval = true, ...rest } = props
-
   const progress = `() => ({
     init() {
       this.value = ${value}
     },
     value: 0,
     get progressBar() {
-      return 'transform: translateX(-' + String(100 - this.value) + '%)';
-    },
-    destroy() {
-      clearTimeout(this.timer)
+      return 'transform: translateX(-' + String(100 - this.value) + '%)'
     },
   })`
-
   const progressInterval = `() => ({
     init() {
       this.value = ${value}
@@ -80,7 +75,7 @@ function Progress(props: ProgressProps): JSX.Element {
 function ProgressDemo(): JSX.Element {
   return (
     <>
-      <Progress interval={false} progressClassName="bg-primary" />
+      <Progress value={50} interval={false} progressClassName="bg-primary" />
     </>
   )
 }
