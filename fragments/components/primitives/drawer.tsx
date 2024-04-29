@@ -7,11 +7,11 @@ interface DrawerProps extends JsxElementProps {
 }
 
 /**
- * Renders an  dialog component.
- *
- * @param {DrawerProps} props - The props for the Drawer component.
+ * @component Drawer (Required)
  * @returns {JSX.Element} The rendered Drawer component.
- * @throws {Error} If the Drawer component does not have exactly two children.
+ *
+ * @description The Drawer component is used to create a drawer with a trigger and content, requiring two children to be passed in the order of [trigger, content].
+ * @example  <Drawer>...</Drawer>
  */
 function Drawer({ children: [trigger, content], ...props }: DrawerProps): JSX.Element {
   const { class: className, ...rest } = props
@@ -47,16 +47,14 @@ function Drawer({ children: [trigger, content], ...props }: DrawerProps): JSX.El
   }
 }
 
-interface DrawerContentProps extends JsxElementProps {}
-
 /**
- * Renders the content of an  dialog.
- *
- * @component
- * @param {PropsWithChildren<DrawerContentProps>} props - The props for the DrawerContent component.
+ * @component DrawerContent (Required)
  * @returns {JSX.Element} The rendered DrawerContent component.
+ *
+ * @description The DrawerContent component is used to create the content for the Drawer component.
+ * @example  <DrawerContent>...</DrawerContent>
  */
-function DrawerContent({ children, ...props }: PropsWithChildren<DrawerContentProps>): JSX.Element {
+function DrawerContent({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
     <div
@@ -83,18 +81,11 @@ function DrawerContent({ children, ...props }: PropsWithChildren<DrawerContentPr
 interface DrawerDescriptionProps extends JsxElementProps {}
 
 /**
- * Renders the description for an  dialog.
+ * @component DrawerDescription (Required)
+ * @returns {JSX.Element} The rendered DrawerDescription component (p).
  *
- * @component
- * @example
- * ```tsx
- * <DrawerDescription>
- *   This is the description for the  dialog.
- * </DrawerDescription>
- * ```
- *
- * @param {PropsWithChildren<DrawerDescriptionProps>} props - The component props.
- * @returns {JSX.Element} The rendered component.
+ * @description The DrawerDescription component is used to create a description for the Drawer component, usually nested within the DrawerContent component.
+ * @example  <DrawerDescription>...</DrawerDescription>
  */
 function DrawerDescription({
   children,
@@ -113,15 +104,14 @@ function DrawerDescription({
   )
 }
 
-interface DrawerFooterProps extends JsxElementProps {}
-
 /**
- * Renders the footer of an  dialog.
- *
- * @param {PropsWithChildren<DrawerFooterProps>} props - The props for the DrawerFooter component.
+ * @component DrawerFooter (Required)
  * @returns {JSX.Element} The rendered DrawerFooter component.
+ *
+ * @description The DrawerFooter component is used to create a footer for the Drawer component, usually nested within the DrawerContent component.
+ * @example  <DrawerFooter>...</DrawerFooter>
  */
-function DrawerFooter({ children, ...props }: PropsWithChildren<DrawerFooterProps>): JSX.Element {
+function DrawerFooter({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
     <div class={cn('mt-auto flex flex-col gap-2 p-4', className)} {...rest}>
@@ -130,15 +120,14 @@ function DrawerFooter({ children, ...props }: PropsWithChildren<DrawerFooterProp
   )
 }
 
-interface DrawerHeaderProps extends JsxElementProps {}
-
 /**
- * Renders the header of an  dialog.
+ * @component DrawerHeader (Required)
+ * @returns {JSX.Element} The rendered DrawerHeader component.
  *
- * @param {PropsWithChildren<DrawerHeaderProps>} props - The component props.
- * @returns {JSX.Element} The rendered component.
+ * @description The DrawerHeader component is used to create a header for the Drawer component, usually nested within the DrawerContent component.
+ * @example  <DrawerHeader>...</DrawerHeader>
  */
-function DrawerHeader({ children, ...props }: PropsWithChildren<DrawerHeaderProps>): JSX.Element {
+function DrawerHeader({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
 
   return (
@@ -148,18 +137,14 @@ function DrawerHeader({ children, ...props }: PropsWithChildren<DrawerHeaderProp
   )
 }
 
-interface DrawerTitleProps extends JsxElementProps {}
-
 /**
- * Renders the title of an  dialog.
+ * @component DrawerTitle (Required)
+ * @returns {JSX.Element} The rendered DrawerTitle component (h2).
  *
- * @component
- * @example
- * ```tsx
- * <DrawerTitle>This is the title</DrawerTitle>
- * ```
+ * @description The DrawerTitle component is used to create a title for the Drawer component, usually nested within the DrawerHeader component.
+ * @example  <DrawerTitle>...</DrawerTitle>
  */
-function DrawerTitle({ children, ...props }: PropsWithChildren<DrawerTitleProps>): JSX.Element {
+function DrawerTitle({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
     <h2
@@ -173,15 +158,14 @@ function DrawerTitle({ children, ...props }: PropsWithChildren<DrawerTitleProps>
   )
 }
 
-interface DrawerTriggerProps extends JsxElementProps {}
-
 /**
- * Renders a trigger element for the Drawer component.
+ * @component DrawerTrigger (Required)
+ * @returns {JSX.Element} The rendered DrawerTrigger component.
  *
- * @param {PropsWithChildren<DrawerTriggerProps>} props - The component props.
- * @returns {JSX.Element} The rendered trigger element.
+ * @description The DrawerTrigger component is used to create a trigger for the Drawer component.
+ * @example  <DrawerTrigger>...</DrawerTrigger>
  */
-function DrawerTrigger({ children, ...props }: PropsWithChildren<DrawerTriggerProps>): JSX.Element {
+function DrawerTrigger({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
     <span x-on:click="open=!open" class={cn('cursor-pointer', className)} {...rest}>
@@ -190,8 +174,35 @@ function DrawerTrigger({ children, ...props }: PropsWithChildren<DrawerTriggerPr
   )
 }
 
+/**
+ * @component DrawerClose (Required)
+ * @returns {JSX.Element} The rendered DrawerClose component.
+ *
+ * @description The DrawerClose component is used to create a close icon for the Drawer component, usually nested within the DrawerHeader component.
+ * @example  <DrawerClose>...</DrawerClose>
+ */
 function DrawerClose({ children }: PropsWithChildren): JSX.Element {
   return <span x-on:click="open=!open">{children}</span>
+}
+
+function DrawerDemo() {
+  return (
+    <Drawer>
+      <DrawerTrigger>
+        <button>Open Drawer</button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Drawer Title</DrawerTitle>
+          <DrawerClose>Close</DrawerClose>
+        </DrawerHeader>
+        <DrawerDescription>Drawer Description</DrawerDescription>
+        <DrawerFooter>
+          <button>Save</button>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  )
 }
 export {
   Drawer,
@@ -202,4 +213,5 @@ export {
   DrawerTitle,
   DrawerTrigger,
   DrawerClose,
+  DrawerDemo
 }
