@@ -20,6 +20,7 @@ import {
   DrawerDemo,
   MenubarDemo,
   NavigationMenuDemo,
+  PaginationDemo
 } from '#components'
 
 export default function Home() {
@@ -34,6 +35,7 @@ export default function Home() {
         </div>
         <div class="flex flex-col gap-10 w-full justify-center items-center max-w-screen-lg mx-auto">
           <PopoverDemo />
+          <PaginationDemo />
           <NavigationMenuDemo />
           <MenubarDemo />
           <DrawerDemo />

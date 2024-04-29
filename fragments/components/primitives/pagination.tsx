@@ -4,6 +4,13 @@ import { JsxElementProps } from '#fragments/lib/types'
 import { buttonVariants } from '#components'
 import { Icon } from '#components'
 
+/**
+ * @component Pagination (Required)
+ * @returns {JSX.Element} The rendered Pagination component element.
+ *
+ * @description The Pagination component is a wrapper for the pagination component.
+ * @example <Pagination>...</Pagination>
+ */
 function Pagination({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -18,6 +25,13 @@ function Pagination({ children, ...props }: PropsWithChildren<JsxElementProps>):
   )
 }
 
+/**
+ * @component PaginationContent (Required)
+ * @returns {JSX.Element} The rendered PaginationContent component element.
+ *
+ * @description The PaginationContent component is a wrapper for the pagination content.
+ * @example <PaginationContent>...</PaginationContent>
+ */
 function PaginationContent({
   children,
   ...props
@@ -30,6 +44,13 @@ function PaginationContent({
   )
 }
 
+/**
+ * @component PaginationItem (Required)
+ * @returns {JSX.Element} The rendered PaginationItem component element.
+ *
+ * @description The PaginationItem component is a wrapper for the pagination item.
+ * @example <PaginationItem>...</PaginationItem>
+ */
 function PaginationItem({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -45,6 +66,16 @@ interface PaginationLinkProps extends JsxElementProps {
   size?: 'icon' | 'default' | 'sm' | 'lg' | null | undefined
 }
 
+/**
+ * @component PaginationLink (Required)
+ * @prop {string} href The href attribute for the pagination link.
+ * @prop {boolean} active The active state of the pagination link.
+ * @prop {string} size The size of the pagination link.
+ * @returns {JSX.Element} The rendered PaginationLink component element.
+ *
+ * @description The PaginationLink component is a link for the pagination.
+ * @example <PaginationLink>...</PaginationLink>
+ */
 function PaginationLink({
   children,
   ...props
@@ -72,6 +103,14 @@ interface PaginationPreviousNextProps extends JsxElementProps {
   href: string
 }
 
+/**
+ * @component PaginationPrevious (Required)
+ * @prop {string} href The href attribute for the previous pagination link.
+ * @returns {JSX.Element} The rendered PaginationPrevious component element.
+ *
+ * @description The PaginationPrevious component is a link for the previous pagination.
+ * @example <PaginationPrevious>...</PaginationPrevious>
+ */
 function PaginationPrevious({
   children,
   ...props
@@ -91,6 +130,14 @@ function PaginationPrevious({
   )
 }
 
+/**
+ * @component PaginationNext (Required)
+ * @prop {string} href The href attribute for the next pagination link.
+ * @returns {JSX.Element} The rendered PaginationNext component element.
+ *
+ * @description The PaginationNext component is a link for the next pagination.
+ * @example <PaginationNext>...</PaginationNext>
+ */
 function PaginationNext({
   children,
   ...props
@@ -110,14 +157,50 @@ function PaginationNext({
   )
 }
 
+/**
+ * @component PaginationEllipsis (Required)
+ * @returns {JSX.Element} The rendered PaginationEllipsis component element.
+ *
+ * @description The PaginationEllipsis component is a wrapper for the pagination ellipsis.
+ * @example <PaginationEllipsis>...</PaginationEllipsis>
+ */
 function PaginationEllipsis({ ...props }: JsxElementProps): JSX.Element {
   const { class: className, ...rest } = props
 
   return (
     <span aria-hidden class={cn('flex h-9 w-9 items-center justify-center', className)} {...rest}>
-      <Icon i="dots" class="h-4 w-4" />
+      <Icon i="more-horiz" class="h-4 w-4" />
       <span class="sr-only">More pages</span>
     </span>
+  )
+}
+
+function PaginationDemo() {
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious href="#" />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">1</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#" active>
+            2
+          </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">3</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationEllipsis />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext href="#" />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   )
 }
 
@@ -129,4 +212,5 @@ export {
   PaginationPrevious,
   PaginationNext,
   PaginationEllipsis,
+  PaginationDemo
 }
