@@ -4,7 +4,6 @@ import { JsxElementProps } from '#fragments/lib/types'
 import { Icon } from '#components'
 
 const selectData = () => ({
-  init() {},
   value: '',
   open: false,
   setSelected(value: string) {
@@ -16,15 +15,39 @@ const selectData = () => ({
   },
 })
 
-function Select({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
-  const { class: className, ...rest } = props
+interface SelectProps extends JsxElementProps {
+  selected?: string
+}
+
+/**
+ * @component Select (Required)
+ * @prop {string} selected The selected value of the Select.
+ * @returns {JSX.Element} The rendered Select component element.
+ *
+ * @description The Select component container element.
+ * @example <Select>...</Select>
+ */
+function Select({ children, ...props }: PropsWithChildren<SelectProps>): JSX.Element {
+  const { class: className, selected = '', ...rest } = props
   return (
-    <div x-data={`${selectData}`} class={cn('relative w-full', className)} {...rest}>
+    <div
+      x-data={`${selectData}`}
+      x-init={`setSelected(${selected})`}
+      class={cn('relative w-full', className)}
+      {...rest}
+    >
       {children}
     </div>
   )
 }
 
+/**
+ * @component SelectTrigger (Required)
+ * @returns {JSX.Element} The rendered SelectTrigger component element.
+ *
+ * @description The SelectTrigger component is the trigger of the Select.
+ * @example <SelectTrigger>...</SelectTrigger>
+ */
 function SelectTrigger({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -44,6 +67,13 @@ function SelectTrigger({ children, ...props }: PropsWithChildren<JsxElementProps
   )
 }
 
+/**
+ * @component SelectContent (Required)
+ * @returns {JSX.Element} The rendered SelectContent component element.
+ *
+ * @description The SelectContent component is the content of the Select.
+ * @example <SelectContent>...</SelectContent>
+ */
 function SelectContent({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -61,6 +91,13 @@ function SelectContent({ children, ...props }: PropsWithChildren<JsxElementProps
   )
 }
 
+/**
+ * @component SelectGroup (Required)
+ * @returns {JSX.Element} The rendered SelectGroup component element.
+ *
+ * @description The SelectGroup component is a group of SelectItems.
+ * @example <SelectGroup>...</SelectGroup>
+ */
 function SelectGroup({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -70,6 +107,13 @@ function SelectGroup({ children, ...props }: PropsWithChildren<JsxElementProps>)
   )
 }
 
+/**
+ * @component SelectLabel (Required)
+ * @returns {JSX.Element} The rendered SelectLabel component element.
+ *
+ * @description The SelectLabel component is a label for a group of SelectItems.
+ * @example <SelectLabel>...</SelectLabel>
+ */
 function SelectLabel({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -84,6 +128,15 @@ interface SelectItemProps extends JsxElementProps {
   disabled?: boolean
 }
 
+/**
+ * @component SelectItem (Required)
+ * @prop {string} value The value of the SelectItem.
+ * @prop {boolean} disabled Set to true to disable the SelectItem.
+ * @returns {JSX.Element} The rendered SelectItem component element.
+ *
+ * @description The SelectItem component is a selectable item.
+ * @example <SelectItem value="1">Option 1</SelectItem>
+ */
 function SelectItem({ children, ...props }: PropsWithChildren<SelectItemProps>): JSX.Element {
   const { class: className, disabled = false, value, ...rest } = props
   return (
@@ -98,7 +151,7 @@ function SelectItem({ children, ...props }: PropsWithChildren<SelectItemProps>):
       )}
       {...rest}
     >
-      <Icon x-show={`value === '${value}'`} i="check" class="absolute left-0 w-4 h-4 ml-2" />
+      <Icon x-show={`value == '${value}'`} i="check" class="absolute left-0 w-4 h-4 ml-2" />
       {children}
     </li>
   )
@@ -106,7 +159,7 @@ function SelectItem({ children, ...props }: PropsWithChildren<SelectItemProps>):
 
 function SelectDemo() {
   return (
-    <Select>
+    <Select selected="1">
       <SelectTrigger>Choose an option</SelectTrigger>
       <SelectContent>
         <SelectGroup>
