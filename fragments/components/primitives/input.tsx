@@ -22,6 +22,16 @@ interface InputProps extends JsxElementProps {
   placeholder: string
   type?: TInputType
 }
+
+/**
+ * @component Input (Required)
+ * @param {placeholder} props.placeholder - The placeholder text for the input.
+ * @param {type} props.type - The type of input. Default is 'text'.
+ * @returns {JSX.Element} The rendered Input component.
+ *
+ * @description The Input component is used to create an input element.
+ * @example  <Input placeholder="Enter your name" />
+ */
 function Input({ children, ...props }: PropsWithChildren<InputProps>): JSX.Element {
   const { class: className, type = 'text', placeholder, ...rest } = props
   return (
