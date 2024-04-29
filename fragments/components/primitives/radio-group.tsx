@@ -2,6 +2,16 @@ import { PropsWithChildren } from 'adonisjsx'
 import { cn } from '#fragments/lib/utils'
 import { JsxElementProps } from '#fragments/lib/types'
 
+const radioGroupData = () => ({
+  value: '',
+  setValue(value: string) {
+    this.value = value
+  },
+  getValue() {
+    return this.value
+  },
+})
+
 interface RadioGroupProps extends JsxElementProps {
   defaultValue: string
 }
@@ -17,21 +27,10 @@ interface RadioGroupProps extends JsxElementProps {
 function RadioGroup({ children, ...props }: PropsWithChildren<RadioGroupProps>): JSX.Element {
   const { class: className, defaultValue, ...rest } = props
 
-  const radioGroup = `() => ({
-    init() {
-      this.value = '${defaultValue}'
-    },
-    value: '',
-    setValue(value) {
-      this.value = value
-    },
-    getValue() {
-      return this.value
-    },
-  })`
   return (
     <div
-      x-data={radioGroup}
+      x-data={`${radioGroupData}`}
+      x-init={`setValue('${defaultValue}')`}
       role="radiogroup"
       dir="ltr"
       tabindex={0}
