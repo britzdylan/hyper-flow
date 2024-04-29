@@ -1,6 +1,40 @@
 import { cn } from '#fragments/lib/utils'
 import { JsxElementProps } from '#fragments/lib/types'
 
+const simpleProgress = () => ({
+  value: 0,
+  get progressBar() {
+    return `transform: translateX(-${String(100 - this.value)}%)`
+  },
+  setup(value: number) {
+    this.value = value
+  },
+})
+
+const progressInterval = () => ({
+  setup(value: number, step: number, delay: number) {
+    this.value = value
+
+    // @ts-ignore
+    this.timer = setInterval(() => {
+      this.value += step
+      if (this.value >= 100) {
+        // @ts-ignore
+        clearInterval(this.timer)
+      }
+    }, delay)
+  },
+  timer: null,
+  value: 0,
+  get progressBar() {
+    return `transform: translateX(-${100 - this.value}%)`
+  },
+  destroy() {
+    // @ts-ignore
+    clearInterval(this.timer)
+  },
+})
+
 interface ProgressProps extends JsxElementProps {
   value?: number
   step?: number
@@ -22,39 +56,11 @@ interface ProgressProps extends JsxElementProps {
  */
 function Progress(props: ProgressProps): JSX.Element {
   const { class: className, value = 0, delay = 500, step = 10, interval = true, ...rest } = props
-  const progress = `() => ({
-    init() {
-      this.value = ${value}
-    },
-    value: 0,
-    get progressBar() {
-      return 'transform: translateX(-' + String(100 - this.value) + '%)'
-    },
-  })`
-  const progressInterval = `() => ({
-    init() {
-      this.value = ${value}
-
-      this.timer = setInterval(() => {
-        this.value += ${step}
-        if (this.value >= 100) {
-          clearInterval(this.timer)
-        }
-      }, ${delay})
-    },
-    timer: null,
-    value: 0,
-    get progressBar() {
-      return 'transform: translateX(-' + String(100 - this.value) + '%)';
-    },
-    destroy() {
-      clearInterval(this.timer)
-    },
-  })`
 
   return (
     <div
-      x-data={interval ? progressInterval : progress}
+      x-data={interval ? `${progressInterval}` : `${simpleProgress}`}
+      x-init={`setup(${value}, ${step}, ${delay})`}
       aria-valuemax="100"
       aria-valuemin="0"
       role="progressbar"
@@ -63,7 +69,7 @@ function Progress(props: ProgressProps): JSX.Element {
     >
       <div
         style={{
-          transform: 'translateX(-100%)',
+          transform: `translateX(-${100 - value}%)`,
         }}
         class={cn('h-full w-full flex-1 bg-primary transition-all', props.progressClassName)}
         x-bind:style="progressBar"
@@ -75,7 +81,7 @@ function Progress(props: ProgressProps): JSX.Element {
 function ProgressDemo(): JSX.Element {
   return (
     <>
-      <Progress value={50} interval={false} progressClassName="bg-primary" />
+      <Progress value={50} interval={true} progressClassName="bg-primary" />
     </>
   )
 }
