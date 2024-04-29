@@ -6,6 +6,15 @@ export default class UsersController {
    * Display a list of resource
    */
   async index({ jsx }: HttpContext) {
-    return jsx(Home)
+    const start = performance.now()
+
+    const returnValue = await jsx(Home)
+    const end = performance.now()
+    const used = process.memoryUsage().heapUsed / 1024 / 1024
+
+    console.log(
+      `Code executed in ${((end - start) / 1000).toFixed(5)} seconds. & Memory used: ${(used / 1024).toFixed(2)} KB.`
+    )
+    return returnValue
   }
 }
