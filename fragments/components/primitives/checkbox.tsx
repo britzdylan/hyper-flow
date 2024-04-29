@@ -50,6 +50,16 @@ function CheckboxRoot({ ...props }: PropsWithChildren<CheckboxRootProps>): JSX.E
 
 interface CheckBoxProps extends JsxElementProps, CheckboxRootProps {}
 
+/**
+ * @component CheckBox (Required)
+ * @param {checked} props.checked - The checked state of the checkbox. Default is false.
+ * @param {value} props.value - The value of the checkbox. Default is 'on'.
+ * @param {id} props.id - The id of the checkbox.
+ * @returns {JSX.Element} The rendered CheckBox component.
+ *
+ * @description The CheckBox component is used to create a clickable checkbox element.
+ * @example  <CheckBox id="checkbox">...</CheckBox>
+ */
 function CheckBox({ ...props }: PropsWithChildren<CheckBoxProps>): JSX.Element {
   const { id, checked = false, value = 'on' } = props
 
