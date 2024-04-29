@@ -6,6 +6,13 @@ interface CollapsibleProps extends JsxElementProps {
   defaultOpen?: boolean
 }
 
+/**
+ * @component Collapsible (Required)
+ * @returns {JSX.Element} The rendered Collapsible component.
+ *
+ * @description The Collapsible component is used to create a collapsible container.
+ * @example  <Collapsible>...</Collapsible>
+ */
 function Collapsible({ children, ...props }: PropsWithChildren<CollapsibleProps>): JSX.Element {
   const { class: className, defaultOpen = true, ...rest } = props
 
@@ -16,6 +23,13 @@ function Collapsible({ children, ...props }: PropsWithChildren<CollapsibleProps>
   )
 }
 
+/**
+ * @component CollapsibleTrigger (Required)
+ * @returns {JSX.Element} The rendered CollapsibleTrigger component.
+ *
+ * @description The CollapsibleTrigger component is used to create a clickable trigger for the CollapsibleContent component.
+ * @example  <CollapsibleTrigger>...</CollapsibleTrigger>
+ */
 function CollapsibleTrigger({
   children,
   ...props
@@ -33,6 +47,13 @@ function CollapsibleTrigger({
   )
 }
 
+/**
+ * @component CollapsibleContent (Required)
+ * @returns {JSX.Element} The rendered CollapsibleContent component.
+ *
+ * @description The CollapsibleContent component is used to wrap content that will be collapsible.
+ * @example  <CollapsibleContent>...</CollapsibleContent>
+ */
 function CollapsibleContent({
   children,
   ...props
@@ -45,4 +66,13 @@ function CollapsibleContent({
   )
 }
 
-export { Collapsible, CollapsibleTrigger, CollapsibleContent }
+function CollapsibleDemo() {
+  return (
+    <Collapsible>
+      <CollapsibleTrigger>Click me</CollapsibleTrigger>
+      <CollapsibleContent>Content</CollapsibleContent>
+    </Collapsible>
+  )
+}
+
+export { Collapsible, CollapsibleTrigger, CollapsibleContent, CollapsibleDemo }

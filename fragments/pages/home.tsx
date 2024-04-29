@@ -15,6 +15,7 @@ import {
   BadgeDemo,
   BreadcrumbDemo,
   CardDemo,
+  CollapsibleDemo,
 } from '#components'
 
 export default function Home() {
@@ -44,6 +45,7 @@ export default function Home() {
           <AlertDemo />
           <BreadcrumbDemo />
           <CardDemo />
+          <CollapsibleDemo />
         </div>
       </div>
     </div>
