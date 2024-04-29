@@ -6,6 +6,14 @@ interface LabelProps extends JsxElementProps {
   for: string
 }
 
+/**
+ * @component Label (Required)
+ * @param {for} props.for - The id of the element that the label is for.
+ * @returns {JSX.Element} The rendered Label component.
+ *
+ * @description The Label component is used to create a label element.
+ * @example  <Label for="name">Name</Label>
+ */
 function Label({ children, ...props }: PropsWithChildren<LabelProps>): JSX.Element {
   const { for: htmlFor, class: className, ...rest } = props
   return (
