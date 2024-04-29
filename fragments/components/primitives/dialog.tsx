@@ -8,11 +8,11 @@ interface DialogProps extends JsxElementProps {
 }
 
 /**
- * Renders an  dialog component.
- *
- * @param {DialogProps} props - The props for the Dialog component.
+ * @component Dialog (Required)
  * @returns {JSX.Element} The rendered Dialog component.
- * @throws {Error} If the Dialog component does not have exactly two children.
+ *
+ * @description The Dialog component is used to create a dialog with a trigger and content, requiring two children to be passed in the order of [trigger, content].
+ * @example  <Dialog>...</Dialog>
  */
 function Dialog({ children: [trigger, content], ...props }: DialogProps): JSX.Element {
   const { class: className, ...rest } = props
@@ -45,16 +45,14 @@ function Dialog({ children: [trigger, content], ...props }: DialogProps): JSX.El
   }
 }
 
-interface DialogContentProps extends JsxElementProps {}
-
 /**
- * Renders the content of an  dialog.
- *
- * @component
- * @param {PropsWithChildren<DialogContentProps>} props - The props for the DialogContent component.
+ * @component DialogContent (Required)
  * @returns {JSX.Element} The rendered DialogContent component.
+ *
+ * @description The DialogContent component is used to create the content for the Dialog component.
+ * @example  <DialogContent>...</DialogContent>
  */
-function DialogContent({ children, ...props }: PropsWithChildren<DialogContentProps>): JSX.Element {
+function DialogContent({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
     <div
@@ -76,26 +74,17 @@ function DialogContent({ children, ...props }: PropsWithChildren<DialogContentPr
   )
 }
 
-interface DialogDescriptionProps extends JsxElementProps {}
-
 /**
- * Renders the description for an  dialog.
+ * @component DialogDescription (Required)
+ * @returns {JSX.Element} The rendered DialogDescription component (p).
  *
- * @component
- * @example
- * ```tsx
- * <DialogDescription>
- *   This is the description for the  dialog.
- * </DialogDescription>
- * ```
- *
- * @param {PropsWithChildren<DialogDescriptionProps>} props - The component props.
- * @returns {JSX.Element} The rendered component.
+ * @description The DialogDescription component is used to create a description for the Dialog component.
+ * @example  <DialogDescription>...</DialogDescription>
  */
 function DialogDescription({
   children,
   ...props
-}: PropsWithChildren<DialogDescriptionProps>): JSX.Element {
+}: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
     <p
@@ -109,15 +98,14 @@ function DialogDescription({
   )
 }
 
-interface DialogFooterProps extends JsxElementProps {}
-
 /**
- * Renders the footer of an  dialog.
- *
- * @param {PropsWithChildren<DialogFooterProps>} props - The props for the DialogFooter component.
+ * @component DialogFooter (Required)
  * @returns {JSX.Element} The rendered DialogFooter component.
+ *
+ * @description The DialogFooter component is used to create a footer for the Dialog component.
+ * @example  <DialogFooter>...</DialogFooter>
  */
-function DialogFooter({ children, ...props }: PropsWithChildren<DialogFooterProps>): JSX.Element {
+function DialogFooter({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
     <div
@@ -129,15 +117,14 @@ function DialogFooter({ children, ...props }: PropsWithChildren<DialogFooterProp
   )
 }
 
-interface DialogHeaderProps extends JsxElementProps {}
-
 /**
- * Renders the header of an  dialog.
+ * @component DialogHeader (Required)
+ * @returns {JSX.Element} The rendered DialogHeader component.
  *
- * @param {PropsWithChildren<DialogHeaderProps>} props - The component props.
- * @returns {JSX.Element} The rendered component.
+ * @description The DialogHeader component is used to create a header for the Dialog component.
+ * @example  <DialogHeader>...</DialogHeader>
  */
-function DialogHeader({ children, ...props }: PropsWithChildren<DialogHeaderProps>): JSX.Element {
+function DialogHeader({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
 
   return (
@@ -152,18 +139,14 @@ function DialogHeader({ children, ...props }: PropsWithChildren<DialogHeaderProp
   )
 }
 
-interface DialogTitleProps extends JsxElementProps {}
-
 /**
- * Renders the title of an  dialog.
+ * @component DialogTitle (Required)
+ * @returns {JSX.Element} The rendered DialogTitle component (h2).
  *
- * @component
- * @example
- * ```tsx
- * <DialogTitle>This is the title</DialogTitle>
- * ```
+ * @description The DialogTitle component is used to create a title for the Dialog component, typically used in the header.
+ * @example  <DialogTitle>...</DialogTitle>
  */
-function DialogTitle({ children, ...props }: PropsWithChildren<DialogTitleProps>): JSX.Element {
+function DialogTitle({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
     <h2 x-bind:id="idDialogTitle" class={cn('text-lg font-semibold', className)} {...rest} safe>
@@ -172,20 +155,39 @@ function DialogTitle({ children, ...props }: PropsWithChildren<DialogTitleProps>
   )
 }
 
-interface DialogTriggerProps extends JsxElementProps {}
-
 /**
- * Renders a trigger element for the Dialog component.
+ * @component DialogTrigger (Required)
+ * @returns {JSX.Element} The rendered DialogTrigger component.
  *
- * @param {PropsWithChildren<DialogTriggerProps>} props - The component props.
- * @returns {JSX.Element} The rendered trigger element.
+ * @description The DialogTrigger component is used to create a clickable trigger for the Dialog component.
+ * @example  <DialogTrigger>...</DialogTrigger>
  */
-function DialogTrigger({ children, ...props }: PropsWithChildren<DialogTriggerProps>): JSX.Element {
+function DialogTrigger({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
     <span x-on:click="open=!open" class={cn('cursor-pointer', className)} {...rest}>
       {children}
     </span>
+  )
+}
+
+function DialogDemo() {
+  return (
+    <Dialog>
+      <DialogTrigger>
+        <button>Open Dialog</button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Dialog Title</DialogTitle>
+          <DialogDescription>Dialog Description</DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <button>Cancel</button>
+          <button>Save</button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }
 
@@ -197,4 +199,5 @@ export {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogDemo,
 }

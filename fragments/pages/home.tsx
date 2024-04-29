@@ -16,6 +16,7 @@ import {
   BreadcrumbDemo,
   CardDemo,
   CollapsibleDemo,
+  DialogDemo,
 } from '#components'
 
 export default function Home() {
@@ -46,6 +47,7 @@ export default function Home() {
           <BreadcrumbDemo />
           <CardDemo />
           <CollapsibleDemo />
+          <DialogDemo />
         </div>
       </div>
     </div>
