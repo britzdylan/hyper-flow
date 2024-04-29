@@ -3,6 +3,13 @@ import { cn } from '#fragments/lib/utils'
 import { JsxElementProps } from '#fragments/lib/types'
 import { Icon } from '#components'
 
+/**
+ * @component DropdownMenu (Required)
+ * @returns {JSX.Element} The rendered DropdownMenu component.
+ *
+ * @description The DropdownMenu component is used to create a dropdown menu.
+ * @example  <DropdownMenu>...</DropdownMenu>
+ */
 function DropdownMenu({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   return (
     <div
@@ -18,6 +25,13 @@ function DropdownMenu({ children, ...props }: PropsWithChildren<JsxElementProps>
   )
 }
 
+/**
+ * @component DropdownMenuTrigger (Required)
+ * @returns {JSX.Element} The rendered DropdownMenuTrigger component.
+ *
+ * @description The DropdownMenuTrigger component is used to create a trigger for the DropdownMenu component.
+ * @example  <DropdownMenuTrigger>...</DropdownMenuTrigger>
+ */
 function DropdownMenuTrigger({
   children,
   ...props
@@ -35,6 +49,13 @@ function DropdownMenuTrigger({
   )
 }
 
+/**
+ * @component DropdownMenuContent (Required)
+ * @returns {JSX.Element} The rendered DropdownMenuContent component.
+ *
+ * @description The DropdownMenuContent component is used to create the content for the DropdownMenu component.
+ * @example  <DropdownMenuContent>...</DropdownMenuContent>
+ */
 function DropdownMenuContent({
   children,
   ...props
@@ -57,6 +78,13 @@ function DropdownMenuContent({
   )
 }
 
+/**
+ * @component DropdownMenuGroup (Required)
+ * @returns {JSX.Element} The rendered DropdownMenuGroup component.
+ *
+ * @description The DropdownMenuGroup component is used to group items within the DropdownMenu component.
+ * @example  <DropdownMenuGroup>...</DropdownMenuGroup>
+ */
 function DropdownMenuGroup({
   children,
   ...props
@@ -69,6 +97,13 @@ function DropdownMenuGroup({
   )
 }
 
+/**
+ * @component DropdownMenuLabel (Required)
+ * @returns {JSX.Element} The rendered DropdownMenuLabel component.
+ *
+ * @description The DropdownMenuLabel component is used to create a label for the DropdownMenuContent component.
+ * @example  <DropdownMenuLabel>...</DropdownMenuLabel>
+ */
 function DropdownMenuLabel({
   children,
   ...props
@@ -81,6 +116,13 @@ function DropdownMenuLabel({
   )
 }
 
+/**
+ * @component DropdownMenuSeparator (Required)
+ * @returns {JSX.Element} The rendered DropdownMenuSeparator component.
+ *
+ * @description The DropdownMenuSeparator component is used to create a separator within the DropdownMenuContent component.
+ * @example  <DropdownMenuSeparator>...</DropdownMenuSeparator>
+ */
 function DropdownMenuSeparator({
   children,
   ...props
@@ -100,6 +142,14 @@ interface DropdownMenuItemProps extends JsxElementProps {
   disabled?: boolean
 }
 
+/**
+ * @component DropdownMenuItem (Required)
+ * @param {disabled} props.disabled - The disabled state of the item. Default is false.
+ * @returns {JSX.Element} The rendered DropdownMenuItem component.
+ *
+ * @description The DropdownMenuItem component is used to create an item within the DropdownMenuContent component.
+ * @example  <DropdownMenuItem>...</DropdownMenuItem>
+ */
 function DropdownMenuItem({
   children,
   ...props
@@ -118,6 +168,13 @@ function DropdownMenuItem({
   )
 }
 
+/**
+ * @component DropdownMenuShortcut (Required)
+ * @returns {JSX.Element} The rendered DropdownMenuShortcut component.
+ *
+ * @description The DropdownMenuShortcut component is used to create a shortcut for the DropdownMenuItem component (Display only).
+ * @example  <DropdownMenuShortcut>...</DropdownMenuShortcut>
+ */
 function DropdownMenuShortcut({
   children,
   ...props
@@ -130,6 +187,13 @@ function DropdownMenuShortcut({
   )
 }
 
+/**
+ * @component DropdownMenuSub (Required)
+ * @returns {JSX.Element} The rendered DropdownMenuSub component.
+ *
+ * @description The DropdownMenuSub component is used to create a sub-menu within the DropdownMenuContent component.
+ * @example  <DropdownMenuSub>...</DropdownMenuSub>
+ */
 function DropdownMenuSub({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   return (
     <div class="relative group" x-id="['sub-menu']" {...props}>
@@ -138,6 +202,13 @@ function DropdownMenuSub({ children, ...props }: PropsWithChildren<JsxElementPro
   )
 }
 
+/**
+ * @component DropdownMenuSubTrigger (Required)
+ * @returns {JSX.Element} The rendered DropdownMenuSubTrigger component.
+ *
+ * @description The DropdownMenuSubTrigger component is used to create a trigger for the DropdownMenuSub component.
+ * @example  <DropdownMenuSubTrigger>...</DropdownMenuSubTrigger>
+ */
 function DropdownMenuSubTrigger({
   children,
   ...props
@@ -162,6 +233,13 @@ function DropdownMenuSubTrigger({
   )
 }
 
+/**
+ * @component DropdownMenuSubContent (Required)
+ * @returns {JSX.Element} The rendered DropdownMenuSubContent component.
+ *
+ * @description The DropdownMenuSubContent component is used to create the content for the DropdownMenuSub component.
+ * @example  <DropdownMenuSubContent>...</DropdownMenuSubContent>
+ */
 function DropdownMenuSubContent({
   children,
   ...props
