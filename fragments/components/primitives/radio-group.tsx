@@ -6,11 +6,32 @@ interface RadioGroupProps extends JsxElementProps {
   defaultValue: string
 }
 
+/**
+ * @component RadioGroup (Required)
+ * @prop {string} defaultValue The default value of the RadioGroup.
+ * @returns {JSX.Element} The rendered RadioGroup component element.
+ *
+ * @description The RadioGroup component is a group of radio buttons.
+ * @example <RadioGroup defaultValue="comfortable">...</RadioGroup>
+ */
 function RadioGroup({ children, ...props }: PropsWithChildren<RadioGroupProps>): JSX.Element {
   const { class: className, defaultValue, ...rest } = props
+
+  const radioGroup = `() => ({
+    init() {
+      this.value = '${defaultValue}'
+    },
+    value: '',
+    setValue(value) {
+      this.value = value
+    },
+    getValue() {
+      return this.value
+    },
+  })`
   return (
     <div
-      x-data={`radioGroup('${defaultValue}')`}
+      x-data={radioGroup}
       role="radiogroup"
       dir="ltr"
       tabindex={0}
@@ -28,6 +49,15 @@ interface RadioGroupItemProps extends JsxElementProps {
   id: string
 }
 
+/**
+ * @component RadioGroupItem (Required)
+ * @prop {string} value The value of the RadioGroupItem.
+ * @prop {string} id The id of the RadioGroupItem.
+ * @returns {JSX.Element} The rendered RadioGroupItem component element.
+ *
+ * @description The RadioGroupItem component is a radio button item.
+ * @example <RadioGroupItem value="default" id="r1" />
+ */
 function RadioGroupItem({ ...props }: RadioGroupItemProps): JSX.Element {
   const { class: className, value, id, ...rest } = props
   return (
@@ -70,18 +100,4 @@ function RadioGroupDemo() {
   )
 }
 
-const radioGroup = (initValue: string) => ({
-  init() {
-    this.value = initValue
-  },
-  value: '',
-  setValue(value: string) {
-    this.value = value
-    console.log(value, 'value radio group')
-  },
-  getValue() {
-    return this.value
-  },
-})
-
-export { RadioGroup, RadioGroupItem, RadioGroupDemo, radioGroup }
+export { RadioGroup, RadioGroupItem, RadioGroupDemo }
