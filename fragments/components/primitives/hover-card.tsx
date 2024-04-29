@@ -2,6 +2,13 @@ import { PropsWithChildren } from 'adonisjsx'
 import { cn } from '#fragments/lib/utils'
 import { JsxElementProps } from '#fragments/lib/types'
 
+/**
+ * @component HoverCard (Required)
+ * @returns {JSX.Element} The rendered HoverCard component.
+ *
+ * @description The HoverCard component is used to create a hover card with a trigger and content.
+ * @example  <HoverCard>...</HoverCard>
+ */
 function HoverCard({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -11,6 +18,13 @@ function HoverCard({ children, ...props }: PropsWithChildren<JsxElementProps>): 
   )
 }
 
+/**
+ * @component HoverCardTrigger (Required)
+ * @returns {JSX.Element} The rendered HoverCardTrigger component.
+ *
+ * @description The HoverCardTrigger component is used to create a trigger for the HoverCard component.
+ * @example  <HoverCardTrigger>...</HoverCardTrigger>
+ */
 function HoverCardTrigger({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -26,6 +40,13 @@ function HoverCardTrigger({ children, ...props }: PropsWithChildren<JsxElementPr
   )
 }
 
+/**
+ * @component HoverCardContent (Required)
+ * @returns {JSX.Element} The rendered HoverCardContent component.
+ *
+ * @description The HoverCardContent component is used to create the content for the HoverCard component.
+ * @example  <HoverCardContent>...</HoverCardContent>
+ */
 function HoverCardContent({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
 
