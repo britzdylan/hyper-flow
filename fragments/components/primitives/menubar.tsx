@@ -3,6 +3,13 @@ import { cn } from '#fragments/lib/utils'
 import { JsxElementProps } from '#fragments/lib/types'
 import { Icon } from '#components'
 
+/**
+ * @component Menubar (Required)
+ * @returns {JSX.Element} The rendered Menubar component.
+ *
+ * @description The Menubar component is used to create a menubar element, which is a horizontal bar of menu items.
+ * @example  <Menubar for="name">Name</Menubar>
+ */
 function Menubar({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -16,6 +23,13 @@ function Menubar({ children, ...props }: PropsWithChildren<JsxElementProps>): JS
   )
 }
 
+/**
+ * @component MenubarMenu (Required)
+ * @returns {JSX.Element} The rendered MenubarMenu component.
+ *
+ * @description The MenubarMenu component is used to create a the menubar menu container element.
+ * @example <MenubarMenu>...</MenubarMenu>
+ */
 function MenubarMenu({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -31,6 +45,13 @@ function MenubarMenu({ children, ...props }: PropsWithChildren<JsxElementProps>)
   )
 }
 
+/**
+ * @component MenubarTrigger (Required)
+ * @returns {JSX.Element} The rendered MenubarTrigger component element.
+ *
+ * @description The MenubarTrigger component is used to create a menubar trigger element.
+ * @example <MenubarTrigger>...</MenubarTrigger>
+ */
 function MenubarTrigger({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -60,6 +81,13 @@ function MenubarTrigger({ children, ...props }: PropsWithChildren<JsxElementProp
   )
 }
 
+/**
+ * @component MenubarContent (Required)
+ * @returns {JSX.Element} The rendered MenubarContent component element.
+ *
+ * @description The MenubarContent component is used to create a menubar content container element.
+ * @example <MenubarContent>...</MenubarContent>
+ */
 function MenubarContent({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -89,6 +117,14 @@ interface MenubarItemProps extends JsxElementProps {
   disabled?: boolean
 }
 
+/**
+ * @component MenubarItem (Required)
+ * @param {disabled} props.disabled - Whether the menubar item is disabled.
+ * @returns {JSX.Element} The rendered MenubarItem component element.
+ *
+ * @description The MenubarItem component is used to create a menubar item element.
+ * @example <MenubarItem>...</MenubarItem>
+ */
 function MenubarItem({ children, ...props }: PropsWithChildren<MenubarItemProps>): JSX.Element {
   const { class: className, disabled = false, ...rest } = props
   return (
@@ -107,6 +143,13 @@ function MenubarItem({ children, ...props }: PropsWithChildren<MenubarItemProps>
   )
 }
 
+/**
+ * @component MenubarSeparator (Required)
+ * @returns {JSX.Element} The rendered MenubarSeparator component element.
+ *
+ * @description The MenubarSeparator component is used to create a menubar separator element.
+ * @example <MenubarSeparator>...</MenubarSeparator>
+ */
 function MenubarSeparator({ ...props }: JsxElementProps): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -120,6 +163,13 @@ function MenubarSeparator({ ...props }: JsxElementProps): JSX.Element {
   )
 }
 
+/**
+ * @component MenubarShortcut (Required)
+ * @returns {JSX.Element} The rendered MenubarShortcut component element.
+ *
+ * @description The MenubarShortcut component is used to create a menubar shortcut element, display only.
+ * @example <MenubarShortcut>...</MenubarShortcut>
+ */
 function MenubarShortcut({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -129,6 +179,13 @@ function MenubarShortcut({ children, ...props }: PropsWithChildren<JsxElementPro
   )
 }
 
+/**
+ * @component MenubarLabel (Required)
+ * @returns {JSX.Element} The rendered MenubarLabel component element.
+ *
+ * @description The MenubarLabel component is used to create a menubar label element.
+ * @example <MenubarLabel>...</MenubarLabel>
+ */
 function MenubarLabel({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -143,6 +200,15 @@ interface MenubarCheckboxItemProps extends JsxElementProps {
   checked?: boolean
 }
 
+/**
+ * @component MenubarCheckboxItem (Required)
+ * @param {disabled} props.disabled - Whether the menubar checkbox item is disabled.
+ * @param {checked} props.checked - Whether the menubar checkbox item is checked.
+ * @returns {JSX.Element} The rendered MenubarCheckboxItem component element.
+ *
+ * @description The MenubarCheckboxItem component is used to create a menubar checkbox item element.
+ * @example <MenubarbCheckboxItem>...</MenubarCheckboxItem>
+ */
 function MenubarCheckboxItem({
   children,
   ...props
@@ -174,6 +240,14 @@ interface MenubarRadioGroupProps extends JsxElementProps {
   value?: string
 }
 
+/**
+ * @component MenubarRadioGroup (Required)
+ * @param {value} props.value - The default value of the menubar radio group.
+ * @returns {JSX.Element} The rendered MenubarCheckboxItem component element.
+ *
+ * @description The MenubarRadioGroup component is used to create a menubar radio group element.
+ * @example <MenubarRadioGroup>...</MenubarCheckboxItem>
+ */
 function MenubarRadioGroup({
   children,
   ...props
@@ -191,6 +265,15 @@ interface MenubarRadioItemProps extends JsxElementProps {
   value?: string
 }
 
+/**
+ * @component MenubarRadioItem (Required)
+ * @param {disabled} props.disabled - Whether the menubar radio item is disabled.
+ * @param {value} props.value - The value of the menubar radio item.
+ * @returns {JSX.Element} The rendered MenubarRadioItem component element.
+ *
+ * @description The MenubarRadioItem component is used to create a menubar radio item element.
+ * @example <MenubarRadioItem>...</MenubarRadioItem>
+ */
 function MenubarRadioItem({
   children,
   ...props
@@ -220,6 +303,13 @@ function MenubarRadioItem({
   )
 }
 
+/**
+ * @component MenubarSub (Required)
+ * @returns {JSX.Element} The rendered MenubarSub component element.
+ *
+ * @description The MenubarSub component is used to create a menubar sub container element.
+ * @example <MenubarSub>...</MenubarSub>
+ */
 function MenubarSub({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
   return (
@@ -229,6 +319,13 @@ function MenubarSub({ children, ...props }: PropsWithChildren<JsxElementProps>):
   )
 }
 
+/**
+ * @component MenubarSubTrigger (Required)
+ * @returns {JSX.Element} The rendered MenubarSubTrigger component element.
+ *
+ * @description The MenubarSubTrigger component is used to create a menubar sub trigger element.
+ * @example <MenubarSubTrigger>...</MenubarSubTrigger>
+ */
 function MenubarSubTrigger({
   children,
   ...props
@@ -252,6 +349,13 @@ function MenubarSubTrigger({
   )
 }
 
+/**
+ * @component MenubarSubContent (Required)
+ * @returns {JSX.Element} The rendered MenubarSubContent component element.
+ *
+ * @description The MenubarSubContent component is used to create a menubar sub content container element.
+ * @example <MenubarSubContent>...</MenubarSubContent>
+ */
 function MenubarSubContent({
   children,
   ...props
@@ -276,6 +380,96 @@ function MenubarSubContent({
   )
 }
 
+function MenubarDemo() {
+  return (
+    <Menubar>
+      <MenubarMenu>
+        <MenubarTrigger>File</MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem>
+            New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+          </MenubarItem>
+          <MenubarItem>
+            New Window <MenubarShortcut>⌘N</MenubarShortcut>
+          </MenubarItem>
+          <MenubarItem disabled>New Incognito Window</MenubarItem>
+          <MenubarSeparator />
+          <MenubarSub>
+            <MenubarSubTrigger>Share</MenubarSubTrigger>
+            <MenubarSubContent>
+              <MenubarItem>Email link</MenubarItem>
+              <MenubarItem>Messages</MenubarItem>
+              <MenubarItem>Notes</MenubarItem>
+            </MenubarSubContent>
+          </MenubarSub>
+          <MenubarSeparator />
+          <MenubarItem>
+            Print... <MenubarShortcut>⌘P</MenubarShortcut>
+          </MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger>Edit</MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem>
+            Undo <MenubarShortcut>⌘Z</MenubarShortcut>
+          </MenubarItem>
+          <MenubarItem>
+            Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut>
+          </MenubarItem>
+          <MenubarSeparator />
+          <MenubarSub>
+            <MenubarSubTrigger>Find</MenubarSubTrigger>
+            <MenubarSubContent>
+              <MenubarItem>Search the web</MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>Find...</MenubarItem>
+              <MenubarItem>Find Next</MenubarItem>
+              <MenubarItem>Find Previous</MenubarItem>
+            </MenubarSubContent>
+          </MenubarSub>
+          <MenubarSeparator />
+          <MenubarItem>Cut</MenubarItem>
+          <MenubarItem>Copy</MenubarItem>
+          <MenubarItem>Paste</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger>View</MenubarTrigger>
+        <MenubarContent>
+          <MenubarCheckboxItem>Always Show Bookmarks Bar</MenubarCheckboxItem>
+          <MenubarCheckboxItem checked>Always Show Full URLs</MenubarCheckboxItem>
+          <MenubarSeparator />
+          <MenubarItem>
+            Reload <MenubarShortcut>⌘R</MenubarShortcut>
+          </MenubarItem>
+          <MenubarItem disabled>
+            Force Reload <MenubarShortcut>⇧⌘R</MenubarShortcut>
+          </MenubarItem>
+          <MenubarSeparator />
+          <MenubarItem>Toggle Fullscreen</MenubarItem>
+          <MenubarSeparator />
+          <MenubarItem>Hide Sidebar</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger>Profiles</MenubarTrigger>
+        <MenubarContent>
+          <MenubarRadioGroup value="benoit">
+            <MenubarRadioItem value="andy">Andy</MenubarRadioItem>
+            <MenubarRadioItem value="benoit">Benoit</MenubarRadioItem>
+            <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>
+          </MenubarRadioGroup>
+          <MenubarSeparator />
+          <MenubarItem>Edit...</MenubarItem>
+          <MenubarSeparator />
+          <MenubarItem>Add Profile...</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+    </Menubar>
+  )
+}
+
 export {
   Menubar,
   MenubarMenu,
@@ -291,4 +485,5 @@ export {
   MenubarSub,
   MenubarSubTrigger,
   MenubarSubContent,
+  MenubarDemo,
 }
