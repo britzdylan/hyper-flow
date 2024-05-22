@@ -7,6 +7,10 @@ interface ClassProps {
 
 export interface JsxElementProps extends ClassProps {}
 
+export interface ILogoOptions {
+  href: string
+}
+
 export type IconNames =
   | 'accessibility-sign'
   | 'accessibility-tech'

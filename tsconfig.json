@@ -58,6 +58,9 @@
       "#primitives/*": [
         "./UI/components/primitives/*.js"
       ],
+      "#misc/*": [
+        "UI/components/project/*.js"
+      ],
       "#components": [
         "./UI/components/index.js"
       ],
