@@ -31,19 +31,19 @@
     "#tests/*": "./tests/*.js",
     "#config/*": "./config/*.js",
     "#primitives/*": [
-      "./fragments/components/primitives/*.js"
+      "./UI/components/primitives/*.js"
     ],
     "#components": [
-      "./fragments/components/index.js"
+      "./UI/components/index.js"
     ],
     "#layouts/*": [
-      "./fragments/layouts/*.js"
+      "./UI/layouts/*.js"
     ],
     "#pages/*": [
-      "./fragments/pages/*.js"
+      "./UI/pages/*.js"
     ],
-    "#fragments/*": [
-      "./fragments/*.js"
+    "#UI/*": [
+      "./UI/*.js"
     ]
   },
   "devDependencies": {
