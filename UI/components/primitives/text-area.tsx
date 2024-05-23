@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'adonisjsx'
-import { cn } from '#UIils'
-import { JsxElementProps } from '#UIpes'
+import { cn } from '#UI/lib/utils'
+import { JsxElementProps } from '#UI/lib/types'
 
 function TextArea({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className, ...rest } = props
