@@ -14,7 +14,10 @@ function AvatarFallback({ children, ...props }: PropsWithChildren<JsxElementProp
   const { class: className } = props
   return (
     <div
-      class={cn('flex h-full w-full items-center justify-center rounded-full bg-muted', className)}
+      class={cn(
+        'flex h-full w-full items-center justify-center rounded-full bg-muted text-sm',
+        className
+      )}
     >
       {children}
     </div>
@@ -51,7 +54,7 @@ function AvatarImage({ children, ...props }: PropsWithChildren<AvatarImageProps>
 function Avatar({ children, ...props }: PropsWithChildren<JsxElementProps>): JSX.Element {
   const { class: className } = props
   return (
-    <span class={cn('relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full', className)}>
+    <span class={cn('relative flex h-8 w-8 shrink-0 overflow-hidden rounded-full', className)}>
       {children}
     </span>
   )
