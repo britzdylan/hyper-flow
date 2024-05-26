@@ -15,7 +15,7 @@ import {
   Icon,
   Logo,
 } from '#components'
-import { JsxElementProps } from '#UI/lib/types'
+import { JsxElementProps } from '#ui/lib/types'
 
 function DashboardTopNavigation({}: JsxElementProps): JSX.Element {
   return (

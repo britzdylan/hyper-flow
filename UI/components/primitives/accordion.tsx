@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'adonisjsx'
-import { cn } from '#UI/lib/utils'
-import { JsxElementProps, IconNames } from '#UI/lib/types'
+import { cn } from '#ui/lib/utils'
+import { JsxElementProps, IconNames } from '#ui/lib/types'
 
 interface AccordionContentProps extends JsxElementProps {
   self?: boolean

@@ -1,5 +1,5 @@
-import { cn } from '#UI/lib/utils'
-import { JsxElementProps } from '#UI/lib/types'
+import { cn } from '#ui/lib/utils'
+import { JsxElementProps } from '#ui/lib/types'
 
 function Skeleton({ class: className, ...props }: JsxElementProps) {
   return <div class={cn('animate-pulse rounded-md bg-muted', className)} {...props}></div>

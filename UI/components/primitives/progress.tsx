@@ -1,5 +1,5 @@
-import { cn } from '#UI/lib/utils'
-import { JsxElementProps } from '#UI/lib/types'
+import { cn } from '#ui/lib/utils'
+import { JsxElementProps } from '#ui/lib/types'
 
 const simpleProgress = () => ({
   value: 0,

@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'adonisjsx'
-import { cn } from '#UI/lib/utils'
-import { JsxElementProps } from '#UI/lib/types'
+import { cn } from '#ui/lib/utils'
+import { JsxElementProps } from '#ui/lib/types'
 import { Icon } from '#components'
 
 const selectData = () => ({

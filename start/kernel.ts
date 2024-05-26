@@ -8,6 +8,18 @@
 |
 */
 
+/*
+|--------------------------------------------------------------------------
+| Modules Compatibility
+|--------------------------------------------------------------------------
+|
+| All middlewaqre should be declared here. 
+| Module specific middleware should be manually triggered via the modules/routes.
+| Modules has access to global, modules cannot mutate global middleware.
+|
+|
+*/
+
 import router from '@adonisjs/core/services/router'
 import server from '@adonisjs/core/services/server'
 

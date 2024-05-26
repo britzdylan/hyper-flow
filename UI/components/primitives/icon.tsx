@@ -1,5 +1,5 @@
-import { cn } from '#UI/lib/utils'
-import type { IconNames, JsxElementProps } from '#UI/lib/types'
+import { cn } from '#ui/lib/utils'
+import type { IconNames, JsxElementProps } from '#ui/lib/types'
 
 interface IconProps extends JsxElementProps {
   i: IconNames

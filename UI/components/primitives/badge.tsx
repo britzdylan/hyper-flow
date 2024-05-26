@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'adonisjsx'
 import { cva, type VariantProps } from 'class-variance-authority'
-import { cn } from '#UI/lib/utils'
-import type { JsxElementProps } from '#UI/lib/types'
+import { cn } from '#ui/lib/utils'
+import type { JsxElementProps } from '#ui/lib/types'
 
 const badgeVariants = cva(
   'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',

@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import { PropsWithChildren } from 'adonisjsx'
-import { cn } from '#UI/lib/utils'
-import { JsxElementProps } from '#UI/lib/types'
+import { cn } from '#ui/lib/utils'
+import { JsxElementProps } from '#ui/lib/types'
 
 const alertVariants = cva(
   'relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground',

@@ -43,6 +43,9 @@
       "#abilities/*": [
         "./app/abilities/*.js"
       ],
+      "#modules/*": [
+        "./app/modules/*.js"
+      ],
       "#database/*": [
         "./database/*.js"
       ],
@@ -56,22 +59,22 @@
         "./config/*.js"
       ],
       "#primitives/*": [
-        "./UI/components/primitives/*.js"
+        "./ui/components/primitives/*.js"
       ],
       "#misc/*": [
-        "./UI/components/project/*.js"
+        "./ui/components/project/*.js"
       ],
       "#components": [
-        "./UI/components/index.js"
+        "./ui/components/index.js"
       ],
-      "#UI/*": [
-        "./UI/*.js"
+      "#ui/*": [
+        "./ui/*.js"
       ],
       "#layouts/*": [
-        "./UI/layouts/*.js"
+        "./ui/layouts/*.js"
       ],
       "#pages/*": [
-        "./UI/pages/*.js"
+        "./ui/pages/*.js"
       ]
     },
     "plugins": [

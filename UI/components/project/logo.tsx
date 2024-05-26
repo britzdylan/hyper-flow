@@ -1,4 +1,4 @@
-import type { JsxElementProps } from '#UI/lib/types'
+import type { JsxElementProps } from '#ui/lib/types'
 
 interface LogoProps extends JsxElementProps {
   options: {

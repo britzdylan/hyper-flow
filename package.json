@@ -26,27 +26,28 @@
     "#providers/*": "./providers/*.js",
     "#policies/*": "./app/policies/*.js",
     "#abilities/*": "./app/abilities/*.js",
+    "#modules/*": "./app/modules/*.js",
     "#database/*": "./database/*.js",
     "#start/*": "./start/*.js",
     "#tests/*": "./tests/*.js",
     "#config/*": "./config/*.js",
     "#primitives/*": [
-      "./UI/components/primitives/*.js"
+      "./ui/components/primitives/*.js"
     ],
     "#misc/*": [
-      "./UI/components/misc/*.js"
+      "./ui/components/misc/*.js"
     ],
     "#components": [
-      "./UI/components/index.js"
+      "./ui/components/index.js"
     ],
     "#layouts/*": [
-      "./UI/layouts/*.js"
+      "./ui/layouts/*.js"
     ],
     "#pages/*": [
-      "./UI/pages/*.js"
+      "./ui/pages/*.js"
     ],
-    "#UI/*": [
-      "./UI/*.js"
+    "#ui/*": [
+      "./ui/*.js"
     ]
   },
   "devDependencies": {
