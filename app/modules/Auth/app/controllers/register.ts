@@ -6,13 +6,6 @@ import emitter from '@adonisjs/core/services/emitter'
 import { emailAndPassword, emailVerification } from '../validators/auth.js'
 import { AuthConfig } from '../../../config.js'
 
-// import RegisterValidator from 'App/Validators/Auth/RegisterValidator'
-// import flowConfig from 'Config/flow'
-// import FlashMessage from 'App/Enums/FlashMessage'
-// import Route from '@ioc:Adonis/Core/Route'
-// import EmailVerificationValidator from 'App/Validators/Auth/EmailVerificationValidator'
-
-// const { register, verification } = flowConfig.views
 // const { RegisterSuccess, EmailVerified, EmailAlreadyVerified EmailVerificationResent } = FlashMessage
 
 /**
@@ -22,7 +15,7 @@ export default class RegistersController {
   /**
    * Renders the registration view.
    */
-  public async viewRegisterPage({ jsx }: HttpContext) {
+  public async getRegisterPage({ jsx }: HttpContext) {
     return await jsx(registerPage, {
       data: {},
     })
@@ -31,7 +24,7 @@ export default class RegistersController {
   /**
    * Validates user data and creates a new user.
    */
-  public async registerUserWithEmailPassword({
+  public async postUserEmailPassword({
     request,
     response,
     session,
@@ -43,25 +36,24 @@ export default class RegistersController {
     const user = await UserModule.create(userData)
 
     await user.save()
-    emitter.emit('user:registerEmailPassword', user) // ['sendUserEmailVerification']
-    session.flash('success', ['RegisterSuccess'])
-
+    if (AuthConfig.actions.postUserEmailPassword.event) {
+      emitter.emit('user:registerEmailPassword', user) // ['sendUserEmailVerification']
+    }
+    if (AuthConfig.actions.postUserEmailPassword.flash) {
+      session.flash('success', ['RegisterSuccess'])
+    }
     if (AuthConfig.strict) {
-      return response.redirect().toRoute('Auth_loginPage') // atc
+      return response.redirect().toRoute(`${AuthConfig.routeIdPrefix}viewLoginPage`)
     }
 
     await auth.use().login(user)
-    return response.redirect().toRoute('Auth_userDashboard') // atc
+    return response.redirect().toRoute(`${AuthConfig.routeIdPrefix}viewUserDashboard`)
   }
 
   /**
    * Verifies a user's email address.
    */
-  public async verifyUserEmailWithToken({
-    request,
-    response,
-    session,
-  }: HttpContext): Promise<void> {
+  public async getUserEmailWithToken({ request, response, session }: HttpContext): Promise<void> {
     const token = request.params().token
     const user = await UserModule.findByOrFail('emailVerificationToken', token) // new dependency for the user model fields
 
@@ -70,13 +62,15 @@ export default class RegistersController {
       return response.status(403).badRequest()
     }
     await user.save()
-    session.flash('success', ['UserEmailVerified'])
-    return response.redirect().toRoute('Auth_loginPage')
+    if (AuthConfig.actions.getUserEmailWithToken.flash) {
+      session.flash('success', ['UserEmailVerified'])
+    }
+    return response.redirect().toRoute(`${AuthConfig.routeIdPrefix}loginPage`)
   }
   /**
    * Render  email verification view.
    */
-  public async viewEmailVerificationPage({ jsx }: HttpContext) {
+  public async getEmailVerificationPage({ jsx }: HttpContext) {
     return await jsx(EmailVerificationPage, {
       data: {},
     })
@@ -84,7 +78,7 @@ export default class RegistersController {
   /**
    * Resend email verification.
    */
-  public async sendUserVerificationToken({
+  public async postUserVerificationToken({
     request,
     response,
     session,
@@ -93,7 +87,9 @@ export default class RegistersController {
     const email = await request.validateUsing(emailVerification)
     const user = await UserModule.findByOrFail('email', email)
     if (user.isVerified) {
-      session.flash('success', ['EmailAlreadyVerified'])
+      if (AuthConfig.actions.postUserVerificationToken.flash) {
+        session.flash('success', ['EmailAlreadyVerified'])
+      }
       return response.redirect().back()
     }
     user.generateVerificationToken()

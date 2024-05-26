@@ -2,19 +2,30 @@ export const AuthConfig = {
   strict: false,
   routeIdPrefix: 'Auth_',
   actions: {
-    viewRegisterPage: {
+    getRegisterPage: {
       route: '/register',
       event: false,
+      flash: false,
     },
-    registerUserEmailPassword: {
+    postUserEmailPassword: {
       route: '/register',
-      event: true,
-      resolve: (strict: boolean) => {
-        if (strict) {
-          return 'viewLoginPage'
-        }
-        return 'viewDashbosaard'
-      },
+      event: false,
+      flash: false,
+    },
+    getUserEmailWithToken: {
+      route: '/verify/email',
+      event: false,
+      flash: false,
+    },
+    getEmailVerificationPage: {
+      route: '/request/verification/email',
+      event: false,
+      flash: false,
+    },
+    postUserVerificationToken: {
+      route: '/request/verification/email',
+      event: false,
+      flash: false,
     },
   },
 }

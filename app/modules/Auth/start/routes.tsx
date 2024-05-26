@@ -2,13 +2,18 @@ import router from '@adonisjs/core/services/router'
 import RegisterController from '../app/controllers/register.js'
 import { AuthConfig } from '../../config.js'
 
-const { GET, POST } = AuthConfig.routes
+const {
+  postUserEmailPassword,
+  getRegisterPage,
+  verifyUserEmailWithToken,
+  viewEmailVerificationPage,
+} = AuthConfig.actions
 const { routeIdPrefix } = AuthConfig
 
 router
-  .get(`${GET.viewRegisterPage}`, [RegisterController, 'viewRegisterPage'])
-  .as(`${routeIdPrefix}viewRegisterPage`)
+  .get(`${getRegisterPage}`, [RegisterController, 'getRegisterPage'])
+  .as(`${routeIdPrefix}getRegisterPage`)
 
 router
-  .post(`${POST.registerUser}`, [RegisterController, 'registerUser'])
-  .as(`${routeIdPrefix}registerUser`)
+  .post(`${postUserEmailPassword.route}`, [RegisterController, 'postUserEmailPassword'])
+  .as(`${routeIdPrefix}postUserEmailPassword`)
