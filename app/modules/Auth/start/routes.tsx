@@ -5,13 +5,13 @@ import { AuthConfig } from '../../config.js'
 const {
   postUserEmailPassword,
   getRegisterPage,
-  verifyUserEmailWithToken,
-  viewEmailVerificationPage,
+  //   verifyUserEmailWithToken,
+  //   viewEmailVerificationPage,
 } = AuthConfig.actions
 const { routeIdPrefix } = AuthConfig
 
 router
-  .get(`${getRegisterPage}`, [RegisterController, 'getRegisterPage'])
+  .get(`${getRegisterPage.route}`, [RegisterController, 'getRegisterPage'])
   .as(`${routeIdPrefix}getRegisterPage`)
 
 router

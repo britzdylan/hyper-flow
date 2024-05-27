@@ -20,6 +20,7 @@ type TInputType =
 
 interface InputProps extends JsxElementProps {
   placeholder: string
+  name: string
   type?: TInputType
 }
 
