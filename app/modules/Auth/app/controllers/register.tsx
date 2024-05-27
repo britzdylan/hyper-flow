@@ -148,11 +148,7 @@ export default class RegistersController {
   /**
    * Resend email verification.
    */
-  public async requestEmailVerification({
-    request,
-    response,
-    session,
-  }: HttpContext): Promise<void> {
+  public async requestEmailVerification({ request, session }: HttpContext): Promise<void> {
     // @ts-ignore
     const email = await request.validateUsing(emailVerification)
     let user = await UserModule.findByOrFail('email', email)
@@ -163,7 +159,8 @@ export default class RegistersController {
       if (AuthConfig.actions.requestEmailVerification.flash) {
         session.flash('success', ['EmailAlreadyVerified'])
       }
-      return response.redirect().back()
+
+      return
     }
     user.generateVerificationToken()
     user = await user.save()
@@ -173,6 +170,7 @@ export default class RegistersController {
     if (AuthConfig.actions.requestEmailVerification.flash) {
       session.flash('success', ['EmailVerificationResent'])
     }
-    return response.redirect().back()
+
+    return
   }
 }
