@@ -12,7 +12,7 @@ interface IUser {
   id: number
   email: string
   password: string
-  rememberMeToken?: string
+  rememberMeToken: string | null
   emailVerificationToken: string | null
   emailResetRequest: string | null
   emailVerifiedAt: DateTime | null
@@ -22,6 +22,8 @@ interface IUser {
 }
 
 export default class UserModule extends User implements IUser {
+  static table = 'users'
+
   /*
   / Relationships
   */

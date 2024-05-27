@@ -21,6 +21,8 @@ type TInputType =
 interface InputProps extends JsxElementProps {
   placeholder: string
   name: string
+  value?: string
+  required?: boolean
   type?: TInputType
 }
 

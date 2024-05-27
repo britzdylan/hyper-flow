@@ -1,3 +1,4 @@
+import { HttpContext } from '@adonisjs/core/http'
 import { Html, PropsWithChildren } from 'adonisjsx'
 import { viteAssets, viteReactRefresh } from 'adonisjsx'
 
@@ -18,9 +19,17 @@ function Head() {
   )
 }
 
+interface errorObject {
+  [key: string]: string
+}
+
 function Body({ children }: PropsWithChildren) {
+  // const ctx = HttpContext.get()
+  // let errors: errorObject = ctx?.session.flashMessages.get('notifyErrors')
+  // let alerts: errorObject = ctx?.session.flashMessages.get('notifyAlerts')
+
   return (
-    <body class="bg-background flex flex-col min-h-screen font-sans text-foreground">
+    <body id="page-body" class="bg-background flex flex-col min-h-screen font-sans text-foreground">
       {children}
     </body>
   )
