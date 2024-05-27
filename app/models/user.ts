@@ -10,6 +10,8 @@ const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
 })
 
 export default class User extends compose(BaseModel, AuthFinder) {
+  static table = 'users'
+
   @column({ isPrimary: true })
   declare id: number
 
@@ -20,7 +22,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare password: string
 
   @column()
-  declare rememberMeToken?: string
+  declare rememberMeToken: string | null
 
   @column({ serializeAs: null })
   declare emailVerificationToken: string | null
