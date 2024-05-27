@@ -10,5 +10,6 @@ declare module '@adonisjs/core/types' {
     'Auth:renderEmailVerificationPage': null
     'Auth:requestEmailVerification:verified': string
     'Auth:requestEmailVerification': User
+    'Auth:renderLoginPage': null
   }
 }

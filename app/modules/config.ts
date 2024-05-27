@@ -27,5 +27,42 @@ export const AuthConfig = {
       event: false,
       flash: false,
     },
+
+    renderLoginPage: {
+      route: '/login',
+      event: false,
+      flash: false,
+    },
+    userLogin: {
+      route: '/login',
+      event: false,
+      flash: false,
+    },
+    userLogout: {
+      route: '/logout',
+      event: false,
+      flash: false,
+    },
+
+    renderForgotPasswordPage: {
+      route: '/forgot-password',
+      event: false,
+      flash: false,
+    },
+    userRequestPasswordReset: {
+      route: '/forgot-password',
+      event: false,
+      flash: false,
+    },
+    renderPasswordResetPage: {
+      route: '/reset-password',
+      event: false,
+      flash: false,
+    },
+    userUpdatePassword: {
+      route: '/reset-password',
+      event: false,
+      flash: false,
+    },
   },
 }
