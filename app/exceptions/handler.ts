@@ -1,6 +1,7 @@
 import app from '@adonisjs/core/services/app'
 import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
-
+import { StatusPageRange, StatusPageRenderer } from '@adonisjs/http-server/types'
+import NotFound from '#pages/NotFound'
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
    * In debug mode, the exception handler will display verbose errors
@@ -13,13 +14,21 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    * codes. You might want to enable them in production only, but feel
    * free to enable them in development as well.
    */
-  protected renderStatusPages = app.inProduction
+  protected renderStatusPages = !app.inProduction
+
+  protected ignoreCodes = ['E_VALIDATION_ERROR']
+
+  protected statusPages: Record<StatusPageRange, StatusPageRenderer> = {
+    '404': (_, { jsx }) => jsx(NotFound),
+    // '500..599': (_, { view }) => view.render('errors/server-error')
+  }
 
   /**
    * The method is used for handling errors and returning
    * response to the client
    */
   async handle(error: unknown, ctx: HttpContext) {
+    console.log(error)
     return super.handle(error, ctx)
   }
 
