@@ -6,10 +6,16 @@ import { emailAndPassword, emailVerification } from '../validators/auth.js'
 import { AuthConfig } from '../../../config.js'
 import router from '@adonisjs/core/services/router'
 import InvalidUrl from '#pages/invalidUrl'
+import { FlashMessages } from '#enum/FlashMessages'
 
-// TODO [flashMessages,testing]
+// TODO [testing]
 
-// const { RegisterSuccess, EmailVerified, EmailAlreadyVerified EmailVerificationResent } = FlashMessage
+const {
+  UserRegisterSuccess,
+  UserEmailVerificationResent,
+  UserEmailAlreadyVerified,
+  UserEmailVerified,
+} = FlashMessages
 
 /**
  * Controller for registering and verifying users.
@@ -71,7 +77,7 @@ export default class RegistersController {
       emitter.emit('Auth:createUser', user)
     }
     if (AuthConfig.actions.createUser.flash) {
-      session.flash('success', ['RegisterSuccess'])
+      session.flash('success', [UserRegisterSuccess])
     }
     if (AuthConfig.strict) {
       response.header(
@@ -119,7 +125,7 @@ export default class RegistersController {
       emitter.emit('Auth:verifyUserEmail', user)
     }
     if (AuthConfig.actions.verifyUserEmail.flash) {
-      session.flash('success', ['UserEmailVerified'])
+      session.flash('success', [UserEmailVerified])
     }
 
     response.header(
@@ -157,7 +163,7 @@ export default class RegistersController {
         emitter.emit('Auth:requestEmailVerification:verified', 'User is already verified')
       }
       if (AuthConfig.actions.requestEmailVerification.flash) {
-        session.flash('success', ['EmailAlreadyVerified'])
+        session.flash('success', [UserEmailAlreadyVerified])
       }
 
       return
@@ -168,7 +174,7 @@ export default class RegistersController {
       emitter.emit('Auth:requestEmailVerification', user)
     }
     if (AuthConfig.actions.requestEmailVerification.flash) {
-      session.flash('success', ['EmailVerificationResent'])
+      session.flash('success', [UserEmailVerificationResent])
     }
 
     return

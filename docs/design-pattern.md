@@ -1,4 +1,4 @@
-# Modular based design pattern
+# Modular Event based design pattern
 
 File Structure for each module
 

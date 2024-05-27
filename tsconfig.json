@@ -75,7 +75,10 @@
       ],
       "#pages/*": [
         "./ui/pages/*.js"
-      ]
+      ],
+      "#enum/*": [
+        "./app/enum/*.js"
+      ],
     },
     "plugins": [
       {
