@@ -4,8 +4,8 @@ import Hash from '@adonisjs/core/services/hash'
 import encryption from '@adonisjs/core/services/encryption'
 import string from '@adonisjs/core/helpers/string'
 import User from '#models/user'
+import { AuthConfig } from '#modules/config'
 // import UserProfile from '#models/UserProfile'
-// import flowConfig from 'Config/flow'
 // import UserSession from '#models/UserSession'
 
 interface IUser {
@@ -25,32 +25,14 @@ export default class UserModule extends User implements IUser {
   static table = 'users'
 
   /*
-  / Relationships
-  */
-
-  //   @hasOne(() => UserProfile)
-  //   public profile: HasOne<typeof UserProfile>
-
-  //   @hasMany(() => UserSession)
-  //   public sessions: HasMany<typeof UserSession>
-
-  /*
   / Hooks
   */
   @beforeCreate()
   public static generateVerificationToken(user: UserModule) {
-    if (false) {
+    if (AuthConfig.strict) {
       user.generateVerificationToken()
     }
   }
-
-  //   @afterCreate()
-  //   public static async createProfile(user: UserModule) {
-  //     const profile = await user.related('profile').create({
-  //       userId: user.id,
-  //     })
-  //     await profile.save()
-  //   }
 
   @beforeSave()
   public static async hashPassword(user: UserModule) {

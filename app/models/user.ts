@@ -46,4 +46,26 @@ export default class User extends compose(BaseModel, AuthFinder) {
     }
     return false
   }
+
+  /*
+  / Relationships
+  */
+
+  //   @hasOne(() => UserProfile)
+  //   public profile: HasOne<typeof UserProfile>
+
+  //   @hasMany(() => UserSession)
+  //   public sessions: HasMany<typeof UserSession>
+
+  /*
+  / Hooks
+  */
+
+  //   @afterCreate()
+  //   public static async createProfile(user: UserModule) {
+  //     const profile = await user.related('profile').create({
+  //       userId: user.id,
+  //     })
+  //     await profile.save()
+  //   }
 }

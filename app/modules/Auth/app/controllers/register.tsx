@@ -7,7 +7,7 @@ import { AuthConfig } from '../../../config.js'
 import router from '@adonisjs/core/services/router'
 import InvalidUrl from '#pages/invalidUrl'
 
-// TODO [flashMessages,testing,events]
+// TODO [flashMessages,testing]
 
 // const { RegisterSuccess, EmailVerified, EmailAlreadyVerified EmailVerificationResent } = FlashMessage
 
