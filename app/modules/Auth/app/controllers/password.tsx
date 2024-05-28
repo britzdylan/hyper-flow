@@ -6,7 +6,7 @@ import router from '@adonisjs/core/services/router'
 import { FlashMessages } from '#enum/FlashMessages'
 import { PasswordResetRequestPage, PasswordResetPage } from '#modules/Auth/ui/views/password'
 import { emailVerification, passwordOnlyStrict } from '#modules/Auth/app/validators/auth'
-import PasswordReset from '#models/PasswordReset'
+import PasswordReset from '#models/passwordReset'
 import { PasswordResetForm, PasswordResetRequestForm } from '#modules/Auth/ui/views/password'
 import InvalidUrl from '#pages/invalidUrl'
 

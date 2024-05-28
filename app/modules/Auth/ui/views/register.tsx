@@ -12,7 +12,7 @@ export function UserRegisterForm({ formUrl, formData, formErrors }: FormProps): 
         name="email"
         required
         type="email"
-        value={formData.email}
+        value={formData?.email}
       />
       <Input placeholder="8+ Character Password" required name="password" type="password" />
       <Input placeholder="Confirm Password" name="password_confirmed" type="password" />
@@ -93,7 +93,7 @@ export function EmailRequestForm({ formUrl, formData, formErrors }: FormProps): 
         name="email"
         required
         type="email"
-        value={formData.email}
+        value={formData?.email}
       />
       <Button class="w-full">Verify Email</Button>
       <Button type="submit" disabled={true} class="w-full htmx-indicator">

@@ -12,7 +12,7 @@ export function LoginForm({ formUrl, formData, formErrors }: FormProps): JSX.Ele
         name="email"
         required
         type="email"
-        value={formData.email}
+        value={formData?.email}
       />
       <Input placeholder="Password" required name="password" type="password" />
       <Button class="w-full">Login</Button>
@@ -48,6 +48,7 @@ export function LoginForm({ formUrl, formData, formErrors }: FormProps): JSX.Ele
 
 export function LoginPage({ formUrl, formData }: FormProps): JSX.Element {
   const registerUrl = router.builder().make(`${AuthConfig.routeIdPrefix}renderRegisterPage`)
+  const forgotPasswordUrl = router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)
 
   return (
     <div class="relative h-full w-full flex items-center justify-center p-4">
@@ -63,7 +64,7 @@ export function LoginPage({ formUrl, formData }: FormProps): JSX.Element {
         </h2>
         <LoginForm formData={formData} formUrl={formUrl} />
         <span>
-          <a href="/">Forgot Password</a>
+          <a href={forgotPasswordUrl}>Forgot Password</a>
         </span>
       </div>
     </div>
