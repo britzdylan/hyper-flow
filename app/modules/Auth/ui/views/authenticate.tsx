@@ -48,7 +48,9 @@ export function LoginForm({ formUrl, formData, formErrors }: FormProps): JSX.Ele
 
 export function LoginPage({ formUrl, formData }: FormProps): JSX.Element {
   const registerUrl = router.builder().make(`${AuthConfig.routeIdPrefix}renderRegisterPage`)
-  const forgotPasswordUrl = router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)
+  const forgotPasswordUrl = router
+    .builder()
+    .make(`${AuthConfig.routeIdPrefix}renderForgotPasswordPage`)
 
   return (
     <div class="relative h-full w-full flex items-center justify-center p-4">

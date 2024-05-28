@@ -18,6 +18,7 @@ export default class PasswordController {
     if (actions.renderForgotPasswordPage.event) {
       emitter.emit('Auth:renderForgotPasswordPage', null)
     }
+    // @ts-ignore
     return jsx(PasswordResetRequestPage, {
       data: {
         formUrl: router.builder().make(`${AuthConfig.routeIdPrefix}userRequestPasswordReset`),
@@ -28,9 +29,10 @@ export default class PasswordController {
     })
   }
 
-  public async renderPasswordResetPage({ jsx, request }: HttpContext) {
-    let token, passwordResetRequest
-    token = request.param('token')
+  public async renderPasswordResetPage({ jsx, params }: HttpContext) {
+    let passwordResetRequest
+    const { token } = params
+    console.log(token)
     passwordResetRequest = await PasswordReset.findByOrFail('token', token)
 
     if (passwordResetRequest.isExpired()) {
@@ -44,19 +46,23 @@ export default class PasswordController {
     if (actions.renderPasswordResetPage.event) {
       emitter.emit('Auth:renderPasswordResetPage', null)
     }
-
+    // @ts-ignore
     return jsx(PasswordResetPage, {
       data: {
-        formUrl: router.builder().make(`${AuthConfig.routeIdPrefix}userUpdatePassword`),
+        formUrl: router
+          .builder()
+          .params([token])
+          .make(`${AuthConfig.routeIdPrefix}userUpdatePassword`),
       },
     })
   }
 
   public async userRequestPasswordReset({ request, auth, session, response }: HttpContext) {
-    let email, user, newRequest
+    let formData, user, newRequest
     try {
-      email = await emailVerification.validate(request.input('email'))
+      formData = await emailVerification.validate(request.all())
     } catch (error) {
+      console.log(error)
       if (AuthConfig.actions.userRequestPasswordReset.event) {
         emitter.emit('Auth:userRequestPasswordReset:error', 'Invalid Email')
       }
@@ -71,7 +77,7 @@ export default class PasswordController {
       )
     }
 
-    user = await User.findBy('email', email)
+    user = await User.findBy('email', formData.email)
     if (user) {
       await PasswordReset.query().where('user_id', user.id).delete()
 
@@ -97,19 +103,25 @@ export default class PasswordController {
     return
   }
 
-  public async userUpdatePassword({ request, auth, session, response }: HttpContext) {
-    let token, password, passwordReset, user
+  public async userUpdatePassword({ request, auth, session, response, params }: HttpContext) {
+    let formData, passwordReset, user
 
-    token = request.param('token')
+    const { token } = params
+
+    console.log(params)
     try {
-      password = await passwordOnlyStrict.validate(request.input('password'))
+      formData = await passwordOnlyStrict.validate(request.all())
     } catch (error) {
+      console.log(error)
       if (AuthConfig.actions.userUpdatePassword.event) {
         emitter.emit('Auth:userUpdatePassword:error', 'Password Verification Failed')
       }
       return await (
         <PasswordResetForm
-          formUrl={router.builder().make(`${AuthConfig.routeIdPrefix}userUpdatePassword`)}
+          formUrl={router
+            .builder()
+            .params([token])
+            .make(`${AuthConfig.routeIdPrefix}userUpdatePassword`)}
           formErrors={{
             password: () =>
               error.messages.map((item: any) => (item.field === 'password' ? item.message : '')),
@@ -122,7 +134,7 @@ export default class PasswordController {
     user = await passwordReset.related('user').query().firstOrFail()
     await auth.use('web').logout()
 
-    user.merge({ password: password })
+    user.merge({ password: formData.password })
     await user.save()
 
     if (AuthConfig.actions.userUpdatePassword.event) {

@@ -6,7 +6,7 @@ import User from '#models/user'
 import encryption from '@adonisjs/core/services/encryption'
 
 export default class PasswordReset extends BaseModel {
-  static table = 'password_reset'
+  static table = 'password_resets'
 
   @column({ isPrimary: true })
   declare id: number

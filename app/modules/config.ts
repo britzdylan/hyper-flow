@@ -56,12 +56,12 @@ export const AuthConfig = {
       flash: false,
     },
     renderPasswordResetPage: {
-      route: '/reset-password',
+      route: '/reset-password/:token',
       event: false,
       flash: false,
     },
     userUpdatePassword: {
-      route: '/reset-password',
+      route: '/reset-password/:token',
       event: false,
       flash: false,
     },

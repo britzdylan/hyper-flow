@@ -15,7 +15,7 @@ export function UserRegisterForm({ formUrl, formData, formErrors }: FormProps): 
         value={formData?.email}
       />
       <Input placeholder="8+ Character Password" required name="password" type="password" />
-      <Input placeholder="Confirm Password" name="password_confirmed" type="password" />
+      <Input placeholder="Confirm Password" name="password_confirmation" type="password" />
       <Button class="w-full">Sign up with Email</Button>
       <Button type="submit" disabled={true} class="w-full htmx-indicator">
         <svg
