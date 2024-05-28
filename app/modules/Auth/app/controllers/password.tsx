@@ -1,23 +1,20 @@
 import { HttpContext } from '@adonisjs/core/http'
-import User from '#models/user'
-import emitter from '@adonisjs/core/services/emitter'
 import { AuthConfig } from '#modules/config'
-import router from '@adonisjs/core/services/router'
 import { FlashMessages } from '#enum/FlashMessages'
 import { PasswordResetRequestPage, PasswordResetPage } from '#modules/Auth/ui/views/password'
 import { emailVerification, passwordOnlyStrict } from '#modules/Auth/app/validators/auth'
-import PasswordReset from '#models/passwordReset'
 import { PasswordResetForm, PasswordResetRequestForm } from '#modules/Auth/ui/views/password'
+import { Session } from '@adonisjs/session'
+import emitter from '@adonisjs/core/services/emitter'
+import User from '#models/user'
+import router from '@adonisjs/core/services/router'
+import PasswordReset from '#models/passwordReset'
 import InvalidUrl from '#pages/invalidUrl'
-
-const { actions } = AuthConfig
-const { UserPasswordResetRequested, UserPasswordResetSuccess } = FlashMessages
 
 export default class PasswordController {
   public async renderForgotPasswordPage({ jsx }: HttpContext) {
-    if (actions.renderForgotPasswordPage.event) {
-      emitter.emit('Auth:renderForgotPasswordPage', null)
-    }
+    this.emitAuthEvent('renderForgotPasswordPage', 'event', null)
+
     // @ts-ignore
     return jsx(PasswordResetRequestPage, {
       data: {
@@ -30,22 +27,15 @@ export default class PasswordController {
   }
 
   public async renderPasswordResetPage({ jsx, params }: HttpContext) {
-    let passwordResetRequest
     const { token } = params
     console.log(token)
-    passwordResetRequest = await PasswordReset.findByOrFail('token', token)
+    let passwordResetRequest = await PasswordReset.findByOrFail('token', token)
 
-    if (passwordResetRequest.isExpired()) {
+    if (passwordResetRequest.isExpired() || !(await passwordResetRequest.verifyToken(token))) {
       return jsx(InvalidUrl)
     }
+    this.emitAuthEvent('renderPasswordResetPage', 'event', null)
 
-    if (!(await passwordResetRequest.verifyToken(token))) {
-      return jsx(InvalidUrl)
-    }
-
-    if (actions.renderPasswordResetPage.event) {
-      emitter.emit('Auth:renderPasswordResetPage', null)
-    }
     // @ts-ignore
     return jsx(PasswordResetPage, {
       data: {
@@ -58,44 +48,33 @@ export default class PasswordController {
   }
 
   public async userRequestPasswordReset({ request, auth, session, response }: HttpContext) {
-    let formData, user, newRequest
+    let formData, user
     try {
       formData = await emailVerification.validate(request.all())
     } catch (error) {
-      console.log(error)
-      if (AuthConfig.actions.userRequestPasswordReset.event) {
-        emitter.emit('Auth:userRequestPasswordReset:error', 'Invalid Email')
-      }
-      return await (
-        <PasswordResetRequestForm
-          formUrl={router.builder().make(`${AuthConfig.routeIdPrefix}userRequestPasswordReset`)}
-          formErrors={{
-            email: () =>
-              error.messages.map((item: any) => (item.field === 'email' ? item.message : '')),
-          }}
-        />
-      )
+      this.emitAuthEvent('userRequestPasswordReset', 'error', 'Invalid Email')
+
+      return this.renderPasswordResetRequestForm(error)
     }
 
     user = await User.findBy('email', formData.email)
     if (user) {
       await PasswordReset.query().where('user_id', user.id).delete()
 
-      newRequest = new PasswordReset()
+      const newRequest = new PasswordReset()
       newRequest.userId = user.id
       await newRequest.generateToken()
       await newRequest.save()
-      if (actions.userRequestPasswordReset.event) {
-        emitter.emit('Auth:userRequestPasswordReset', user)
-      }
+      this.emitAuthEvent('userRequestPasswordReset', 'event', user)
     } else {
-      if (actions.userRequestPasswordReset.event) {
-        emitter.emit('Auth:userRequestPasswordReset:error', 'User not found')
-      }
+      this.emitAuthEvent('userRequestPasswordReset', 'error', 'User not found')
     }
-    if (actions.userRequestPasswordReset.flash) {
-      session.flash('success', [UserPasswordResetRequested])
-    }
+    this.showFlashMessage(
+      session,
+      'userRequestPasswordReset',
+      'success',
+      'UserPasswordResetRequested'
+    )
 
     response.header('HX-Reswap', 'none')
     response.header('HX-Trigger', 'showToast')
@@ -104,30 +83,14 @@ export default class PasswordController {
   }
 
   public async userUpdatePassword({ request, auth, session, response, params }: HttpContext) {
+    const { token } = params
     let formData, passwordReset, user
 
-    const { token } = params
-
-    console.log(params)
     try {
       formData = await passwordOnlyStrict.validate(request.all())
     } catch (error) {
-      console.log(error)
-      if (AuthConfig.actions.userUpdatePassword.event) {
-        emitter.emit('Auth:userUpdatePassword:error', 'Password Verification Failed')
-      }
-      return await (
-        <PasswordResetForm
-          formUrl={router
-            .builder()
-            .params([token])
-            .make(`${AuthConfig.routeIdPrefix}userUpdatePassword`)}
-          formErrors={{
-            password: () =>
-              error.messages.map((item: any) => (item.field === 'password' ? item.message : '')),
-          }}
-        />
-      )
+      this.emitAuthEvent('userUpdatePassword', 'error', 'Password Verification Failed')
+      return this.renderPasswordResetForm(error, token)
     }
 
     passwordReset = await PasswordReset.findByOrFail('token', token)
@@ -136,21 +99,68 @@ export default class PasswordController {
 
     user.merge({ password: formData.password })
     await user.save()
+    this.emitAuthEvent('userUpdatePassword', 'event', user)
+    this.showFlashMessage(session, 'userUpdatePassword', 'success', 'UserPasswordResetSuccess')
 
-    if (AuthConfig.actions.userUpdatePassword.event) {
-      emitter.emit('Auth:userUpdatePassword', user)
-    }
-
-    if (AuthConfig.actions.userUpdatePassword.flash) {
-      session.flash('success', [UserPasswordResetSuccess])
-    }
     response.header('HX-Reswap', 'none')
     response.header('HX-Trigger', 'showToast')
     response.header(
       'HX-Redirect',
       router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)
     )
+  }
 
-    return
+  private emitAuthEvent(
+    actionName: keyof typeof AuthConfig.actions,
+    eventType: 'event' | 'error',
+    data: any
+  ) {
+    const actionConfig = AuthConfig.actions[actionName]
+
+    if (actionConfig && actionConfig.event) {
+      const emitString = `Auth:${actionName}:${eventType}`
+      // @ts-ignore
+      emitter.emit(emitString, data)
+    }
+  }
+
+  private showFlashMessage(
+    session: Session,
+    actionName: keyof typeof AuthConfig.actions,
+    type: 'success' | 'error',
+    msg: keyof typeof FlashMessages
+  ) {
+    const actionConfig = AuthConfig.actions[actionName]
+    const message = FlashMessages[msg]
+    if (actionConfig && actionConfig.flash) {
+      session.flash(type, [message])
+    }
+  }
+
+  private renderPasswordResetRequestForm(error: any) {
+    return (
+      <PasswordResetRequestForm
+        formUrl={router.builder().make(`${AuthConfig.routeIdPrefix}userRequestPasswordReset`)}
+        formErrors={{
+          email: () =>
+            error.messages.map((item: any) => (item.field === 'email' ? item.message : '')),
+        }}
+      />
+    )
+  }
+
+  private renderPasswordResetForm(error: any, token: string) {
+    return (
+      <PasswordResetForm
+        formUrl={router
+          .builder()
+          .params([token])
+          .make(`${AuthConfig.routeIdPrefix}userUpdatePassword`)}
+        formErrors={{
+          password: () =>
+            error.messages.map((item: any) => (item.field === 'password' ? item.message : '')),
+        }}
+      />
+    )
   }
 }
