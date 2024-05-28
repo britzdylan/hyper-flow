@@ -13,6 +13,16 @@ export interface ILogoOptions {
   href: string
 }
 
+export interface FormProps {
+  formUrl: string
+  formData: {
+    email: string
+  }
+  formErrors?: {
+    [key: string]: () => string
+  }
+}
+
 export type IconNames =
   | 'accessibility-sign'
   | 'accessibility-tech'
