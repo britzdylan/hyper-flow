@@ -30,7 +30,7 @@ export default class AuthenticateController {
       email: request.input('email'),
       password: request.input('password'),
     }
-    const user = await User.verifyCredentials(email, password) // TODO: handle error
+    const user = await User.verifyCredentials(email, password)
     await auth.use('web').login(user)
 
     if (actions.userLogin.event) {

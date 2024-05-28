@@ -5,4 +5,5 @@ export enum FlashMessages {
   UserEmailVerified = '',
   UserLoginSuccess = '',
   UserLogoutSuccess = '',
+  UserPasswordResetRequested = '',
 }

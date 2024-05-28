@@ -13,5 +13,10 @@ declare module '@adonisjs/core/types' {
     'Auth:renderLoginPage': null
     'Auth:userLogin': User
     'Auth:userLogout': null
+    'Auth:renderForgotPasswordPage': null
+    'Auth:renderPasswordResetPage': null
+    'Auth:userRequestPasswordReset': User
+    'Auth:userUpdatePassword': User
+    'Auth:userRequestPasswordReset:error': string
   }
 }

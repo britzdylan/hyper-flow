@@ -2,6 +2,7 @@ export const AuthConfig = {
   strict: false,
   routeIdPrefix: 'Auth_',
   actions: {
+    // Register
     renderRegisterPage: {
       route: '/register',
       event: false,
@@ -27,7 +28,7 @@ export const AuthConfig = {
       event: false,
       flash: false,
     },
-
+    // Authenticate
     renderLoginPage: {
       route: '/login',
       event: false,
@@ -43,7 +44,7 @@ export const AuthConfig = {
       event: false,
       flash: false,
     },
-
+    // Password
     renderForgotPasswordPage: {
       route: '/forgot-password',
       event: false,

@@ -40,21 +40,21 @@ router
   .get(`${verifyUserEmail.route}`, [RegisterController, 'verifyUserEmail'])
   .as(`${routeIdPrefix}verifyUserEmail`)
 
-// router
-//   .post(`${renderForgotPasswordPage.route}`, [PasswordController, 'renderForgotPasswordPage'])
-//   .as(`${routeIdPrefix}renderForgotPasswordPage`)
+router
+  .get(`${renderForgotPasswordPage.route}`, [PasswordController, 'renderForgotPasswordPage'])
+  .as(`${routeIdPrefix}renderForgotPasswordPage`)
 
-// router
-//   .post(`${renderPasswordResetPage.route}`, [PasswordController, 'renderPasswordResetPage'])
-//   .as(`${routeIdPrefix}renderPasswordResetPage`)
+router
+  .get(`${renderPasswordResetPage.route}`, [PasswordController, 'renderPasswordResetPage'])
+  .as(`${routeIdPrefix}renderPasswordResetPage`)
 
 router
   .get(`${renderLoginPage.route}`, [AuthenticateController, 'renderLoginPage'])
   .as(`${routeIdPrefix}renderLoginPage`)
 
-// router
-//   .post(`${userRequestPasswordReset.route}`, [PasswordController, 'userRequestPasswordReset'])
-//   .as(`${routeIdPrefix}userRequestPasswordReset`)
+router
+  .post(`${userRequestPasswordReset.route}`, [PasswordController, 'userRequestPasswordReset'])
+  .as(`${routeIdPrefix}userRequestPasswordReset`)
 
 router
   .post(`${userLogin.route}`, [AuthenticateController, 'userLogin'])
@@ -64,6 +64,6 @@ router
   .post(`${userLogout.route}`, [AuthenticateController, 'userLogout'])
   .as(`${routeIdPrefix}userLogout`)
 
-// router
-//   .post(`${userUpdatePassword.route}`, [PasswordController, 'userUpdatePassword'])
-//   .as(`${routeIdPrefix}userUpdatePassword`)
+router
+  .post(`${userUpdatePassword.route}`, [PasswordController, 'userUpdatePassword'])
+  .as(`${routeIdPrefix}userUpdatePassword`)
