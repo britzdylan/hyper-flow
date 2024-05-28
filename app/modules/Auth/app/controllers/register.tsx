@@ -1,5 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import UserModule from '#modules/Auth/app/models/user'
+import User from '#models/user'
 import {
   EmailVerificationPage,
   RegisterPage,
@@ -75,7 +75,7 @@ export default class RegistersController {
       )
     }
 
-    const user = await UserModule.create(userData)
+    const user = await User.create(userData)
 
     if (AuthConfig.actions.createUser.event) {
       emitter.emit('Auth:createUser', user)
@@ -111,7 +111,7 @@ export default class RegistersController {
   }: HttpContext): Promise<string | void> {
     const token = request.params().token
 
-    const user = await UserModule.findByOrFail('emailVerificationToken', token)
+    const user = await User.findByOrFail('emailVerificationToken', token)
 
     const verified = user.verifyEmail(token)
 
@@ -161,7 +161,7 @@ export default class RegistersController {
   public async requestEmailVerification({ request, session }: HttpContext): Promise<void> {
     // @ts-ignore
     const email = await request.validateUsing(emailVerification)
-    let user = await UserModule.findByOrFail('email', email)
+    let user = await User.findByOrFail('email', email)
     if (user.isVerified) {
       if (AuthConfig.actions.requestEmailVerification.event) {
         emitter.emit('Auth:requestEmailVerification:verified', 'User is already verified')

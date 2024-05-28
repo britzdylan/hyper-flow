@@ -3,6 +3,11 @@ import { BaseModel, column, computed } from '@adonisjs/lucid/orm'
 import { compose } from '@adonisjs/core/helpers'
 import hash from '@adonisjs/core/services/hash'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
+import { beforeCreate } from '@adonisjs/lucid/orm'
+import Hash from '@adonisjs/core/services/hash'
+import encryption from '@adonisjs/core/services/encryption'
+import string from '@adonisjs/core/helpers/string'
+import { AuthConfig } from '#modules/config'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['id', 'email'],
@@ -68,4 +73,47 @@ export default class User extends compose(BaseModel, AuthFinder) {
   //     })
   //     await profile.save()
   //   }
+
+  @beforeCreate()
+  public static generateVerificationToken(user: User) {
+    if (AuthConfig.strict) {
+      user.generateVerificationToken()
+    }
+  }
+
+  /*
+  / Methods
+  */
+
+  public verifyEmail(token: string): boolean {
+    if (encryption.decrypt(token) === encryption.decrypt(this.emailVerificationToken ?? '')) {
+      this.emailVerifiedAt = DateTime.now()
+      this.emailVerificationToken = null
+      return true
+    }
+    return false
+  }
+
+  public generateVerificationToken() {
+    this.emailVerificationToken = encryption.encrypt(string.random(40))
+  }
+
+  public async newEmailResetRequest(email: string) {
+    return (this.emailResetRequest = encryption.encrypt(email, '2 hours'))
+  }
+
+  public async updateEmail(token: string) {
+    const newEmail = encryption.decrypt<string>(token ?? '')
+    if (!newEmail) {
+      return false
+    }
+    this.email = newEmail!
+    this.emailResetRequest = null
+    this.emailVerifiedAt = DateTime.now()
+    return true
+  }
+
+  public async verifyPassword(password: string): Promise<boolean> {
+    return Hash.verify(this.password, password)
+  }
 }
