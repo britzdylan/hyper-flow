@@ -49,7 +49,7 @@ router
 //   .as(`${routeIdPrefix}renderPasswordResetPage`)
 
 router
-  .post(`${renderLoginPage.route}`, [AuthenticateController, 'renderLoginPage'])
+  .get(`${renderLoginPage.route}`, [AuthenticateController, 'renderLoginPage'])
   .as(`${routeIdPrefix}renderLoginPage`)
 
 // router
