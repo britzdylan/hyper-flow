@@ -18,5 +18,6 @@ declare module '@adonisjs/core/types' {
     'Auth:userRequestPasswordReset': User
     'Auth:userUpdatePassword': User
     'Auth:userRequestPasswordReset:error': string
+    'Auth:userUpdatePassword:error': string
   }
 }

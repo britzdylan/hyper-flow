@@ -22,3 +22,9 @@ export const emailVerification = vine.compile(
     email: vine.string().email(),
   })
 )
+
+export const passwordOnlyStrict = vine.compile(
+  vine.object({
+    password: vine.string().minLength(8).maxLength(32).confirmed(),
+  })
+)

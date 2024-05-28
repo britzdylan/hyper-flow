@@ -15,8 +15,8 @@ export interface ILogoOptions {
 
 export interface FormProps {
   formUrl: string
-  formData: {
-    email: string
+  formData?: {
+    [key: string]: string
   }
   formErrors?: {
     [key: string]: () => string
