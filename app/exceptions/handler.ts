@@ -2,6 +2,7 @@ import app from '@adonisjs/core/services/app'
 import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
 import { StatusPageRange, StatusPageRenderer } from '@adonisjs/http-server/types'
 import NotFound from '#pages/NotFound'
+import { errors } from '@adonisjs/auth'
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
    * In debug mode, the exception handler will display verbose errors
@@ -29,6 +30,13 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    */
   async handle(error: unknown, ctx: HttpContext) {
     console.log(error)
+    if (error instanceof errors.E_INVALID_CREDENTIALS) {
+      ctx.session.flash('errors', ['Invalid Credentials'])
+      ctx.response.header('HX-Reswap', 'none')
+      ctx.response.header('HX-Trigger', 'showToast')
+
+      return
+    }
     return super.handle(error, ctx)
   }
 
