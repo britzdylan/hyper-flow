@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { beforeSave, beforeCreate } from '@adonisjs/lucid/orm'
+import { beforeCreate } from '@adonisjs/lucid/orm'
 import Hash from '@adonisjs/core/services/hash'
 import encryption from '@adonisjs/core/services/encryption'
 import string from '@adonisjs/core/helpers/string'
@@ -31,13 +31,6 @@ export default class UserModule extends User implements IUser {
   public static generateVerificationToken(user: UserModule) {
     if (AuthConfig.strict) {
       user.generateVerificationToken()
-    }
-  }
-
-  @beforeSave()
-  public static async hashPassword(user: UserModule) {
-    if (user.$dirty.password) {
-      user.password = await Hash.make(user.password)
     }
   }
 
