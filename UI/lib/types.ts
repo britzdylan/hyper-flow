@@ -3,6 +3,8 @@ interface ClassProps {
   attrs?: any
   key?: any
   disabled?: boolean
+  id?: string
+  name?: string
 }
 
 export interface JsxElementProps extends ClassProps {}

@@ -1,5 +1,6 @@
 import { Button, Input } from '#components'
-import { csrfField } from 'adonisjsx'
+import { Form } from '#primitives/form'
+
 interface FormProps {
   formUrl: string
   formData: {
@@ -13,13 +14,7 @@ interface FormProps {
 
 export function UserRegisterForm({ formUrl, formData, formErrors }: FormProps): JSX.Element {
   return (
-    <form
-      id="loginForm"
-      hx-post={formUrl}
-      hx-swap="outerHTML"
-      class="flex flex-col gap-2 w-full items-start"
-    >
-      {csrfField()}
+    <Form name="loginForm" id="loginForm" hx-post={formUrl} hx-swap="outerHTML">
       <Input
         placeholder="name@example.com"
         name="email"
@@ -56,7 +51,7 @@ export function UserRegisterForm({ formUrl, formData, formErrors }: FormProps): 
       <span>
         {formErrors?.email()},{formErrors?.password()}
       </span>
-    </form>
+    </Form>
   )
 }
 
@@ -93,13 +88,7 @@ export function EmailVerificationFailed(): JSX.Element {
 
 export function EmailRequestForm({ formUrl, formData, formErrors }: FormProps): JSX.Element {
   return (
-    <form
-      id="emailRequestForm"
-      hx-post={formUrl}
-      hx-swap="outerHTML"
-      class="flex flex-col gap-2 w-full items-start"
-    >
-      {csrfField()}
+    <Form name="emailRequestForm" id="emailRequestForm" hx-post={formUrl} hx-swap="outerHTML">
       <Input
         placeholder="name@example.com"
         name="email"
@@ -132,7 +121,7 @@ export function EmailRequestForm({ formUrl, formData, formErrors }: FormProps): 
         Please wait...
       </Button>
       <span>{formErrors?.email()}</span>
-    </form>
+    </Form>
   )
 }
 
