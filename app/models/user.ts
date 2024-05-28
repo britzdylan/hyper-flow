@@ -10,7 +10,7 @@ import string from '@adonisjs/core/helpers/string'
 import { AuthConfig } from '#modules/config'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
-  uids: ['id', 'email'],
+  uids: ['email'],
   passwordColumnName: 'password',
 })
 
