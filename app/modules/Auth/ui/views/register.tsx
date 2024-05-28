@@ -1,20 +1,12 @@
 import { Button, Input } from '#components'
+import { AuthConfig } from '#modules/config'
 import { Form } from '#primitives/form'
-
-interface FormProps {
-  formUrl: string
-  formData: {
-    email: string
-  }
-  formErrors?: {
-    email: () => string
-    password: () => string
-  }
-}
+import { FormProps } from '#ui/lib/types'
+import router from '@adonisjs/core/services/router'
 
 export function UserRegisterForm({ formUrl, formData, formErrors }: FormProps): JSX.Element {
   return (
-    <Form name="loginForm" id="loginForm" hx-post={formUrl} hx-swap="outerHTML">
+    <Form name="registerForm" id="registerForm" hx-post={formUrl} hx-swap="outerHTML">
       <Input
         placeholder="name@example.com"
         name="email"
@@ -56,11 +48,14 @@ export function UserRegisterForm({ formUrl, formData, formErrors }: FormProps): 
 }
 
 export function RegisterPage({ formUrl, formData }: FormProps): JSX.Element {
+  const loginUrl = router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)
   return (
     <div class="relative h-full w-full flex items-center justify-center p-4">
-      <Button variant="ghost" class="absolute top-4 right-4">
-        Login
-      </Button>
+      <a href={loginUrl} title="View login Page">
+        <Button variant="ghost" class="absolute top-4 right-4">
+          Login
+        </Button>
+      </a>
       <div class=" h-full w-full flex flex-col gap-4 items-center justify-center max-w-sm mx-auto">
         <h1 class="text-2xl font-semibold text-foreground">Create Account</h1>
         <h2 class="text-sm font-medium text-foreground/60">
@@ -77,11 +72,15 @@ export function RegisterPage({ formUrl, formData }: FormProps): JSX.Element {
 }
 
 export function EmailVerificationFailed(): JSX.Element {
+  const loginUrl = router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)
+
   return (
     <div class="relative h-full w-full flex items-center justify-center p-4">
-      <Button variant="ghost" class="absolute top-4 right-4">
-        Back to Login
-      </Button>
+      <a href={loginUrl} title="View login Page">
+        <Button variant="ghost" class="absolute top-4 right-4">
+          Back to Login
+        </Button>
+      </a>
     </div>
   )
 }
