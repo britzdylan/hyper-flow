@@ -26,12 +26,9 @@ export default class AuthenticateController {
   }
 
   public async userLogin({ request, auth, response, session }: HttpContext) {
-    const { email, password } = {
-      email: request.input('email'),
-      password: request.input('password'),
-    }
-    console.log(email, password)
+    const { email, password } = request.all()
     const user = await User.verifyCredentials(email, password)
+
     await auth.use('web').login(user)
 
     if (actions.userLogin.event) {
@@ -44,11 +41,11 @@ export default class AuthenticateController {
       'HX-Redirect',
       router.builder().make(`${AuthConfig.routeIdPrefix}renderUserDashboard`)
     )
-    return
   }
 
   public async userLogout({ auth, response, session }: HttpContext) {
     await auth.use('web').logout()
+
     if (actions.userLogout.flash) {
       session.flash('success', [UserLogoutSuccess])
     }
@@ -59,6 +56,5 @@ export default class AuthenticateController {
       'HX-Redirect',
       router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)
     )
-    return
   }
 }
