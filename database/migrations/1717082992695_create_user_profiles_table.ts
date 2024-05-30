@@ -16,6 +16,8 @@ export default class extends BaseSchema {
       table.json('avatar')
       table.string('first_name').nullable().defaultTo(null)
       table.string('last_name').nullable().defaultTo(null)
+      table.string('bio').nullable().defaultTo(null)
+
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

@@ -5,8 +5,8 @@ import vine from '@vinejs/vine'
  */
 export const patchProfile = vine.compile(
   vine.object({
-    firstName: vine.string().fixedLength(72).optional(),
-    lastName: vine.string().fixedLength(72).optional(),
-    bio: vine.string().fixedLength(300).optional(),
+    firstName: vine.string().maxLength(72).optional(),
+    lastName: vine.string().maxLength(72).optional(),
+    bio: vine.string().maxLength(300).optional(),
   })
 )
