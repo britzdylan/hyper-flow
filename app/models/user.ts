@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, computed } from '@adonisjs/lucid/orm'
+import { BaseModel, afterCreate, column, computed, hasOne } from '@adonisjs/lucid/orm'
 import { compose } from '@adonisjs/core/helpers'
+import type { HasOne } from '@adonisjs/lucid/types/relations'
 import hash from '@adonisjs/core/services/hash'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { beforeCreate } from '@adonisjs/lucid/orm'
@@ -8,6 +9,7 @@ import Hash from '@adonisjs/core/services/hash'
 import encryption from '@adonisjs/core/services/encryption'
 import string from '@adonisjs/core/helpers/string'
 import { AuthConfig } from '#modules/config'
+import UserProfile from '#models/user_profile'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -56,8 +58,8 @@ export default class User extends compose(BaseModel, AuthFinder) {
   / Relationships
   */
 
-  //   @hasOne(() => UserProfile)
-  //   public profile: HasOne<typeof UserProfile>
+  @hasOne(() => UserProfile)
+  declare profile: HasOne<typeof UserProfile>
 
   //   @hasMany(() => UserSession)
   //   public sessions: HasMany<typeof UserSession>
@@ -66,13 +68,13 @@ export default class User extends compose(BaseModel, AuthFinder) {
   / Hooks
   */
 
-  //   @afterCreate()
-  //   public static async createProfile(user: UserModule) {
-  //     const profile = await user.related('profile').create({
-  //       userId: user.id,
-  //     })
-  //     await profile.save()
-  //   }
+  @afterCreate()
+  public static async createProfile(user: User) {
+    const profile = await user.related('profile').create({
+      userId: user.id,
+    })
+    await profile.save()
+  }
 
   @beforeCreate()
   public static generateVerificationToken(user: User) {
