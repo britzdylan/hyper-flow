@@ -250,7 +250,9 @@ function UserDashboardLayout({ children }: PropsWithChildren) {
           </ul>
         </div>
         <DashboardPageHeader>
-          <p class="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">Settings</p>
+          <p class="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
+            Account Settings
+          </p>
         </DashboardPageHeader>
         <div id="page-content-container">{children}</div>
       </main>
