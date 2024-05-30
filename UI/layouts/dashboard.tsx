@@ -16,6 +16,7 @@ import {
   Logo,
 } from '#components'
 import { JsxElementProps } from '#ui/lib/types'
+import { DashboardPageHeader } from '#ui/components/project/dashboard/pageHeader'
 
 function DashboardTopNavigation({}: JsxElementProps): JSX.Element {
   return (
@@ -248,6 +249,9 @@ function UserDashboardLayout({ children }: PropsWithChildren) {
             </li>
           </ul>
         </div>
+        <DashboardPageHeader>
+          <p class="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">Settings</p>
+        </DashboardPageHeader>
         <div id="page-content-container">{children}</div>
       </main>
       <Footer />
