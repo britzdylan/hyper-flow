@@ -19,5 +19,10 @@ declare module '@adonisjs/core/types' {
     'Auth:userUpdatePassword': User
     'Auth:userRequestPasswordReset:error': string
     'Auth:userUpdatePassword:error': string
+    'Profile:renderProfilePage': null
+    'Profile:patchProfile': string
+    'Profile:putProfileImage': string
+    'Profile:deleteProfileImage': string
+    'Profile:patchProfile:error': string
   }
 }
