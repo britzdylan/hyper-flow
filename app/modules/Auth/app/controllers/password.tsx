@@ -1,19 +1,17 @@
 import { HttpContext } from '@adonisjs/core/http'
 import { AuthConfig } from '#modules/config'
-import { FlashMessages } from '#enum/FlashMessages'
 import { PasswordResetRequestPage, PasswordResetPage } from '#modules/Auth/ui/views/password'
 import { emailVerification, passwordOnlyStrict } from '#modules/Auth/app/validators/auth'
 import { PasswordResetForm, PasswordResetRequestForm } from '#modules/Auth/ui/views/password'
-import { Session } from '@adonisjs/session'
-import emitter from '@adonisjs/core/services/emitter'
 import User from '#models/user'
 import router from '@adonisjs/core/services/router'
 import PasswordReset from '#models/passwordReset'
 import InvalidUrl from '#pages/invalidUrl'
+import ModuleController from '#modules/index'
 
-export default class PasswordController {
+export default class PasswordController extends ModuleController {
   public async renderForgotPasswordPage({ jsx }: HttpContext) {
-    this.emitAuthEvent('renderForgotPasswordPage', 'event', null)
+    this.emitEvent('renderForgotPasswordPage', 'event', null)
 
     // @ts-ignore
     return jsx(PasswordResetRequestPage, {
@@ -34,7 +32,7 @@ export default class PasswordController {
     if (passwordResetRequest.isExpired() || !(await passwordResetRequest.verifyToken(token))) {
       return jsx(InvalidUrl)
     }
-    this.emitAuthEvent('renderPasswordResetPage', 'event', null)
+    this.emitEvent('renderPasswordResetPage', 'event', null)
 
     // @ts-ignore
     return jsx(PasswordResetPage, {
@@ -52,7 +50,7 @@ export default class PasswordController {
     try {
       formData = await emailVerification.validate(request.all())
     } catch (error) {
-      this.emitAuthEvent('userRequestPasswordReset', 'error', 'Invalid Email')
+      this.emitEvent('userRequestPasswordReset', 'error', 'Invalid Email')
 
       return this.renderPasswordResetRequestForm(error)
     }
@@ -65,9 +63,9 @@ export default class PasswordController {
       newRequest.userId = user.id
       await newRequest.generateToken()
       await newRequest.save()
-      this.emitAuthEvent('userRequestPasswordReset', 'event', user)
+      this.emitEvent('userRequestPasswordReset', 'event', user)
     } else {
-      this.emitAuthEvent('userRequestPasswordReset', 'error', 'User not found')
+      this.emitEvent('userRequestPasswordReset', 'error', 'User not found')
     }
     this.showFlashMessage(
       session,
@@ -89,7 +87,7 @@ export default class PasswordController {
     try {
       formData = await passwordOnlyStrict.validate(request.all())
     } catch (error) {
-      this.emitAuthEvent('userUpdatePassword', 'error', 'Password Verification Failed')
+      this.emitEvent('userUpdatePassword', 'error', 'Password Verification Failed')
       return this.renderPasswordResetForm(error, token)
     }
 
@@ -99,7 +97,7 @@ export default class PasswordController {
 
     user.merge({ password: formData.password })
     await user.save()
-    this.emitAuthEvent('userUpdatePassword', 'event', user)
+    this.emitEvent('userUpdatePassword', 'event', user)
     this.showFlashMessage(session, 'userUpdatePassword', 'success', 'UserPasswordResetSuccess')
 
     response.header('HX-Reswap', 'none')
@@ -108,33 +106,6 @@ export default class PasswordController {
       'HX-Redirect',
       router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)
     )
-  }
-
-  private emitAuthEvent(
-    actionName: keyof typeof AuthConfig.actions,
-    eventType: 'event' | 'error',
-    data: any
-  ) {
-    const actionConfig = AuthConfig.actions[actionName]
-
-    if (actionConfig && actionConfig.event) {
-      const emitString = `Auth:${actionName}:${eventType}`
-      // @ts-ignore
-      emitter.emit(emitString, data)
-    }
-  }
-
-  private showFlashMessage(
-    session: Session,
-    actionName: keyof typeof AuthConfig.actions,
-    type: 'success' | 'error',
-    msg: keyof typeof FlashMessages
-  ) {
-    const actionConfig = AuthConfig.actions[actionName]
-    const message = FlashMessages[msg]
-    if (actionConfig && actionConfig.flash) {
-      session.flash(type, [message])
-    }
   }
 
   private renderPasswordResetRequestForm(error: any) {
