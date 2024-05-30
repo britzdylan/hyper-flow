@@ -67,3 +67,35 @@ export const AuthConfig = {
     },
   },
 }
+
+export const ProfileConfig = {
+  routeIdPrefix: 'Profile_',
+  forms: [
+    {
+      id: 'profileForm',
+      name: 'userProfileForm',
+    },
+  ],
+  actions: {
+    renderProfilePage: {
+      route: '/profile',
+      event: true,
+      flash: true,
+    },
+    patchProfile: {
+      route: '/profile',
+      event: true,
+      flash: true,
+    },
+    putProfileImage: {
+      route: '/profile/image',
+      event: true,
+      flash: true,
+    },
+    deleteProfileImage: {
+      route: '/profile/image',
+      event: true,
+      flash: true,
+    },
+  },
+}
