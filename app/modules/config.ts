@@ -70,12 +70,6 @@ export const AuthConfig = {
 
 export const ProfileConfig = {
   routeIdPrefix: 'Profile_',
-  forms: [
-    {
-      id: 'profileForm',
-      name: 'userProfileForm',
-    },
-  ],
   actions: {
     renderProfilePage: {
       route: '/profile',
