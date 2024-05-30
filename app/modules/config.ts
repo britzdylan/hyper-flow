@@ -31,7 +31,7 @@ export const AuthConfig = {
     // Authenticate
     renderLoginPage: {
       route: '/login',
-      event: false,
+      event: true,
       flash: false,
     },
     userLogin: {

@@ -16,9 +16,7 @@ router.get('/api', () => {
 })
 
 router
-  .get('/dashbaord', () => {
+  .get('/dashboard', () => {
     return <h1>Hello dashboard</h1>
   })
-  .as('Auth_viewUserDashboard')
-
-  
+  .as('Auth_renderUserDashboard')

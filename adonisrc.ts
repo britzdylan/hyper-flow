@@ -45,7 +45,11 @@ export default defineConfig({
   | List of modules to import before starting the application.
   |
   */
-  preloads: [() => import('#start/routes'), () => import('#start/kernel'), () => import('#start/events')],
+  preloads: [
+    () => import('#start/routes'),
+    () => import('#start/kernel'),
+    () => import('#start/events'),
+  ],
 
   /*
   |--------------------------------------------------------------------------
@@ -58,6 +62,11 @@ export default defineConfig({
   */
   tests: {
     suites: [
+      {
+        files: ['app/modules/Auth/tests/**/*.spec(.ts|.js)'],
+        name: 'module:auth',
+        timeout: 2000,
+      },
       {
         files: ['tests/unit/**/*.spec(.ts|.js)'],
         name: 'unit',

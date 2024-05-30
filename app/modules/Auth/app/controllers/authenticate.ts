@@ -15,7 +15,7 @@ export default class AuthenticateController {
       emitter.emit('Auth:renderLoginPage', null)
     }
     // @ts-ignore
-    return jsx(LoginPage, {
+    return await jsx(LoginPage, {
       data: {
         formUrl: router.builder().make(`${AuthConfig.routeIdPrefix}userLogin`),
         formData: {
