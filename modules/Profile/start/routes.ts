@@ -1,6 +1,6 @@
 import router from '@adonisjs/core/services/router'
-import ProfileController from '../app/controllers/profile.js'
-import { ProfileConfig } from '../../config.js'
+import ProfileController from '#modules/Profile/app/controllers/profile'
+import { ProfileConfig } from '#modules/config'
 import { middleware } from '#start/kernel'
 const { renderProfilePage, patchProfile, putProfileImage, deleteProfileImage } =
   ProfileConfig.actions

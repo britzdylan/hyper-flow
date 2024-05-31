@@ -1,10 +1,10 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import emitter from '@adonisjs/core/services/emitter'
-import { AuthConfig } from '../../../config.js'
+import { AuthConfig } from '#modules/config'
 import router from '@adonisjs/core/services/router'
 import { FlashMessages } from '#enum/FlashMessages'
-import { LoginPage } from '../../ui/views/authenticate.js'
+import { LoginPage } from '#modules/Auth/templates/authenticate'
 
 const { actions } = AuthConfig
 const { UserLoginSuccess, UserLogoutSuccess } = FlashMessages

@@ -1,9 +1,9 @@
 import { test } from '@japa/runner'
 import testUtils from '@adonisjs/core/services/test_utils'
-import AuthenticateController from '../app/controllers/authenticate.js'
+import AuthenticateController from '#modules/Auth/app/controllers/authenticate'
 import User from '#models/user'
 import emitter from '@adonisjs/core/services/emitter'
-import { AuthConfig } from '../../config.js'
+import { AuthConfig } from '#modules/config'
 import { FlashMessages } from '#enum/FlashMessages'
 
 test.group('Authenticate', (group) => {

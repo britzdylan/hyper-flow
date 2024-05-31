@@ -5,13 +5,13 @@ File Structure for each module
 - app
   - controllers
   - middleware
-  - models
   - validators
 - start
   - events
   - routes
 - tests
-- ui
+- templates
+- utils.ts
 
 Rules
 

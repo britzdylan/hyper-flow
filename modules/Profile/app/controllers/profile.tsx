@@ -3,7 +3,7 @@ import { patchProfile } from '#modules/Profile/app/validators/profile'
 import { ProfileConfig } from '#modules/config'
 import router from '@adonisjs/core/services/router'
 import ModuleController from '#modules/index'
-import { ProfilePage, ProfilePatchForm } from '../../ui/views/profile.js'
+import { ProfilePage, ProfilePatchForm } from '#modules/Profile/templates/profile'
 import { UserDashboardLayout } from '#layouts/dashboard'
 
 export default class ProfileController extends ModuleController {
