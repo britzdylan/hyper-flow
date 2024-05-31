@@ -1,8 +1,8 @@
 import router from '@adonisjs/core/services/router'
-import RegisterController from '#modules/Auth/app/controllers/register'
-import PasswordController from '#modules/Auth/app/controllers/password'
-import AuthenticateController from '#modules/Auth/app/controllers/authenticate'
-import { AuthConfig } from '#modules/config'
+import RegisterController from '../app/controllers/register.js'
+import PasswordController from '../app/controllers/password.js'
+import AuthenticateController from '../app/controllers/authenticate.js'
+import { AuthConfig } from '../../config.js'
 
 const {
   createUser,

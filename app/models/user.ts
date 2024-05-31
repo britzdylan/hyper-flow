@@ -8,7 +8,7 @@ import { beforeCreate } from '@adonisjs/lucid/orm'
 import Hash from '@adonisjs/core/services/hash'
 import encryption from '@adonisjs/core/services/encryption'
 import string from '@adonisjs/core/helpers/string'
-import { AuthConfig } from '#modules/config'
+import { AuthConfig } from '../../modules/config.js'
 import UserProfile from '#models/user_profile'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {

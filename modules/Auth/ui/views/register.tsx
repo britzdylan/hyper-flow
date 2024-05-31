@@ -1,5 +1,5 @@
 import { Button, Input } from '#components'
-import { AuthConfig } from '#modules/config'
+import { AuthConfig } from '../../../config.js'
 import { Form } from '#primitives/form'
 import { FormProps } from '#ui/lib/types'
 import router from '@adonisjs/core/services/router'

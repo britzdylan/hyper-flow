@@ -1,13 +1,9 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
-import {
-  EmailVerificationPage,
-  RegisterPage,
-  UserRegisterForm,
-} from '#modules/Auth/ui/views/register'
+import { EmailVerificationPage, RegisterPage, UserRegisterForm } from '../../ui/views/register.js'
 import emitter from '@adonisjs/core/services/emitter'
-import { emailAndPassword, emailVerification } from '#modules/Auth/app/validators/auth'
-import { AuthConfig } from '#modules/config'
+import { emailAndPassword, emailVerification } from '../validators/auth.js'
+import { AuthConfig } from '../../../config.js'
 import router from '@adonisjs/core/services/router'
 import InvalidUrl from '#pages/invalidUrl'
 import { FlashMessages } from '#enum/FlashMessages'

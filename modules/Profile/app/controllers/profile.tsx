@@ -3,14 +3,14 @@ import { patchProfile } from '#modules/Profile/app/validators/profile'
 import { ProfileConfig } from '#modules/config'
 import router from '@adonisjs/core/services/router'
 import ModuleController from '#modules/index'
-import { ProfilePage, ProfilePatchForm } from '#modules/Profile/ui/views/profile'
+import { ProfilePage, ProfilePatchForm } from '../../ui/views/profile.js'
 import { UserDashboardLayout } from '#layouts/dashboard'
 
 export default class ProfileController extends ModuleController {
   public async renderProfilePage({ jsx, auth }: HttpContext) {
     const user = auth.user!
     const [profile] = await user.related('profile').query()
-    // console.log(profile)
+
     this.emitEvent('renderProfilePage', 'event', null)
     // @ts-ignore
     return await jsx(ProfilePage, {

@@ -44,7 +44,7 @@
         "./app/abilities/*.js"
       ],
       "#modules/*": [
-        "./app/modules/*.js"
+        "./modules/*.js"
       ],
       "#database/*": [
         "./database/*.js"

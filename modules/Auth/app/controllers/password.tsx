@@ -1,13 +1,13 @@
 import { HttpContext } from '@adonisjs/core/http'
-import { AuthConfig } from '#modules/config'
-import { PasswordResetRequestPage, PasswordResetPage } from '#modules/Auth/ui/views/password'
-import { emailVerification, passwordOnlyStrict } from '#modules/Auth/app/validators/auth'
-import { PasswordResetForm, PasswordResetRequestForm } from '#modules/Auth/ui/views/password'
+import { AuthConfig } from '../../../config.js'
+import { PasswordResetRequestPage, PasswordResetPage } from '../../ui/views/password.js'
+import { emailVerification, passwordOnlyStrict } from '../validators/auth.js'
+import { PasswordResetForm, PasswordResetRequestForm } from '../../ui/views/password.js'
 import User from '#models/user'
 import router from '@adonisjs/core/services/router'
 import PasswordReset from '#models/passwordReset'
 import InvalidUrl from '#pages/invalidUrl'
-import ModuleController from '#modules/index'
+import ModuleController from '../../../index.js'
 
 export default class PasswordController extends ModuleController {
   public async renderForgotPasswordPage({ jsx }: HttpContext) {
