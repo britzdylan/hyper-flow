@@ -93,3 +93,13 @@ export const ProfileConfig = {
     },
   },
 }
+
+export const BillingConfig = {
+  routeIdPrefix: 'Billing_',
+  actions: {},
+  // What infro to save
+  // flow for create new billing plan
+  // manage current billing plan
+  // change billing plan
+  // cancel billing plan
+}

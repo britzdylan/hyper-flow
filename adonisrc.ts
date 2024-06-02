@@ -63,7 +63,7 @@ export default defineConfig({
   tests: {
     suites: [
       {
-        files: ['app/modules/Auth/tests/**/*.spec(.ts|.js)'],
+        files: ['modules/Auth/tests/**/*.spec(.ts|.js)'],
         name: 'module:auth',
         timeout: 2000,
       },
