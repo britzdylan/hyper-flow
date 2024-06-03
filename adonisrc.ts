@@ -35,6 +35,8 @@ export default defineConfig({
     () => import('@adonisjs/static/static_provider'),
     () => import('@adonisjs/vite/vite_provider'),
     () => import('adonisjsx/jsxProvider'),
+    () => import('@adonisjs/cors/cors_provider'),
+    () => import('#providers/rest_provider')
   ],
 
   /*

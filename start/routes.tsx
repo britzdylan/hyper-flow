@@ -21,3 +21,9 @@ router
     return <h1>Hello dashboard</h1>
   })
   .as('Auth_renderUserDashboard')
+
+router.get('/framer', ({ response }) => {
+  return response.json({
+    title: 'Hello World',
+  })
+})
