@@ -1,4 +1,7 @@
 import type { ApplicationService } from '@adonisjs/core/types'
+import { HttpContext } from '@adonisjs/core/http'
+import env from '#start/env'
+import LemonSDK from './src/lemon_squeezy_sdk.js'
 
 export default class ServiceProvider {
   constructor(protected app: ApplicationService) {}
@@ -12,6 +15,10 @@ export default class ServiceProvider {
    * The container bindings have booted
    */
   async boot() {
+    // @ts-ignore
+    HttpContext.macro('lemonSDK', () => {
+      return new LemonSDK(env.get('LEMONSQUEEZY_API_KEY'))
+    })
     await import('./src/rest.js')
   }
 

@@ -26,14 +26,24 @@ export class RestClient {
    */
   private async request(endpoint: string, options: RequestInit): Promise<any> {
     const url = `${this.baseURL}${endpoint}`
-    const response: Response = await fetch(url, { ...this.init, ...options })
+    console.log('/////////////////////////////////////////////////////////////////////////////')
+    console.log(url)
+    console.log(options)
+    console.log('/////////////////////////////////////////////////////////////////////////////')
+    const response: Response = await fetch(url, options)
 
     if (!response.ok) {
       const errorBody = await response.json()
+      console.log('/////////////////////////////////////////////////////////////////////////////')
+      console.log(errorBody)
+      console.log('/////////////////////////////////////////////////////////////////////////////')
       return new Error(
         `Error ${response.status}: ${response.statusText} - ${JSON.stringify(errorBody)}`
       )
     }
+    console.log('/////////////////////////////////////////////////////////////////////////////')
+    console.log(response)
+    console.log('/////////////////////////////////////////////////////////////////////////////')
 
     return response.json()
   }
@@ -44,10 +54,13 @@ export class RestClient {
    * @param {Record<string, string>} [headers={}] - Optional headers.
    * @returns {Promise<any>} - The response JSON.
    */
-  public get(endpoint: string, headers: Record<string, string> = {}): Promise<any> {
+  public get<T>(endpoint: string, headers?: Record<string, string>): Promise<T> {
     return this.request(endpoint, {
       method: 'GET',
-      headers,
+      headers: {
+        ...this.init.headers,
+        ...headers,
+      },
     })
   }
 
@@ -61,7 +74,7 @@ export class RestClient {
   public post(endpoint: string, body: any, headers: Record<string, string> = {}): Promise<any> {
     return this.request(endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...headers },
+      headers: { 'Content-Type': 'application/json', ...this.init.headers, ...headers },
       body: JSON.stringify(body),
     })
   }
@@ -76,7 +89,22 @@ export class RestClient {
   public put(endpoint: string, body: any, headers: Record<string, string> = {}): Promise<any> {
     return this.request(endpoint, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...headers },
+      headers: { 'Content-Type': 'application/json', ...this.init.headers, ...headers },
+      body: JSON.stringify(body),
+    })
+  }
+
+  /**
+   * Makes a PATCH request.
+   * @param {string} endpoint - The endpoint to request.
+   * @param {any} body - The request body.
+   * @param {Record<string, string>} [headers={}] - Optional headers.
+   * @returns {Promise<any>} - The response JSON.
+   */
+  public patch(endpoint: string, body: any, headers: Record<string, string> = {}): Promise<any> {
+    return this.request(endpoint, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...this.init.headers, ...headers },
       body: JSON.stringify(body),
     })
   }
@@ -90,7 +118,10 @@ export class RestClient {
   public delete(endpoint: string, headers: Record<string, string> = {}): Promise<any> {
     return this.request(endpoint, {
       method: 'DELETE',
-      headers,
+      headers: {
+        ...this.init.headers,
+        ...headers,
+      },
     })
   }
 }
