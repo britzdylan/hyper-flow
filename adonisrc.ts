@@ -36,13 +36,13 @@ export default defineConfig({
     () => import('@adonisjs/vite/vite_provider'),
     () => import('adonisjsx/jsxProvider'),
     () => import('@adonisjs/cors/cors_provider'),
-    () => import('#providers/rest_provider')
+    () => import('#providers/service_provider'),
   ],
 
   /*
   |--------------------------------------------------------------------------
   | Preloads
-  |--------------------------------------------------------------------------
+  |--------------------------------------------------------------------------`
   |
   | List of modules to import before starting the application.
   |

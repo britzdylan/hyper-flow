@@ -1,6 +1,6 @@
 import type { ApplicationService } from '@adonisjs/core/types'
 
-export default class ApiProvider {
+export default class ServiceProvider {
   constructor(protected app: ApplicationService) {}
 
   /**
@@ -11,7 +11,9 @@ export default class ApiProvider {
   /**
    * The container bindings have booted
    */
-  async boot() {}
+  async boot() {
+    await import('./src/rest.js')
+  }
 
   /**
    * The application has been booted
