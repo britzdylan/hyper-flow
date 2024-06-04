@@ -27,6 +27,6 @@ router
 router.get('/framer', async ({ response, lemonSDK }) => {
   // const ls = new LemonSDK(env.get('LEMONSQUEEZY_API_KEY'))
   let d = await lemonSDK()
-  console.log(d.getAuthUser())
+
   return response.json(await d.getAuthUser())
 })
