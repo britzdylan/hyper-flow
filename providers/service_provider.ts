@@ -19,7 +19,7 @@ export default class ServiceProvider {
     HttpContext.macro('lemonSDK', () => {
       return new LemonSDK(env.get('LEMONSQUEEZY_API_KEY'))
     })
-    await import('./src/rest.js')
+    await import('./src/rest_provider.js')
   }
 
   /**

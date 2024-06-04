@@ -1,4 +1,4 @@
-import { RestClient } from './rest.js'
+import { RestClient } from './rest_provider.js'
 
 interface ResourceObjectStructure<T> {
   type: string

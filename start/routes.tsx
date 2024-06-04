@@ -11,8 +11,6 @@ import router from '@adonisjs/core/services/router'
 import { Button } from '#components'
 import '#modules/Auth/start/routes'
 import '#modules/Profile/start/routes'
-import LemonSDK from '#providers/src/lemon_squeezy_sdk'
-import env from '#start/env'
 
 router.get('/api', () => {
   return <Button variant="destructive">Incremented</Button> // only use when swapping content with HTMX
