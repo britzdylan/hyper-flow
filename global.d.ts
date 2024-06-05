@@ -1,4 +1,4 @@
-import LemonSDK from './services/lemon_squeezy_sdk.ts'
+import LemonSDK from './services/lemon_squeezy.ts'
 import { RestClient } from '#providers/src/rest_provider'
 
 declare global {
