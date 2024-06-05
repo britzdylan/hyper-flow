@@ -108,8 +108,8 @@ export default class LemonSDK {
     options?: ResourceOptions,
     body?: ResourceData
   ): Promise<T | Error> {
-    const url = `${this.url}${endpoint}${this.getQueryString(options)}`.replace('?&', '?')
-    console.log({ ...this.headers, ...(options?.headers || {}) })
+    const url = `${this.url}${endpoint}${this.getQueryString(options)}`
+    // console.log({ ...this.headers, ...(options?.headers || {}) })
     try {
       const response = await fetch(url, {
         method,
