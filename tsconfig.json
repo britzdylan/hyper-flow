@@ -20,7 +20,7 @@
         "./app/mails/*.js"
       ],
       "#services/*": [
-        "./app/services/*.js"
+        "./services/*.js"
       ],
       "#listeners/*": [
         "./app/listeners/*.js"

@@ -1,4 +1,4 @@
-import LemonSDK from '#providers/src/lemon_squeezy_sdk'
+import LemonSDK from './services/lemon_squeezy_sdk.ts'
 import { RestClient } from '#providers/src/rest_provider'
 
 declare global {
@@ -9,7 +9,6 @@ declare global {
 
 declare module '@adonisjs/core/http' {
   export interface HttpContext {
-    lemonSDK: LemonSDK
     restClient: {
       [key: string]: RestClient
     }
