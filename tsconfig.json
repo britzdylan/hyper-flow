@@ -79,6 +79,9 @@
       "#enum/*": [
         "./app/enum/*.js"
       ],
+      "#types/*": [
+        "./types/*js"
+      ]
     },
     "plugins": [
       {
