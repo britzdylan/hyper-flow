@@ -139,7 +139,7 @@ export class RestClient {
 // apiClient.get('/endpoint').then(response => console.log(response)).catch(error => console.error(error));
 
 // @ts-ignore
-HttpContext.macro('restClient', async () => {
+HttpContext.getter('restClient', async () => {
   const config = {
     //TODO get from global config
     json: {
@@ -160,11 +160,3 @@ HttpContext.macro('restClient', async () => {
 
   return client
 })
-
-declare module '@adonisjs/core/http' {
-  export interface HttpContext {
-    restClient: {
-      [key: string]: RestClient
-    }
-  }
-}

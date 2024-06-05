@@ -1,4 +1,4 @@
-import { RestClient } from './rest_provider.js'
+import type { ObjectOfAny } from '#types/global' // Ensure correct path
 
 interface ResourceObjectStructure<T> {
   type: string
@@ -9,110 +9,144 @@ interface ResourceObjectStructure<T> {
   meta?: {}
 }
 
+interface Paginate {
+  size: number | null
+  number: number | null
+}
+
 interface ResourceOptions {
-  related?: string[]
-  filter?: {
-    [key: string]: any
-  }
-  paginate?: {
-    size: number | null
-    number: number | null
-  }
-  headers?: {
-    [key: string]: any
-  }
+  related: string[] | null
+  filter: ObjectOfAny | null
+  paginate: Paginate | null
+  headers: ObjectOfAny | null
 }
 
 interface ResourceData {
   type: string
-  data: {
-    [key: string]: any
-  }
-  relationships?: {
-    [key: string]: any
-  }
+  attributes: ObjectOfAny
+  relationships?: ObjectOfAny
   id?: string
 }
 
-export default class LemonSDK {
-  readonly url = 'https://api.lemonsqueezy.com/v1'
-  private RestClient: RestClient | null = null
+interface User {
+  name: string
+  email: string
+  color: string
+  avatar_url: string
+  has_custom_avatar: boolean
+  createdAt: string
+  updatedAt: string
+}
 
-  private headers = (key: string) => {
+export default class LemonSDK {
+  private readonly url = 'https://api.lemonsqueezy.com/v1'
+  private apiKey: string
+
+  constructor(apiKey: string) {
+    this.apiKey = apiKey
+  }
+
+  private get headers() {
     return {
       'Accept': 'application/vnd.api+json',
       'Content-Type': 'application/vnd.api+json',
-      'Authorization': `Bearer ${key}`,
+      'Authorization': `Bearer ${this.apiKey}`,
     }
   }
 
-  constructor(apiKey: string) {
-    this.RestClient = new RestClient(this.url, { headers: this.headers(apiKey) })
+  private getFilter(filter: ObjectOfAny) {
+    let finalFilter = ''
+    if (filter) {
+      Object.keys(filter).forEach((item) => {
+        finalFilter = `${finalFilter}&filter[${item}]=${filter[item]}`
+      })
+    }
+    return finalFilter
   }
 
-  private async getResource<T>(resource: string, options: ResourceOptions = {}) {
-    const { related, filter, paginate, headers } = options
+  private getPagination(paginate: Paginate) {
+    if (paginate && paginate.size !== null && paginate.number !== null) {
+      return `&page[size]=${paginate.size}&page[number]=${paginate.number}`
+    }
 
-    const getRelated = () => (related ? `include=${related.join(',')}` : '')
+    if (paginate && paginate.size !== null) {
+      return `&page[size]=${paginate.size}`
+    }
 
-    const getFilters = () => {
-      let finalFilter = ''
-      if (filter) {
-        Object.keys(filter).forEach((item) => {
-          finalFilter = `${finalFilter}&filter[${item}]=${filter[item]}`
-        })
+    if (paginate && paginate.number !== null) {
+      return `&page[number]=${paginate.number}`
+    }
+
+    return '' // Ensure a return statement if none of the conditions are met
+  }
+
+  private getQueryString(options?: ResourceOptions) {
+    if (!options) {
+      return ''
+    }
+    const { related = null, filter = null, paginate = null } = options
+    let queryString = ''
+
+    if (related && related.length > 0) {
+      queryString += `&include=${related.join(',')}`
+    }
+
+    if (filter) {
+      queryString += this.getFilter(filter)
+    }
+
+    if (paginate) {
+      queryString += this.getPagination(paginate)
+    }
+
+    return '?' + queryString.replace('?&', '?')
+  }
+
+  private async request<T>(
+    endpoint: string,
+    method: string,
+    options?: ResourceOptions,
+    body?: ResourceData
+  ): Promise<T | Error> {
+    const url = `${this.url}${endpoint}${this.getQueryString(options)}`.replace('?&', '?')
+    console.log({ ...this.headers, ...(options?.headers || {}) })
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: { ...this.headers, ...(options?.headers || {}) },
+        body: body ? JSON.stringify({ data: body }) : undefined,
+      })
+
+      if (!response.ok) {
+        console.log(response)
+        throw new Error(`HTTP error! status: ${response.status}`)
       }
-      return finalFilter
-    }
 
-    const getPaginate = () => {
-      if (paginate && paginate.size && paginate.number) {
-        return `&page[size]=${paginate.size}&page[number]=${paginate.number}`
-      } else {
-        return ''
-      }
-    }
-
-    const finalUrl = `${resource}?${getRelated()}${getFilters()}${getPaginate()}`.replace('?&', '?')
-    console.log('finalUrl', finalUrl)
-    try {
-      const response = await this.RestClient!.get<ResourceObjectStructure<T>>(finalUrl, headers)
-      return response
+      return (await response.json()) as T
     } catch (error) {
-      console.error(`Error fetching resource ${resource}:`, error)
-      throw new Error(`Error fetching resource ${resource}`)
+      console.error(`Error fetching resource ${endpoint}:`, error.message)
+      return error as Error
     }
   }
 
-  private async createResource(resource: string, data: ResourceData) {
-    try {
-      return this.RestClient!.post(resource, data)
-    } catch (error) {
-      console.error(`Error creating resource ${resource}:`, error)
-      throw new Error(`Error creating resource ${resource}`)
-    }
+  private getResource<T>(resource: string, options?: ResourceOptions) {
+    return this.request<ResourceObjectStructure<T>>(resource, 'GET', options)
   }
 
-  private async updateResource(resource: string, data: ResourceData) {
-    try {
-      return this.RestClient!.patch(resource, data)
-    } catch (error) {
-      console.error(`Error updating resource ${resource}:`, error)
-      throw new Error(`Error updating resource ${resource}`)
-    }
+  private createResource<T>(resource: string, data: ResourceData) {
+    return this.request<T>(resource, 'POST', undefined, data)
   }
 
-  private async deleteResource(resource: string, id: number) {
-    try {
-      return this.RestClient!.delete(`${resource}/${id}`)
-    } catch (error) {
-      console.error(`Error deleting resource ${resource}/${id}:`, error)
-      throw new Error(`Error deleting resource ${resource}/${id}`)
-    }
+  private updateResource<T>(resource: string, data: ResourceData) {
+    return this.request<T>(resource, 'PATCH', undefined, data)
   }
 
-  public async getAuthUser() {
-    return this.getResource('/users/me')
+  private deleteResource<T>(resource: string, id: number) {
+    return this.request<T>(`${resource}/${id}`, 'DELETE')
+  }
+
+  public getAuthUser() {
+    return this.getResource<User>('/users/me')
   }
 
   /////////////////////////////////
@@ -200,9 +234,9 @@ export default class LemonSDK {
     return this.getResource('/orders')
   }
 
-  public async generateOrderInvoice(id: number) {
-    // Implementation depending on API specifics
-  }
+  // public async generateOrderInvoice(id: number) {
+  // Implementation depending on API specifics
+  // }
 
   /////////////////////////////////
   // Subscriptions RUDL
@@ -234,9 +268,9 @@ export default class LemonSDK {
     return this.updateResource(`/subscription-items/${id}`, data)
   }
 
-  public async getCurrentUsage(id: number) {
-    // Fetch current usage depending on API specifics
-  }
+  // public async getCurrentUsage(id: number) {
+  // Fetch current usage depending on API specifics
+  // }
 
   /////////////////////////////////
   // Subscription Invoices RL - Generate invoice
@@ -358,11 +392,3 @@ export default class LemonSDK {
     return this.getResource('/webhooks')
   }
 }
-
-declare module '@adonisjs/core/app' {
-  interface HttpContext {
-    lemonSDK: () => LemonSDK
-  }
-}
-
-// @ts-ignore

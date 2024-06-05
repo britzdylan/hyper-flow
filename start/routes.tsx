@@ -24,7 +24,28 @@ router
 
 router.get('/framer', async ({ response, lemonSDK }) => {
   // const ls = new LemonSDK(env.get('LEMONSQUEEZY_API_KEY'))
-  let d = lemonSDK()
-
-  return response.json(await d.getAuthUser())
+  let d = lemonSDK
+  let a = await d.createWebhook({
+    type: 'webhooks',
+    attributes: {
+      url: 'https://mysite.com/webhooks/',
+      events: [
+        'order_created',
+        'subscription_created',
+        'subscription_updated',
+        'subscription_expired',
+      ],
+      secret: 'SIGNING_SECRET',
+    },
+    relationships: {
+      store: {
+        data: {
+          type: 'stores',
+          id: '52117',
+        },
+      },
+    },
+  })
+  console.log(a)
+  return response.json(await d.getAllStores())
 })
