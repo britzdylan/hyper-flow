@@ -5,15 +5,17 @@ import { HttpContext } from '@adonisjs/core/http'
 export class RestClient {
   private baseURL: string
   private init: RequestInit
+  private log: boolean
 
   /**
    * Creates an instance of ApiClient.
    * @param {string} baseURL - The base URL for the API.
    * @param {RequestInit} [init={}] - Optional initial request configuration.
    */
-  constructor(baseURL: string, init: RequestInit = {}) {
+  constructor(baseURL: string, init: RequestInit = {}, log?: boolean) {
     this.baseURL = baseURL
     this.init = init
+    this.log = log ?? false
   }
 
   /**
@@ -26,24 +28,30 @@ export class RestClient {
    */
   private async request(endpoint: string, options: RequestInit): Promise<any> {
     const url = `${this.baseURL}${endpoint}`
-    console.log('/////////////////////////////////////////////////////////////////////////////')
-    console.log(url)
-    console.log(options)
-    console.log('/////////////////////////////////////////////////////////////////////////////')
+    if (this.log) {
+      console.log('/////////////////////////////////////////////////////////////////////////////')
+      console.log(url)
+      console.log(options)
+      console.log('/////////////////////////////////////////////////////////////////////////////')
+    }
     const response: Response = await fetch(url, options)
 
     if (!response.ok) {
       const errorBody = await response.json()
-      console.log('/////////////////////////////////////////////////////////////////////////////')
-      console.log(errorBody)
-      console.log('/////////////////////////////////////////////////////////////////////////////')
+      if (this.log) {
+        console.log('/////////////////////////////////////////////////////////////////////////////')
+        console.log(errorBody)
+        console.log('/////////////////////////////////////////////////////////////////////////////')
+      }
       return new Error(
         `Error ${response.status}: ${response.statusText} - ${JSON.stringify(errorBody)}`
       )
     }
-    console.log('/////////////////////////////////////////////////////////////////////////////')
-    console.log(response)
-    console.log('/////////////////////////////////////////////////////////////////////////////')
+    if (this.log) {
+      console.log('/////////////////////////////////////////////////////////////////////////////')
+      console.log(response)
+      console.log('/////////////////////////////////////////////////////////////////////////////')
+    }
 
     return response.json()
   }
@@ -133,6 +141,7 @@ export class RestClient {
 // @ts-ignore
 HttpContext.macro('restClient', async () => {
   const config = {
+    //TODO get from global config
     json: {
       url: 'https://jsonplaceholder.typicode.com',
       init: {
