@@ -16,7 +16,7 @@ export default class ServiceProvider {
    */
   async boot() {
     // @ts-ignore
-    HttpContext.macro('lemonSDK', () => {
+    HttpContext.getter('lemonSDK', () => {
       return new LemonSDK(env.get('LEMONSQUEEZY_API_KEY'))
     })
     await import('./src/rest_provider.js')

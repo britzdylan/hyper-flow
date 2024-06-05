@@ -161,8 +161,10 @@ HttpContext.macro('restClient', async () => {
   return client
 })
 
-declare module '@adonisjs/core/app' {
+declare module '@adonisjs/core/http' {
   export interface HttpContext {
-    restClient: Map<string, RestClient>
+    restClient: {
+      [key: string]: RestClient
+    }
   }
 }

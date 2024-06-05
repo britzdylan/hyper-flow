@@ -80,7 +80,7 @@
         "./app/enum/*.js"
       ],
       "#types/*": [
-        "./types/*js"
+        "./types/*.js"
       ]
     },
     "plugins": [
