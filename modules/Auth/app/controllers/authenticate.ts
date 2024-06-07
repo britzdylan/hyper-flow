@@ -1,19 +1,14 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
-import emitter from '@adonisjs/core/services/emitter'
 import { AuthConfig } from '#modules/config'
 import router from '@adonisjs/core/services/router'
-import { FlashMessages } from '#enum/FlashMessages'
 import { LoginPage } from '#modules/Auth/templates/authenticate'
+import ModuleController from '#modules/index'
 
-const { actions } = AuthConfig
-const { UserLoginSuccess, UserLogoutSuccess } = FlashMessages
-
-export default class AuthenticateController {
+export default class AuthenticateController extends ModuleController {
   public async renderLoginPage({ jsx }: HttpContext) {
-    if (actions.renderLoginPage.event) {
-      emitter.emit('Auth:renderLoginPage', null)
-    }
+    this.emitEvent('Auth:renderLoginPage', 'event', null)
+
     // @ts-ignore
     return await jsx(LoginPage, {
       data: {
@@ -30,13 +25,9 @@ export default class AuthenticateController {
     const user = await User.verifyCredentials(email, password)
 
     await auth.use('web').login(user)
+    this.emitEvent('Auth:userLogin', 'event', user)
+    this.showFlashMessage(session, 'userLogin', 'success', 'UserLoginSuccess')
 
-    if (actions.userLogin.event) {
-      emitter.emit('Auth:userLogin', user)
-    }
-    if (actions.userLogin.flash) {
-      session.flash('success', [UserLoginSuccess])
-    }
     response.header(
       'HX-Redirect',
       router.builder().make(`${AuthConfig.routeIdPrefix}renderUserDashboard`)
@@ -45,13 +36,9 @@ export default class AuthenticateController {
 
   public async userLogout({ auth, response, session }: HttpContext) {
     await auth.use('web').logout()
+    this.showFlashMessage(session, 'userLogout', 'success', 'UserLogoutSuccess')
+    this.emitEvent('Auth:userLogout', 'event', null)
 
-    if (actions.userLogout.flash) {
-      session.flash('success', [UserLogoutSuccess])
-    }
-    if (actions.userLogout.event) {
-      emitter.emit('Auth:userLogout', null)
-    }
     response.header(
       'HX-Redirect',
       router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)

@@ -5,33 +5,38 @@ import {
   RegisterPage,
   UserRegisterForm,
 } from '#modules/Auth/templates/register'
-import emitter from '@adonisjs/core/services/emitter'
 import { emailAndPassword, emailVerification } from '#modules/Auth/app/validators/auth'
 import { AuthConfig } from '#modules/config'
 import router from '@adonisjs/core/services/router'
 import InvalidUrl from '#pages/invalidUrl'
-import { FlashMessages } from '#enum/FlashMessages'
+import ModuleController from '#modules/index'
 
 // TODO [testing]
-
-const {
-  UserRegisterSuccess,
-  UserEmailVerificationResent,
-  UserEmailAlreadyVerified,
-  UserEmailVerified,
-} = FlashMessages
 
 /**
  * Controller for registering and verifying users.
  */
-export default class RegistersController {
+export default class RegistersController extends ModuleController {
+  private renderRegisterForm(userData: any, error: any) {
+    return (
+      <UserRegisterForm
+        formUrl={router.builder().make(`${AuthConfig.routeIdPrefix}createUser`)}
+        formData={{ email: userData?.email ?? '' }}
+        formErrors={{
+          email: () =>
+            error.messages.map((item: any) => (item.field === 'email' ? item.message : '')),
+          password: () =>
+            error.messages.maSp((item: any) => (item.field === 'password' ? item.message : '')),
+        }}
+      />
+    )
+  }
   /**
    * Renders the registration view.
    */
   public async renderRegisterPage({ jsx }: HttpContext) {
-    if (AuthConfig.actions.renderRegisterPage.event) {
-      emitter.emit('Auth:renderRegisterPage', null)
-    }
+    this.emitEvent('Auth:renderRegisterPage', 'event', null)
+
     // @ts-ignore
     return await jsx(RegisterPage, {
       data: {
@@ -58,31 +63,15 @@ export default class RegistersController {
     try {
       userData = await emailAndPassword.validate(data)
     } catch (error) {
-      if (AuthConfig.actions.createUser.event) {
-        emitter.emit('Auth:createUser:error', error)
-      }
-      return await (
-        <UserRegisterForm
-          formUrl={router.builder().make(`${AuthConfig.routeIdPrefix}createUser`)}
-          formData={{ email: userData?.email ?? '' }}
-          formErrors={{
-            email: () =>
-              error.messages.map((item: any) => (item.field === 'email' ? item.message : '')),
-            password: () =>
-              error.messages.maSp((item: any) => (item.field === 'password' ? item.message : '')),
-          }}
-        />
-      )
+      this.emitEvent('Auth:createUser', 'error', error)
+
+      return await this.renderRegisterForm(userData, error)
     }
 
     const user = await User.create(userData)
+    this.emitEvent('Auth:createUser', 'event', user)
+    this.showFlashMessage(session, 'createUser', 'success', 'UserRegisterSuccess')
 
-    if (AuthConfig.actions.createUser.event) {
-      emitter.emit('Auth:createUser', user)
-    }
-    if (AuthConfig.actions.createUser.flash) {
-      session.flash('success', [UserRegisterSuccess])
-    }
     if (AuthConfig.strict) {
       response.header(
         'HX-Redirect',
@@ -116,21 +105,17 @@ export default class RegistersController {
     const verified = user.verifyEmail(token)
 
     if (!verified) {
-      if (AuthConfig.actions.verifyUserEmail.event) {
-        emitter.emit('Auth:verifyUserEmail:error', user)
-      }
+      this.emitEvent('Auth:verifyUserEmail', 'error', user)
+
       return await jsx(InvalidUrl, {
         //move to local view
         data: {},
       })
     }
     await user.save()
-    if (AuthConfig.actions.verifyUserEmail.event) {
-      emitter.emit('Auth:verifyUserEmail', user)
-    }
-    if (AuthConfig.actions.verifyUserEmail.flash) {
-      session.flash('success', [UserEmailVerified])
-    }
+    this.emitEvent('Auth:verifyUserEmail', 'event', user)
+
+    this.showFlashMessage(session, 'verifyUserEmail', 'success', 'UserEmailVerified')
 
     response.header(
       'HX-Redirect',
@@ -142,9 +127,8 @@ export default class RegistersController {
    * Render  email verification view.
    */
   public async renderEmailVerificationPage({ jsx }: HttpContext) {
-    if (AuthConfig.actions.renderEmailVerificationPage.event) {
-      emitter.emit('Auth:renderEmailVerificationPage', null)
-    }
+    this.emitEvent('Auth:renderEmailVerificationPage', 'event', null)
+
     // @ts-ignore
     return await jsx(EmailVerificationPage, {
       data: {
@@ -163,23 +147,26 @@ export default class RegistersController {
     const email = await request.validateUsing(emailVerification)
     let user = await User.findByOrFail('email', email)
     if (user.isVerified) {
-      if (AuthConfig.actions.requestEmailVerification.event) {
-        emitter.emit('Auth:requestEmailVerification:verified', 'User is already verified')
-      }
-      if (AuthConfig.actions.requestEmailVerification.flash) {
-        session.flash('success', [UserEmailAlreadyVerified])
-      }
+      this.emitEvent('Auth:requestEmailVerification', 'event', 'User is already verified')
+      this.showFlashMessage(
+        session,
+        'requestEmailVerification',
+        'success',
+        'UserEmailAlreadyVerified'
+      )
 
       return
     }
     user.generateVerificationToken()
     user = await user.save()
-    if (AuthConfig.actions.requestEmailVerification.event) {
-      emitter.emit('Auth:requestEmailVerification', user)
-    }
-    if (AuthConfig.actions.requestEmailVerification.flash) {
-      session.flash('success', [UserEmailVerificationResent])
-    }
+    this.emitEvent('Auth:requestEmailVerification', 'event', user)
+
+    this.showFlashMessage(
+      session,
+      'requestEmailVerification',
+      'success',
+      'UserEmailVerificationResent'
+    )
 
     return
   }

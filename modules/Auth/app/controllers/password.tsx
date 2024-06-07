@@ -30,7 +30,6 @@ export default class PasswordController extends ModuleController {
 
   public async renderPasswordResetPage({ jsx, params }: HttpContext) {
     const { token } = params
-    console.log(token)
     let passwordResetRequest = await PasswordReset.findByOrFail('token', token)
 
     if (passwordResetRequest.isExpired() || !(await passwordResetRequest.verifyToken(token))) {
