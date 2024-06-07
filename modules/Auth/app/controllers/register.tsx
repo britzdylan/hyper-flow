@@ -13,6 +13,11 @@ import ModuleController from '#modules/index'
 
 // TODO [testing]
 
+interface createUserQueryParams {
+  p?: 'Basic' | 'Pro' | 'Enterprise'
+  email?: string
+}
+
 /**
  * Controller for registering and verifying users.
  */
@@ -51,6 +56,7 @@ export default class RegistersController extends ModuleController {
   /**
    * Validates user data and creates a new user.
    */
+
   public async createUser({
     request,
     response,
@@ -58,7 +64,8 @@ export default class RegistersController extends ModuleController {
     auth,
   }: HttpContext): Promise<string | void> {
     const data = request.all()
-    let userData
+    const { p: plan, email } = request.qs() as createUserQueryParams
+    let userData, subscriptionCheckoutUrl
 
     try {
       userData = await emailAndPassword.validate(data)
@@ -68,22 +75,32 @@ export default class RegistersController extends ModuleController {
       return await this.renderRegisterForm(userData, error)
     }
 
+    if (plan) {
+      // subscriptionCheckoutUrl =  create checkout url
+    }
+
     const user = await User.create(userData)
     this.emitEvent('Auth:createUser', 'event', user)
     this.showFlashMessage(session, 'createUser', 'success', 'UserRegisterSuccess')
 
-    if (AuthConfig.strict) {
-      response.header(
-        'HX-Redirect',
-        router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)
-      )
-    } else {
-      await auth.use().login(user)
+    if (!subscriptionCheckoutUrl) {
+      if (AuthConfig.strict) {
+        // redirect to checkout plan url
 
-      response.header(
-        'HX-Redirect',
-        router.builder().make(`${AuthConfig.routeIdPrefix}renderUserDashboard`)
-      )
+        response.header(
+          'HX-Redirect',
+          router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)
+        )
+      } else {
+        await auth.use().login(user)
+
+        response.header(
+          'HX-Redirect',
+          router.builder().make(`${AuthConfig.routeIdPrefix}renderUserDashboard`)
+        )
+      }
+    } else {
+      response.header('HX-Redirect', 'checkout url')
     }
 
     return

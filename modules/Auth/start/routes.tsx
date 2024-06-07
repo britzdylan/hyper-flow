@@ -61,9 +61,9 @@ router
   .as(`${routeIdPrefix}userLogin`)
 
 router
-  .post(`${userLogout.route}`, [AuthenticateController, 'userLogout'])
+  .delete(`${userLogout.route}`, [AuthenticateController, 'userLogout'])
   .as(`${routeIdPrefix}userLogout`)
 
 router
-  .post(`${userUpdatePassword.route}`, [PasswordController, 'userUpdatePassword'])
+  .patch(`${userUpdatePassword.route}`, [PasswordController, 'userUpdatePassword'])
   .as(`${routeIdPrefix}userUpdatePassword`)
