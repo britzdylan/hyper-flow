@@ -10,6 +10,7 @@ import encryption from '@adonisjs/core/services/encryption'
 import string from '@adonisjs/core/helpers/string'
 import { AuthConfig } from '../../modules/config.js'
 import UserProfile from '#models/user_profile'
+import UserBilling from '#models/user_billing'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -61,6 +62,9 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @hasOne(() => UserProfile)
   declare profile: HasOne<typeof UserProfile>
 
+  @hasOne(() => UserBilling)
+  declare billing: HasOne<typeof UserBilling>
+
   //   @hasMany(() => UserSession)
   //   public sessions: HasMany<typeof UserSession>
 
@@ -74,6 +78,14 @@ export default class User extends compose(BaseModel, AuthFinder) {
       userId: user.id,
     })
     await profile.save()
+  }
+
+  @afterCreate()
+  public static async createBilling(user: User) {
+    const billing = await user.related('billing').create({
+      userId: user.id,
+    })
+    await billing.save()
   }
 
   @beforeCreate()
