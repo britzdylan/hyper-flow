@@ -38,5 +38,7 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   LEMONSQUEEZY_API_KEY: Env.schema.string(),
 
-  WEBHOOK_SIGNATURE: Env.schema.string()
+  WEBHOOK_SIGNATURE: Env.schema.string(),
+
+  APP_NAME: Env.schema.string()
 })

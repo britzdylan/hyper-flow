@@ -124,10 +124,7 @@ export default class RegistersController extends ModuleController {
     }
 
     if (AuthConfig.strict) {
-      response.header(
-        'HX-Redirect',
-        router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)
-      )
+      response.header('HX-Redirect', AuthConfig.actions.renderLoginPage.route)
     } else {
       await auth.use().login(user)
 

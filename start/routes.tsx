@@ -8,16 +8,12 @@
 */
 
 import router from '@adonisjs/core/services/router'
-import { Button } from '#components'
 import '#modules/Auth/start/routes'
 import '#modules/Profile/start/routes'
 import '#modules/Billing/start/routes'
 
 import ErrorPage from '#pages/error'
-
-router.get('/api', () => {
-  return <Button variant="destructive">Incremented</Button> // only use when swapping content with HTMX
-})
+import Home from '#pages/home'
 
 router
   .get('/dashboard', async () => {
@@ -26,7 +22,7 @@ router
   .as('Auth_renderUserDashboard')
 
 router
-  .get('/505', ({ jsx, request }) => {
+  .get('/500', ({ jsx, request }) => {
     let title = request.qs().title ?? 'Oops something went wrong'
     let desc = request.qs().desc ?? 'Please try again later'
     return jsx(ErrorPage, {
@@ -36,4 +32,10 @@ router
       },
     })
   })
-  .as('505')
+  .as('500')
+
+router.get('/', ({ jsx }) => {
+  return jsx(Home, {
+    data: {},
+  })
+})
