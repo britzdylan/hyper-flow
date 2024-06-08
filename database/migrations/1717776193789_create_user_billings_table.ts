@@ -13,11 +13,12 @@ export default class extends BaseSchema {
         .inTable('users')
         .onDelete('CASCADE')
         .index()
+      table.string('email').nullable().defaultTo(null)
       table.string('first_name').nullable().defaultTo(null)
       table.string('last_name').nullable().defaultTo(null)
       table.string('tax_id_number').nullable().defaultTo(null)
       table.string('country').nullable().defaultTo(null)
-      table.string('postal_code').nullable().defaultTo(null)
+      table.string('zip').nullable().defaultTo(null)
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

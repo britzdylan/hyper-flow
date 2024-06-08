@@ -16,7 +16,6 @@ import SubscriptionController from '#modules/Billing/app/controllers/Subscriptio
 
 interface createUserQueryParams {
   pid?: string
-  email?: string
 }
 
 /**
@@ -37,16 +36,41 @@ export default class RegistersController extends ModuleController {
       />
     )
   }
+
+  private async withNewSubscription({ response, request }: HttpContext, user: User) {
+    try {
+      let checkout = await new SubscriptionController().generateCheckoutUrl({
+        user,
+        pid: request.qs().pid,
+      })
+      this.emitEvent('Auth:withNewSubscription', 'event', checkout)
+
+      let url = checkout.data.attributes.url
+
+      return response.header('HX-Redirect', url)
+    } catch (error) {
+      this.emitEvent('Auth:withNewSubscription', 'error', error)
+      console.log(error)
+      let title = 'Sorry something went wrong during checkout',
+        desc = 'This matter has been reported and we will contact you within 48 hours.'
+      return response.header('HX-Redirect', `/505?title=${title}&desc=${desc}`)
+    }
+  }
   /**
    * Renders the registration view.
    */
-  public async renderRegisterPage({ jsx }: HttpContext) {
+  public async renderRegisterPage({ jsx, request }: HttpContext) {
     this.emitEvent('Auth:renderRegisterPage', 'event', null)
-
+    const qs = request.qs()
     // @ts-ignore
     return await jsx(RegisterPage, {
       data: {
-        formUrl: router.builder().make(`${AuthConfig.routeIdPrefix}createUser`),
+        formUrl: router
+          .builder()
+          .qs({
+            ...qs,
+          })
+          .make(`${AuthConfig.routeIdPrefix}createUser`),
         formData: {
           email: '',
         },
@@ -58,13 +82,8 @@ export default class RegistersController extends ModuleController {
    * Validates user data and creates a new user.
    */
 
-  public async createUser({
-    request,
-    response,
-    session,
-    auth,
-    jsx,
-  }: HttpContext): Promise<string | void> {
+  public async createUser(ctx: HttpContext): Promise<string | void> {
+    const { request, response, session, auth } = ctx
     const data = request.all()
     const { pid } = request.qs() as createUserQueryParams
     let userData, subscriptionCheckoutUrl
@@ -83,44 +102,39 @@ export default class RegistersController extends ModuleController {
     this.showFlashMessage(session, 'createUser', 'success', 'UserRegisterSuccess')
 
     if (pid) {
-      subscriptionCheckoutUrl = await new SubscriptionController().generateCheckoutUrl({
-        user,
-        pid,
-      })
+      await this.withNewSubscription(ctx, user)
+      return
 
-      if (subscriptionCheckoutUrl == typeof Error) {
-        const { error_page } = RegistersController
-        // TODO: create critical error log
-        // TODO: show toast error and keep user on free plan
-        // if no free plan lock user out until resolved
-        if (!BillingConfig.hasFreePlan) {
-          return jsx(error_page, {
-            data: {
-              title: 'Checkout could not be completed',
-              description:
-                'There was an issue with your checkout, please try again later, an alert has been created for this issue. Thank you for understanding.',
-            },
-          })
-        }
-      }
+      // if (subscriptionCheckoutUrl == typeof Error) {
+      //   // const { error_page } = RegistersController
+      //   console.error(subscriptionCheckoutUrl)
+      //   // TODO: create critical error log
+      //   // TODO: show toast error and keep user on free plan
+      //   // if no free plan lock user out until resolved
+      //   // if (!BillingConfig.hasFreePlan) {
+      //   //   return jsx(error_page, {
+      //   //     data: {
+      //   //       title: 'Checkout could not be completed',
+      //   //       description:
+      //   //         'There was an issue with your checkout, please try again later, an alert has been created for this issue. Thank you for understanding.',
+      //   //     },
+      //   //   })
+      //   // }
+      // }
     }
 
-    if (!subscriptionCheckoutUrl) {
-      if (AuthConfig.strict) {
-        response.header(
-          'HX-Redirect',
-          router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)
-        )
-      } else {
-        await auth.use().login(user)
-
-        response.header(
-          'HX-Redirect',
-          router.builder().make(`${AuthConfig.routeIdPrefix}renderUserDashboard`)
-        )
-      }
+    if (AuthConfig.strict) {
+      response.header(
+        'HX-Redirect',
+        router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)
+      )
     } else {
-      response.header('HX-Redirect', subscriptionCheckoutUrl)
+      await auth.use().login(user)
+
+      response.header(
+        'HX-Redirect',
+        router.builder().make(`${AuthConfig.routeIdPrefix}renderUserDashboard`)
+      )
     }
 
     return

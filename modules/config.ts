@@ -101,7 +101,8 @@ export const BillingConfig = {
   hasFreePlan: true,
   products: [
     {
-      id: '408337',
+      id: 408337,
+      product_id: 286903,
       receipt_button_text: 'Return to Dashboard',
       redirect_url: '',
       receipt_link_url: '',
@@ -110,6 +111,7 @@ export const BillingConfig = {
     },
     {
       id: '408346',
+      product_id: 286903,
       receipt_button_text: 'Return to Dashboard',
       redirect_url: '',
       receipt_link_url: '',
