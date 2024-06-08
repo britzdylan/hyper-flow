@@ -221,7 +221,7 @@ export default class SubscriptionController extends ModuleController {
 
   async cancelSubscription({ auth, session, response }: HttpContext) {
     const { id } = auth.user!
-    const deleteResponse = await fetch(this.url + '/subscriptions' + id, {
+    const deleteResponse = await fetch(this.url + '/subscriptions/' + id, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/vnd.api+json',
