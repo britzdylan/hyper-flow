@@ -10,7 +10,7 @@ import encryption from '@adonisjs/core/services/encryption'
 import string from '@adonisjs/core/helpers/string'
 import { AuthConfig } from '../../modules/config.js'
 import UserProfile from '#models/user_profile'
-import UserBilling from '#models/user_billing'
+import UserSubscription from '#models/user_subscription'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -62,8 +62,8 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @hasOne(() => UserProfile)
   declare profile: HasOne<typeof UserProfile>
 
-  @hasOne(() => UserBilling)
-  declare billing: HasOne<typeof UserBilling>
+  @hasOne(() => UserSubscription)
+  declare billing: HasOne<typeof UserSubscription>
 
   //   @hasMany(() => UserSession)
   //   public sessions: HasMany<typeof UserSession>

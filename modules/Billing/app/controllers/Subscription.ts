@@ -197,10 +197,10 @@ export default class SubscriptionController extends ModuleController {
 
     await UserSubscription.updateOrCreate(
       {
-        subscriptionId: data.id,
+        userId: meta.custom_data.userId,
       },
       {
-        userId: meta.custom_data.userId,
+        subscriptionId: data.id,
         customerId: customer_id,
         orderId: order_id,
         orderItemId: order_item_id,
