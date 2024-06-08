@@ -8,7 +8,7 @@ type PageError = {
 export default function ErrorPage({ title, description }: PageError): JSX.Element {
   return (
     <div class="relative h-full w-full bg-muted text-2xl inline-flex justify-center items-center">
-      <Alert>
+      <Alert class="max-w-screen-sm">
         <AlertTitle>{title}</AlertTitle>
         <AlertDescription>{description}</AlertDescription>
       </Alert>
