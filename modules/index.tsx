@@ -1,11 +1,14 @@
 import { FlashMessages } from '#enum/FlashMessages'
 import { Session } from '@adonisjs/session'
 import emitter from '@adonisjs/core/services/emitter'
-
+import ErrorPage from '#pages/error'
 export default class ModuleController {
+  static error_page = ErrorPage
+
   moduleConfig: any = {
     actions: [],
   }
+
   emitEvent(
     actionName: keyof typeof this.moduleConfig.actions,
     eventType: 'event' | 'error',

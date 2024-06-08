@@ -6,15 +6,16 @@ import {
   UserRegisterForm,
 } from '#modules/Auth/templates/register'
 import { emailAndPassword, emailVerification } from '#modules/Auth/app/validators/auth'
-import { AuthConfig } from '#modules/config'
+import { AuthConfig, BillingConfig } from '#modules/config'
 import router from '@adonisjs/core/services/router'
 import InvalidUrl from '#pages/invalidUrl'
 import ModuleController from '#modules/index'
+import SubscriptionController from '#modules/Billing/app/controllers/Subscription'
 
 // TODO [testing]
 
 interface createUserQueryParams {
-  p?: 'Basic' | 'Pro' | 'Enterprise'
+  pid?: string
   email?: string
 }
 
@@ -62,9 +63,10 @@ export default class RegistersController extends ModuleController {
     response,
     session,
     auth,
+    jsx,
   }: HttpContext): Promise<string | void> {
     const data = request.all()
-    const { p: plan, email } = request.qs() as createUserQueryParams
+    const { pid } = request.qs() as createUserQueryParams
     let userData, subscriptionCheckoutUrl
 
     try {
@@ -75,18 +77,36 @@ export default class RegistersController extends ModuleController {
       return await this.renderRegisterForm(userData, error)
     }
 
-    if (plan) {
-      // subscriptionCheckoutUrl =  create checkout url
-    }
-
     const user = await User.create(userData)
+
     this.emitEvent('Auth:createUser', 'event', user)
     this.showFlashMessage(session, 'createUser', 'success', 'UserRegisterSuccess')
 
+    if (pid) {
+      subscriptionCheckoutUrl = await new SubscriptionController().generateCheckoutUrl({
+        user,
+        pid,
+      })
+
+      if (subscriptionCheckoutUrl == typeof Error) {
+        const { error_page } = RegistersController
+        // TODO: create critical error log
+        // TODO: show toast error and keep user on free plan
+        // if no free plan lock user out until resolved
+        if (!BillingConfig.hasFreePlan) {
+          return jsx(error_page, {
+            data: {
+              title: 'Checkout could not be completed',
+              description:
+                'There was an issue with your checkout, please try again later, an alert has been created for this issue. Thank you for understanding.',
+            },
+          })
+        }
+      }
+    }
+
     if (!subscriptionCheckoutUrl) {
       if (AuthConfig.strict) {
-        // redirect to checkout plan url
-
         response.header(
           'HX-Redirect',
           router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)
@@ -100,7 +120,7 @@ export default class RegistersController extends ModuleController {
         )
       }
     } else {
-      response.header('HX-Redirect', 'checkout url')
+      response.header('HX-Redirect', subscriptionCheckoutUrl)
     }
 
     return

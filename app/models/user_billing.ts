@@ -14,16 +14,19 @@ export default class UserBilling extends BaseModel {
   declare firstName: string | null
 
   @column()
+  declare email: string | null
+
+  @column()
   declare lastName: string | null
 
   @column()
-  declare taxIdNumber: string | null
+  declare taxNumber: string | null
 
   @column()
   declare country: string | null
 
   @column()
-  declare postalCode: string | null
+  declare zip: string | null
 
   @computed()
   public get cardHolderName() {

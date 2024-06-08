@@ -97,6 +97,26 @@ export const ProfileConfig = {
 export const BillingConfig = {
   routeIdPrefix: 'Billing_',
   actions: {},
+  storeId: '52117',
+  hasFreePlan: true,
+  products: [
+    {
+      id: '408337',
+      receipt_button_text: 'Return to Dashboard',
+      redirect_url: '',
+      receipt_link_url: '',
+      receipt_thank_you_note: '',
+      enabled_variants: ['408337'],
+    },
+    {
+      id: '408346',
+      receipt_button_text: 'Return to Dashboard',
+      redirect_url: '',
+      receipt_link_url: '',
+      receipt_thank_you_note: '',
+      enabled_variants: ['408346'],
+    },
+  ],
   // What infro to save
   // flow for create new billing plan
   // manage current billing plan
