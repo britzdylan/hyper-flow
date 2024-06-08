@@ -36,5 +36,7 @@ export default await Env.create(new URL('../', import.meta.url), {
   */
   SESSION_DRIVER: Env.schema.enum(['cookie', 'memory'] as const),
 
-  LEMONSQUEEZY_API_KEY: Env.schema.string()
+  LEMONSQUEEZY_API_KEY: Env.schema.string(),
+
+  WEBHOOK_SIGNATURE: Env.schema.string()
 })

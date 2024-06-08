@@ -8,4 +8,6 @@ export enum FlashMessages {
   UserPasswordResetRequested = '',
   UserPasswordResetSuccess = '',
   ProfileUpdateSuccess = '',
+  UserManualSubscriptionCancelled = '',
+  UserManualSubscriptionCancelationFailed = '',
 }

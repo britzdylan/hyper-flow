@@ -11,6 +11,8 @@ import router from '@adonisjs/core/services/router'
 import { Button } from '#components'
 import '#modules/Auth/start/routes'
 import '#modules/Profile/start/routes'
+import '#modules/Billing/start/routes'
+
 import ErrorPage from '#pages/error'
 
 router.get('/api', () => {

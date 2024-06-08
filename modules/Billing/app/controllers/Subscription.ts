@@ -3,9 +3,13 @@
 // import { ProfileConfig } from '#modules/config'
 // import router from '@adonisjs/core/services/router'
 import User from '#models/user'
+import UserSubscription from '#models/user_subscription'
 import { BillingConfig } from '#modules/config'
 import ModuleController from '#modules/index'
 import env from '#start/env'
+
+import { HttpContext } from '@adonisjs/core/http'
+
 import { DateTime } from 'luxon'
 
 interface CheckoutData {
@@ -56,6 +60,9 @@ interface CheckoutUrlOptions {
 }
 
 export default class SubscriptionController extends ModuleController {
+  protected readonly apiKey = env.get('LEMONSQUEEZY_API_KEY')
+  readonly url = 'https://api.lemonsqueezy.com/v1'
+
   private checkUrlOptions: CheckoutUrlOptions = {
     type: 'checkouts',
     attributes: {
@@ -73,18 +80,16 @@ export default class SubscriptionController extends ModuleController {
   }
 
   private async fetchCheckoutUrl(body: CheckoutUrlOptions): Promise<any> {
-    const apiKey = env.get('LEMONSQUEEZY_API_KEY')
-    const url = 'https://api.lemonsqueezy.com/v1/checkouts'
     const data = {
       data: { ...body },
     }
     // console.log(JSON.stringify(data))
-    return await fetch(url, {
+    return await fetch(this.url + '/checkouts', {
       method: 'POST',
       headers: {
         'Accept': 'application/vnd.api+json',
         'Content-Type': 'application/vnd.api+json',
-        'Authorization': `Bearer ${apiKey}`,
+        'Authorization': `Bearer ${this.apiKey}`,
       },
       body: JSON.stringify(data),
     })
@@ -109,7 +114,7 @@ export default class SubscriptionController extends ModuleController {
 
   public async generateCheckoutUrl({ user, pid }: { user: User; pid: string }) {
     let product_options = this.getProduct(pid)
-    delete product_options.id
+
     if (!product_options) {
       return new Error('Product ID does not exist')
     }
@@ -142,11 +147,116 @@ export default class SubscriptionController extends ModuleController {
     return await this.fetchCheckoutUrl(urlOptions)
   }
 
-  //  generate checkout url
-  // createSubscription
-  // updateSubscription
-  // subscriptionPayment
-  //    subscriptionPaymentFailed
-  //    subscripitonCanceleled
-  //  subscriptionExpired
+  async getCheckoutUrl({ auth, request, response }: HttpContext) {
+    const user = auth.user!
+    try {
+      let checkout = await this.generateCheckoutUrl({
+        user,
+        pid: request.qs().pid,
+      })
+      this.emitEvent('Billing:getCheckoutUrl', 'event', checkout)
+
+      let url = checkout.data.attributes.url
+
+      return response.header('HX-Redirect', url)
+    } catch (error) {
+      this.emitEvent('Billing:getCheckoutUrl', 'error', error)
+      console.log(error)
+      let title = 'Sorry something went wrong during checkout',
+        desc = 'This matter has been reported and we will contact you within 48 hours.'
+      return response.header('HX-Redirect', `/505?title=${title}&desc=${desc}`)
+    }
+  }
+
+  async hookSubscription({ request, response }: HttpContext) {
+    const signature = request.header('X-Signature')
+    if (!signature) {
+      return response.status(200).send('ok')
+    }
+
+    if (signature !== env.get('WEBHOOK_SIGNATURE')) {
+      return response.status(200).send('ok')
+    }
+
+    const { data, meta } = request.body()
+    const {
+      customer_id,
+      order_id,
+      order_item_id,
+      product_id,
+      variant_id,
+      status,
+      trail_ends_at,
+      renews_at,
+      ends_at,
+      card_brand,
+      card_last_four,
+      urls,
+    } = data.attributes
+
+    await UserSubscription.updateOrCreate(
+      {
+        subscriptionId: data.id,
+      },
+      {
+        userId: meta.custom_data.userId,
+        customerId: customer_id,
+        orderId: order_id,
+        orderItemId: order_item_id,
+        productId: product_id,
+        variantId: variant_id,
+        status,
+        trailEndsAt: trail_ends_at,
+        renewsAt: renews_at,
+        endsAt: ends_at,
+        cardBrand: card_brand,
+        cardLastFour: card_last_four,
+        updatePaymentMethod: urls.update_payment_method,
+      }
+    )
+
+    return response.status(200).send('ok')
+  }
+
+  async cancelSubscription({ auth, session, response }: HttpContext) {
+    const { id } = auth.user!
+    const deleteResponse = await fetch(this.url + '/subscriptions' + id, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/vnd.api+json',
+        'Content-Type': 'application/vnd.api+json',
+        'Authorization': `Bearer ${this.apiKey}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success:', data)
+        return data
+      })
+      .catch((error) => {
+        console.error('Error:', error)
+        return error
+      })
+
+    if (deleteResponse == typeof Error) {
+      this.emitEvent('Billing:cancelSubscription', 'error', 'API Called failed')
+      this.showFlashMessage(
+        session,
+        'Billing:cancelSubscription',
+        'error',
+        'UserManualSubscriptionCancelationFailed'
+      )
+    } else {
+      this.emitEvent('Billing:cancelSubscription', 'event', deleteResponse)
+      this.showFlashMessage(
+        session,
+        'Billing:cancelSubscription',
+        'success',
+        'UserManualSubscriptionCancelled'
+      )
+    }
+
+    response.header('HX-Reswap', 'none')
+    response.header('HX-Trigger', 'showToast')
+  }
 }

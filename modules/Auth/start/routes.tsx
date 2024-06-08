@@ -3,6 +3,7 @@ import RegisterController from '#modules/Auth/app/controllers/register'
 import PasswordController from '#modules/Auth/app/controllers/password'
 import AuthenticateController from '#modules/Auth/app/controllers/authenticate'
 import { AuthConfig } from '#modules/config'
+import { middleware } from '#start/kernel'
 
 const {
   createUser,
@@ -63,6 +64,7 @@ router
 router
   .delete(`${userLogout.route}`, [AuthenticateController, 'userLogout'])
   .as(`${routeIdPrefix}userLogout`)
+  .use(middleware.auth())
 
 router
   .patch(`${userUpdatePassword.route}`, [PasswordController, 'userUpdatePassword'])

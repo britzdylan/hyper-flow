@@ -17,7 +17,7 @@ export default class ModuleController {
     const actionConfig = this.moduleConfig.actions[actionName]
 
     if (actionConfig && actionConfig.event) {
-      const emitString = `Auth:${String(actionName)}:${eventType}`
+      const emitString = `${String(actionName)}:${eventType}`
       // @ts-ignore
       emitter.emit(emitString, data)
     }

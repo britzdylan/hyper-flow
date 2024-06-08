@@ -96,7 +96,28 @@ export const ProfileConfig = {
 
 export const BillingConfig = {
   routeIdPrefix: 'Billing_',
-  actions: {},
+  actions: {
+    generateCheckoutUrl: {
+      route: null,
+      event: false,
+      flash: false,
+    },
+    getCheckoutUrl: {
+      route: '/billing/subscription',
+      event: false,
+      flash: false,
+    },
+    hookSubscription: {
+      route: '/hook/billing/subscription',
+      event: false,
+      flash: false,
+    },
+    cancelSubscription: {
+      route: '/billing/subscription/cancel',
+      event: false,
+      flash: false,
+    },
+  },
   storeId: '52117',
   hasFreePlan: true,
   products: [
