@@ -34,6 +34,7 @@ interface ProductOptions {
   receipt_button_text?: string
   enabled_variants?: string[]
 }
+
 interface CheckoutUrlOptions {
   type: 'checkouts'
   test_mode: boolean
