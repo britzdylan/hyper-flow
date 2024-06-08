@@ -6,7 +6,7 @@ import {
   UserRegisterForm,
 } from '#modules/Auth/templates/register'
 import { emailAndPassword, emailVerification } from '#modules/Auth/app/validators/auth'
-import { AuthConfig, BillingConfig } from '#modules/config'
+import { AuthConfig } from '#modules/config'
 import router from '@adonisjs/core/services/router'
 import InvalidUrl from '#pages/invalidUrl'
 import ModuleController from '#modules/index'
