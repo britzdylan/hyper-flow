@@ -4,7 +4,7 @@ import { ProfileConfig } from '#modules/config'
 import router from '@adonisjs/core/services/router'
 import ModuleController from '#modules/index'
 import { ProfilePage, ProfilePatchForm } from '#modules/Profile/templates/profile'
-import { UserDashboardLayout } from '#layouts/dashboard'
+import { SubPageDashboardLayout } from '#layouts/dashboard'
 
 export default class ProfileController extends ModuleController {
   public async renderProfilePage({ jsx, auth }: HttpContext) {
@@ -14,7 +14,7 @@ export default class ProfileController extends ModuleController {
     this.emitEvent('renderProfilePage', 'event', null)
     // @ts-ignore
     return await jsx(ProfilePage, {
-      layout: UserDashboardLayout,
+      layout: SubPageDashboardLayout,
       data: {
         formUrl: router.builder().make(`${ProfileConfig.routeIdPrefix}patchProfile`),
         formData: {

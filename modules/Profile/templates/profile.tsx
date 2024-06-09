@@ -1,20 +1,10 @@
-import { FormProps } from '#ui/lib/types'
-import {
-  Button,
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-  Input,
-  TextArea,
-} from '#components'
+import { FormPropsCard } from '#ui/lib/types'
+import { Button, Input, TextArea } from '#components'
 
 import { Form } from '#primitives/form'
 import { UserSettingsBase } from '#ui/components/base/user-settings'
 
-import { PropsWithChildren } from 'adonisjsx'
+import { InputCard } from '#ui/components/project/forms/inputs'
 
 export function ProfilePage(props: FormPropsCard): JSX.Element {
   return (
@@ -22,11 +12,6 @@ export function ProfilePage(props: FormPropsCard): JSX.Element {
       <ProfilePatchForm {...props} />
     </UserSettingsBase>
   )
-}
-
-interface FormPropsCard extends FormProps {
-  id: string
-  name: string
 }
 
 export function ProfilePatchForm({
@@ -83,29 +68,5 @@ export function ProfilePatchForm({
         Save Changes
       </Button>
     </Form>
-  )
-}
-
-interface InputCard {
-  title: string
-  description: string
-  help: string
-}
-
-export function InputCard({ children, ...props }: PropsWithChildren<InputCard>) {
-  const { title, description, help } = props
-  return (
-    <Card class="w-full">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </CardHeader>
-
-      <CardContent>{children}</CardContent>
-
-      <CardFooter class="border-t border-border bg-secondary text-secondary-foreground font-medium p-6 py-4 justify-between">
-        <small>{help}</small>
-      </CardFooter>
-    </Card>
   )
 }

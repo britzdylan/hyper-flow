@@ -2,13 +2,16 @@
 // import { patchProfile } from '#modules/Profile/app/validators/profile'
 // import { ProfileConfig } from '#modules/config'
 // import router from '@adonisjs/core/services/router'
+import { SubPageDashboardLayout } from '#layouts/dashboard'
 import User from '#models/user'
 import UserSubscription from '#models/user_subscription'
+import { BillingSettingsPage } from '#modules/Billing/templates/billing'
 import { BillingConfig } from '#modules/config'
 import ModuleController from '#modules/index'
 import env from '#start/env'
 
 import { HttpContext } from '@adonisjs/core/http'
+import router from '@adonisjs/core/services/router'
 
 import { DateTime } from 'luxon'
 
@@ -111,6 +114,23 @@ export default class SubscriptionController extends ModuleController {
 
   private genExpiryDate() {
     return DateTime.now().plus({ minutes: 30 }).toISO()
+  }
+
+  public async renderBillingSettings({ jsx, auth }: HttpContext) {
+    const user = auth.user!
+    // const [profile] = await user.related('profile').query()
+
+    this.emitEvent('renderBillingSettings', 'event', null)
+    // @ts-ignore
+    return await jsx(BillingSettingsPage, {
+      layout: SubPageDashboardLayout,
+      data: {
+        formUrl: router.builder().make(`${BillingConfig.routeIdPrefix}renderBillingSettings`),
+        formData: {},
+        id: 'patchProfileForm',
+        name: 'patchProfileForm',
+      },
+    })
   }
 
   public async generateCheckoutUrl({ user, pid }: { user: User; pid: string }) {
