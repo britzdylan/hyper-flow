@@ -1,4 +1,4 @@
-import { Button, Input } from '#components'
+import { Button, FormInput, Input, Logo } from '#components'
 import { AuthConfig } from '../../config.js'
 import { Form } from '#primitives/form'
 import { FormProps } from '#ui/lib/types'
@@ -6,19 +6,28 @@ import router from '@adonisjs/core/services/router'
 
 export function LoginForm({ formUrl, formData, formErrors }: FormProps): JSX.Element {
   return (
-    <Form name="loginForm" id="loginForm" hx-post={formUrl} hx-swap="outerHTML">
-      <Input
-        placeholder="Email Address"
+    <Form name="loginForm" id="loginForm" hx-post={formUrl}>
+      <FormInput
+        label="Email Address"
+        placeholder="john@example.com"
         name="email"
         required
         type="email"
         value={formData?.email}
+        error={formErrors?.email()}
       />
-      <Input placeholder="Password" required name="password" type="password" />
-      <Button class="w-full">Login</Button>
-      <Button type="submit" disabled={true} class="w-full htmx-indicator">
+      <FormInput
+        label="Password"
+        error={formErrors?.password()}
+        placeholder="********"
+        required
+        name="password"
+        type="password"
+      />
+      <Button class="w-full mt-4 indicator">
+        Login{' '}
         <svg
-          class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+          class="animate-spin -ml-1 mr-3 h-5 w-5 text-white indicator"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -36,12 +45,8 @@ export function LoginForm({ formUrl, formData, formErrors }: FormProps): JSX.Ele
             fill="currentColor"
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
           ></path>
-        </svg>{' '}
-        Please wait...
+        </svg>
       </Button>
-      <span>
-        {formErrors?.email()},{formErrors?.password()}
-      </span>
     </Form>
   )
 }
@@ -54,19 +59,23 @@ export function LoginPage({ formUrl, formData }: FormProps): JSX.Element {
 
   return (
     <div class="relative h-full w-full flex items-center justify-center p-4">
-      <a href={registerUrl} title="View Register Page">
-        <Button variant="ghost" class="absolute top-4 right-4">
-          Register
-        </Button>
-      </a>
       <div class=" h-full w-full flex flex-col gap-4 items-center justify-center max-w-sm mx-auto">
-        <h1 class="text-2xl font-semibold text-foreground">Account Login</h1>
-        <h2 class="text-sm font-medium text-foreground/60">
-          Enter your email below to login to your account
-        </h2>
+        <Logo
+          options={{
+            href: '/',
+            title: 'Home Page',
+          }}
+        />
+        <h1 class="typeH1">Account Login</h1>
+        <h2 class="typeP">Enter your email below to login to your account</h2>
         <LoginForm formData={formData} formUrl={formUrl} />
-        <span>
-          <a href={forgotPasswordUrl}>Forgot Password</a>
+        <span class="flex flex-col items-center gap-0">
+          <a class="" href={registerUrl} title="View login Page">
+            <Button variant="link">Don't have an account? Register instead</Button>
+          </a>
+          <a href={forgotPasswordUrl}>
+            <Button variant="link">Forgot Password</Button>
+          </a>
         </span>
       </div>
     </div>

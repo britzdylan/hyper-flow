@@ -73,4 +73,14 @@
   svg.indicator.htmx-request {
     opacity: 1;
   }
+
+  @layer components {
+    .typeH1 {
+      @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+    }
+
+    .typeP {
+      @apply leading-7 text-center;
+    }
+  }
 }

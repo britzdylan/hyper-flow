@@ -20,7 +20,12 @@ export function Form({ children, ...props }: PropsWithChildren<FormProps>): JSX.
   const { class: className, ...rest } = props
 
   return (
-    <form class={cn('flex flex-col gap-2 w-full items-start', className)} {...rest}>
+    <form
+      class={cn('flex flex-col gap-2 w-full items-start', className)}
+      {...rest}
+      hx-indicator=".indicator"
+      hx-swap="outerHTML"
+    >
       {csrfField()}
       {children}
     </form>
