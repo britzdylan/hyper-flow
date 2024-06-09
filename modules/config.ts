@@ -1,5 +1,5 @@
 export const AuthConfig = {
-  strict: false,
+  strict: true,
   routeIdPrefix: 'Auth_',
   actions: {
     // Register

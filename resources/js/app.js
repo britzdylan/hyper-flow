@@ -15,8 +15,8 @@ Alpine.plugin(anchor)
 
 Alpine.start()
 
-document.addEventListener('showToast', () => {
-  alert('show toast')
+document.addEventListener('showToast', (evt) => {
+  alert(evt.detail.value)
 })
 
 console.log('Log from JS entrypoint')

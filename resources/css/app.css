@@ -60,4 +60,17 @@
   [x-cloak] {
     display: none !important;
   }
+
+  button.indicator.htmx-request {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  svg.indicator {
+    opacity: 0;
+  }
+
+  svg.indicator.htmx-request {
+    opacity: 1;
+  }
 }

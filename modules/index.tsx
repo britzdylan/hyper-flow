@@ -35,4 +35,13 @@ export default class ModuleController {
       session.flash(type, [message])
     }
   }
+
+  getErrorToastMessage(error: { detail: string }) {
+    return error.detail
+      .replaceAll('(Key)', '')
+      .replaceAll('=', ' ')
+      .replaceAll('(', '')
+      .replaceAll(')', '')
+      .replaceAll('Key', '')
+  }
 }

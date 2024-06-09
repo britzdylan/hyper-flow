@@ -12,15 +12,15 @@ import {
 } from '#components'
 
 import { Form } from '#primitives/form'
-import { DashboardSettingsBase } from '#ui/components/base/dashboard'
+import { UserSettingsBase } from '#ui/components/base/user-settings'
 
 import { PropsWithChildren } from 'adonisjsx'
 
 export function ProfilePage(props: FormPropsCard): JSX.Element {
   return (
-    <DashboardSettingsBase>
+    <UserSettingsBase>
       <ProfilePatchForm {...props} />
-    </DashboardSettingsBase>
+    </UserSettingsBase>
   )
 }
 

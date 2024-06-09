@@ -5,7 +5,11 @@ import {
   RegisterPage,
   UserRegisterForm,
 } from '#modules/Auth/templates/register'
-import { emailAndPassword, emailVerification } from '#modules/Auth/app/validators/auth'
+import {
+  emailAndPassword,
+  emailAndPasswordStrict,
+  emailVerification,
+} from '#modules/Auth/app/validators/auth'
 import { AuthConfig } from '#modules/config'
 import router from '@adonisjs/core/services/router'
 import InvalidUrl from '#pages/invalidUrl'
@@ -29,9 +33,15 @@ export default class RegistersController extends ModuleController {
         formData={{ email: userData?.email ?? '' }}
         formErrors={{
           email: () =>
-            error.messages.map((item: any) => (item.field === 'email' ? item.message : '')),
+            error.messages.map((item: any) => (item.field === 'email' ? item.message : undefined)),
           password: () =>
-            error.messages.maSp((item: any) => (item.field === 'password' ? item.message : '')),
+            error.messages.map((item: any) =>
+              item.field === 'password' ? item.message : undefined
+            ),
+          passwordConfirmed: () =>
+            error.messages.map((item: any) =>
+              item.field === 'password_confirmation' ? item.message : undefined
+            ),
         }}
       />
     )
@@ -50,7 +60,7 @@ export default class RegistersController extends ModuleController {
       return response.header('HX-Redirect', url)
     } catch (error) {
       this.emitEvent('Auth:withNewSubscription', 'error', error)
-      console.log(error)
+
       let title = 'Sorry something went wrong during checkout',
         desc = 'This matter has been reported and we will contact you within 48 hours.'
       return response.header('HX-Redirect', `/505?title=${title}&desc=${desc}`)
@@ -86,17 +96,29 @@ export default class RegistersController extends ModuleController {
     const { request, response, session, auth } = ctx
     const data = request.all()
     const { pid } = request.qs() as createUserQueryParams
-    let userData, subscriptionCheckoutUrl
+    let userData
 
     try {
-      userData = await emailAndPassword.validate(data)
+      userData = AuthConfig.strict
+        ? await emailAndPasswordStrict.validate(data)
+        : await emailAndPassword.validate(data)
     } catch (error) {
+      console.log(error.messages)
       this.emitEvent('Auth:createUser', 'error', error)
 
-      return await this.renderRegisterForm(userData, error)
+      return await this.renderRegisterForm(data, error)
     }
+    let user
+    try {
+      user = await User.create(userData)
+    } catch (error) {
+      let toastMsg = this.getErrorToastMessage(error)
+      console.log(error)
+      response.header('HX-Reswap', 'none')
+      response.header('HX-Trigger', `{"showToast":"${toastMsg}"}`)
 
-    const user = await User.create(userData)
+      return
+    }
 
     this.emitEvent('Auth:createUser', 'event', user)
     this.showFlashMessage(session, 'createUser', 'success', 'UserRegisterSuccess')
@@ -104,23 +126,6 @@ export default class RegistersController extends ModuleController {
     if (pid) {
       await this.withNewSubscription(ctx, user)
       return
-
-      // if (subscriptionCheckoutUrl == typeof Error) {
-      //   // const { error_page } = RegistersController
-      //   console.error(subscriptionCheckoutUrl)
-      //   // TODO: create critical error log
-      //   // TODO: show toast error and keep user on free plan
-      //   // if no free plan lock user out until resolved
-      //   // if (!BillingConfig.hasFreePlan) {
-      //   //   return jsx(error_page, {
-      //   //     data: {
-      //   //       title: 'Checkout could not be completed',
-      //   //       description:
-      //   //         'There was an issue with your checkout, please try again later, an alert has been created for this issue. Thank you for understanding.',
-      //   //     },
-      //   //   })
-      //   // }
-      // }
     }
 
     if (AuthConfig.strict) {

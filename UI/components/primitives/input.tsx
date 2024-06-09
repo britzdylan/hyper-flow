@@ -51,5 +51,35 @@ function Input({ children, ...props }: PropsWithChildren<InputProps>): JSX.Eleme
     </input>
   )
 }
+interface FormInputProps extends InputProps {
+  error?: string
+  label?: string
+  help?: string
+}
+function FormInput({ children, ...props }: PropsWithChildren<FormInputProps>): JSX.Element {
+  const { class: className, type = 'text', placeholder, error, label, help, ...rest } = props
+  const stateStyling = error ? 'ring-2 ring-red-500 ring-offset-1' : 'ring-0'
+  return (
+    <div class="w-full">
+      {help || label ? (
+        <div class="inline-flex justify-between w-full py-1">
+          <label class="text-sm font-medium leading-none">{label}</label>
+          <span class="text-sm text-muted-foreground">{help}</span>
+        </div>
+      ) : null}
+      <Input
+        class={cn(className, ' ', stateStyling)}
+        type={type}
+        placeholder={placeholder}
+        {...rest}
+      />
+      {error ? (
+        <div class="inline-flex justify-between w-full py-1">
+          <span class="text-sm text-muted-foreground">{error}</span>
+        </div>
+      ) : null}
+    </div>
+  )
+}
 
-export { Input }
+export { Input, FormInput }

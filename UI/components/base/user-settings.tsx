@@ -2,7 +2,7 @@ import { Button } from '#primitives/button'
 import { JsxElementProps } from '#ui/lib/types'
 import { PropsWithChildren } from 'adonisjsx'
 
-export function DashboardSettingsBase({ children, ...props }: PropsWithChildren<JsxElementProps>) {
+export function UserSettingsBase({ children, ...props }: PropsWithChildren<JsxElementProps>) {
   return (
     <section class="w-full max-w-screen-xl mx-auto py-12 px-6 md:px-0 flex gap-12" {...props}>
       <aside class="min-w-[250px]">
