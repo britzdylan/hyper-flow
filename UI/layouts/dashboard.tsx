@@ -16,7 +16,6 @@ import {
   Logo,
 } from '#components'
 import { JsxElementProps } from '#ui/lib/types'
-import { DashboardPageHeader } from '#ui/components/project/dashboard/pageHeader'
 
 function DashboardTopNavigation({}: JsxElementProps): JSX.Element {
   return (
@@ -215,7 +214,31 @@ function Footer(): JSX.Element {
   )
 }
 
-function UserDashboardLayout({ children }: PropsWithChildren) {
+function CtxMenu(): JSX.Element {
+  return (
+    <div id="ctx-menu-navigation" class="max-h-[46px] sticky top-0 z-10 bg-background">
+      <ul class="px-4 flex items-center text-sm font-medium">
+        <li class="text-foreground px-4 py-3 border-b-2 border-foreground">
+          <a href="/" title="">
+            Home
+          </a>
+        </li>
+        <li class="text-foreground/60 px-4 py-3 border-b-0 border-foreground">
+          <a href="/" title="">
+            Settings
+          </a>
+        </li>
+        <li class="text-foreground/60 px-4 py-3 border-b-0 border-foreground">
+          <a href="/" title="">
+            Integrations
+          </a>
+        </li>
+      </ul>
+    </div>
+  )
+}
+
+function DefaultDashboardLayout({ children }: PropsWithChildren) {
   return (
     <Root>
       <header class="flex items-center w-full px-6 h-[64px]">
@@ -230,30 +253,7 @@ function UserDashboardLayout({ children }: PropsWithChildren) {
         <DashboardTopNavigation />
       </header>
       <main class="flex-grow">
-        <div id="sub-menu-navigation" class="max-h-[46px] sticky top-0 z-10 bg-background">
-          <ul class="px-4 flex items-center text-sm font-medium">
-            <li class="text-foreground px-4 py-3 border-b-2 border-foreground">
-              <a href="/" title="">
-                Home
-              </a>
-            </li>
-            <li class="text-foreground/60 px-4 py-3 border-b-0 border-foreground">
-              <a href="/" title="">
-                Settings
-              </a>
-            </li>
-            <li class="text-foreground/60 px-4 py-3 border-b-0 border-foreground">
-              <a href="/" title="">
-                Integrations
-              </a>
-            </li>
-          </ul>
-        </div>
-        <DashboardPageHeader>
-          <p class="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
-            Account Settings
-          </p>
-        </DashboardPageHeader>
+        <CtxMenu />
         <div id="page-content-container">{children}</div>
       </main>
       <Footer />
@@ -261,7 +261,7 @@ function UserDashboardLayout({ children }: PropsWithChildren) {
   )
 }
 
-function AdminDashboardLayout({ children }: PropsWithChildren) {
+function SubPageDashboardLayout({ children }: PropsWithChildren) {
   return (
     <Root>
       <header class="flex items-center w-full px-6 h-[64px]">
@@ -275,26 +275,7 @@ function AdminDashboardLayout({ children }: PropsWithChildren) {
         <span class="h-6 bg-border transform rotate-12 w-0.5 ml-3 mr-1"></span>
         <DashboardTopNavigation />
       </header>
-      <main>
-        <div id="sub-menu-navigation" class="max-h-[46px] sticky top-0 z-10 bg-background">
-          <ul class="px-4 flex items-center text-sm font-medium">
-            <li class="text-foreground px-4 py-3 border-b-2 border-foreground">
-              <a href="/" title="">
-                Home
-              </a>
-            </li>
-            <li class="text-foreground/60 px-4 py-3 border-b-0 border-foreground">
-              <a href="/" title="">
-                Settings
-              </a>
-            </li>
-            <li class="text-foreground/60 px-4 py-3 border-b-0 border-foreground">
-              <a href="/" title="">
-                Integrations
-              </a>
-            </li>
-          </ul>
-        </div>
+      <main class="flex-grow">
         <div id="page-content-container">{children}</div>
       </main>
       <Footer />
@@ -302,4 +283,4 @@ function AdminDashboardLayout({ children }: PropsWithChildren) {
   )
 }
 
-export { UserDashboardLayout, AdminDashboardLayout }
+export { DefaultDashboardLayout, SubPageDashboardLayout }

@@ -23,6 +23,11 @@ export interface FormProps {
   }
 }
 
+export interface FormPropsCard extends FormProps {
+  id: string
+  name: string
+}
+
 export type IconNames =
   | 'accessibility-sign'
   | 'accessibility-tech'
