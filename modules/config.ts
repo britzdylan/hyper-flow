@@ -72,7 +72,7 @@ export const ProfileConfig = {
   routeIdPrefix: 'Profile_',
   actions: {
     renderProfilePage: {
-      route: '/profile',
+      route: '/',
       event: true,
       flash: true,
     },
@@ -108,7 +108,7 @@ export const BillingConfig = {
       flash: false,
     },
     hookSubscription: {
-      route: '/hook/billing/subscription',
+      route: '/hooks/billing/subscription',
       event: false,
       flash: false,
     },
@@ -116,6 +116,9 @@ export const BillingConfig = {
       route: '/billing/subscription/cancel',
       event: false,
       flash: false,
+    },
+    renderBillingSettings: {
+      route: '/billing',
     },
   },
   storeId: '52117',
@@ -140,9 +143,4 @@ export const BillingConfig = {
       enabled_variants: ['408346'],
     },
   ],
-  // What infro to save
-  // flow for create new billing plan
-  // manage current billing plan
-  // change billing plan
-  // cancel billing plan
 }
