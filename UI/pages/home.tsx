@@ -1,5 +1,7 @@
-import { Icon, Logo } from '#components'
+import { Icon } from '#components'
+
 import { ProjectHeaderDefault } from '#ui/components/project/shared/header'
+import { Logo } from '#ui/components/project/shared/logo'
 
 export default function Home() {
   return (
