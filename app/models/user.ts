@@ -1,5 +1,13 @@
 import { DateTime } from 'luxon'
-import { BaseModel, afterCreate, column, computed, hasOne } from '@adonisjs/lucid/orm'
+import {
+  BaseModel,
+  afterCreate,
+  afterFetch,
+  afterFind,
+  column,
+  computed,
+  hasOne,
+} from '@adonisjs/lucid/orm'
 import { compose } from '@adonisjs/core/helpers'
 import type { HasOne } from '@adonisjs/lucid/types/relations'
 import hash from '@adonisjs/core/services/hash'
@@ -93,6 +101,13 @@ export default class User extends compose(BaseModel, AuthFinder) {
     if (AuthConfig.strict) {
       user.generateVerificationToken()
     }
+  }
+
+  @afterFind()
+  static async afterFindHook(user: User) {
+    await user.load((loader) => {
+      loader.load('profile').load('billing')
+    })
   }
 
   /*
