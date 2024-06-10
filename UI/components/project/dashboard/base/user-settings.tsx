@@ -3,7 +3,6 @@ import { JsxElementProps } from '#ui/lib/types'
 import { PropsWithChildren } from 'adonisjsx'
 import { DashboardPageHeader } from '../page-header.js'
 import { cn } from '#ui/lib/utils'
-import router from '@adonisjs/core/services/router'
 import { HttpContext } from '@adonisjs/core/http'
 
 const userSettingOptions = [

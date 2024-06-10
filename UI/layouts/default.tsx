@@ -29,7 +29,10 @@ function Body({ children }: PropsWithChildren) {
   // let alerts: errorObject = ctx?.session.flashMessages.get('notifyAlerts')
 
   return (
-    <body id="page-body" class="bg-background flex flex-col min-h-screen font-sans text-foreground">
+    <body
+      id="page-body"
+      class="bg-background flex flex-col min-h-screen font-sans text-foreground w-full"
+    >
       {children}
     </body>
   )
@@ -37,7 +40,7 @@ function Body({ children }: PropsWithChildren) {
 
 function Root({ children }: PropsWithChildren) {
   return (
-    <html id="page" lang="en">
+    <html id="page" lang="en" hx-boost="true">
       <Head />
       <Body>{children}</Body>
     </html>
