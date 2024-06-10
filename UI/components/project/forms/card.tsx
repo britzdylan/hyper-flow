@@ -1,12 +1,12 @@
-import { Button } from '#primitives/button'
 import {
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '#primitives/card'
+} from '#components'
 import { PropsWithChildren } from 'adonisjsx'
 
 export interface FormCard {

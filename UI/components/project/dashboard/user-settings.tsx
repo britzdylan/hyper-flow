@@ -1,24 +1,10 @@
-import { Button } from '#primitives/button'
+import { Button } from '#components'
 import { JsxElementProps } from '#ui/lib/types'
 import { PropsWithChildren } from 'adonisjsx'
-import { DashboardPageHeader } from '../page-header.js'
+import { DashboardPageHeader } from '#projectUI'
 import { cn } from '#ui/lib/utils'
 import { HttpContext } from '@adonisjs/core/http'
-
-const userSettingOptions = [
-  {
-    title: 'General',
-    route: '/settings',
-  },
-  {
-    title: 'Security',
-    route: '/settings/security',
-  },
-  {
-    title: 'Billing',
-    route: '/settings/billing',
-  },
-]
+import { userSettingOptions } from '#ui/lib/constants'
 
 function isActive(route: string, ctx: HttpContext) {
   return route === ctx.request.url() ? '!text-background bg-foreground hover:!bg-foreground' : ''

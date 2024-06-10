@@ -1,29 +1,25 @@
-import { Avatar, AvatarFallback, AvatarImage } from '#primitives/avatar'
-import { Badge } from '#primitives/badge'
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Badge,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  Icon,
   DropdownMenuTrigger,
-} from '#primitives/dropdown'
-import { Icon } from '#primitives/icon'
+} from '#components'
+
+import { AccountNavDropdownLinks, SupportMenuLink } from '#ui/lib/constants'
 
 interface AccountNavDropdownWithAvatar {
   avatarUrl?: string
   fullName?: string
   email?: string
 }
-
-const AccountNavDropdownLinks = [
-  {
-    title: 'Account Settings',
-    route: '/settings',
-    icon: 'settings',
-  },
-]
 
 export function AccountNavDropdownWithAvatar({
   fullName = 'Dylan Britz',
@@ -65,24 +61,6 @@ export function AccountNavDropdownWithAvatar({
     </DropdownMenu>
   )
 }
-
-const SupportMenuLink = [
-  {
-    title: 'Changelog',
-    route: '/changelog',
-    target: '_self',
-  },
-  {
-    title: 'Support',
-    route: '/support',
-    target: '_self',
-  },
-  {
-    title: 'Docs',
-    route: '/docs',
-    target: '_self',
-  },
-]
 
 export function SupportMenu() {
   return (

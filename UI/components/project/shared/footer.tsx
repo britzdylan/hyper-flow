@@ -1,5 +1,5 @@
-import { Icon } from '#primitives/icon'
-import { Logo } from '../logo.js'
+import { Icon } from '#components'
+import { Logo } from '#projectUI'
 
 export function DashboardFooter(): JSX.Element {
   return (

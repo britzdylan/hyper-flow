@@ -1,19 +1,12 @@
-// import type { HttpContext } from '@adonisjs/core/http'
-// import { patchProfile } from '#modules/Profile/app/validators/profile'
-// import { ProfileConfig } from '#modules/config'
-// import router from '@adonisjs/core/services/router'
-import { SubPageDashboardLayout } from '#layouts/dashboard'
+import { DateTime } from 'luxon'
+import { HttpContext } from '@adonisjs/core/http'
+import env from '#start/env'
 import User from '#models/user'
 import UserSubscription from '#models/user_subscription'
-import { BillingSettingsPage } from '#modules/Billing/templates/billing'
-import { BillingConfig } from '#modules/config'
 import ModuleController from '#modules/index'
-import env from '#start/env'
-
-import { HttpContext } from '@adonisjs/core/http'
-import router from '@adonisjs/core/services/router'
-
-import { DateTime } from 'luxon'
+import { BillingConfig } from '#modules/config'
+import { SubPageDashboardLayout } from '#layouts/dashboard'
+import { BillingSettingsPage } from '#ui/components/project/dashboard/billing'
 
 interface CheckoutData {
   email?: string
@@ -121,14 +114,14 @@ export default class SubscriptionController extends ModuleController {
     const [billing] = await user.related('billing').query()
 
     this.emitEvent('renderBillingSettings', 'event', null)
-    // @ts-ignore
+    //@ts-ignore
     return await jsx(BillingSettingsPage, {
       layout: SubPageDashboardLayout,
       data: {
         billing,
         current: {
           name: 'Hobby',
-          description: ''
+          description: '',
         },
         manageLink: 'a',
         upgradeLink: 'a',
