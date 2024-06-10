@@ -6,7 +6,7 @@ import UserSubscription from '#models/user_subscription'
 import ModuleController from '#modules/index'
 import { BillingConfig } from '#modules/config'
 import { SubPageDashboardLayout } from '#layouts/dashboard'
-import { BillingSettingsPage } from '#ui/components/project/dashboard/billing'
+import { BillingSettingsPage } from '#ui/components/project/user/billing'
 
 interface CheckoutData {
   email?: string
