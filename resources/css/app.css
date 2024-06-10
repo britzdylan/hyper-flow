@@ -82,5 +82,9 @@
     .typeP {
       @apply leading-7 text-center;
     }
+
+    .typeSmall {
+      @apply text-sm font-medium leading-none;
+    }
   }
 }
