@@ -2,7 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import { AuthConfig } from '#modules/config'
 import router from '@adonisjs/core/services/router'
-import { LoginPage } from '#modules/Auth/templates/authenticate'
+import { LoginPage } from '#projectUI'
 import ModuleController from '#modules/index'
 
 export default class AuthenticateController extends ModuleController {

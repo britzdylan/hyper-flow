@@ -1,8 +1,8 @@
-import { Button, FormInput, Logo } from '#components'
-import { AuthConfig } from '../../config.js'
-import { Form } from '#primitives/form'
-import { FormProps } from '#ui/lib/types'
 import router from '@adonisjs/core/services/router'
+import { AuthConfig } from '../../../../modules/config.js'
+import type { FormProps } from '#ui/lib/types'
+import { Button, FormInput, Form } from '#components'
+import { Logo } from '#projectUI'
 
 export function UserRegisterForm({ formUrl, formData, formErrors }: FormProps): JSX.Element {
   const emailError = formErrors?.email()[0]

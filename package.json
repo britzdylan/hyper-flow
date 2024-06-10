@@ -41,6 +41,9 @@
     "#components": [
       "./ui/components/index.js"
     ],
+    "#projectUI": [
+      "./ui/components/project/index.js"
+    ],
     "#layouts/*": [
       "./ui/layouts/*.js"
     ],
