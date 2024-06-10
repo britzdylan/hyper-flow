@@ -118,17 +118,20 @@ export default class SubscriptionController extends ModuleController {
 
   public async renderBillingSettings({ jsx, auth }: HttpContext) {
     const user = auth.user!
-    // const [profile] = await user.related('profile').query()
+    const [billing] = await user.related('billing').query()
 
     this.emitEvent('renderBillingSettings', 'event', null)
     // @ts-ignore
     return await jsx(BillingSettingsPage, {
       layout: SubPageDashboardLayout,
       data: {
-        formUrl: router.builder().make(`${BillingConfig.routeIdPrefix}renderBillingSettings`),
-        formData: {},
-        id: 'patchProfileForm',
-        name: 'patchProfileForm',
+        billing,
+        current: {
+          name: 'Hobby',
+          description: ''
+        },
+        manageLink: 'a',
+        upgradeLink: 'a',
       },
     })
   }
