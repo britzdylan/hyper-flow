@@ -1,8 +1,8 @@
 import router from '@adonisjs/core/services/router'
-import { AuthConfig } from '../../../../modules/config.js'
+import { AuthConfig } from '#modules/config'
 import type { FormProps } from '#ui/lib/types'
 import { Button, FormInput, Form } from '#components'
-import { Logo } from '#projectUI'
+import { Logo } from '#ui/components/project/shared/logo'
 
 export function UserRegisterForm({ formUrl, formData, formErrors }: FormProps): JSX.Element {
   const emailError = formErrors?.email()[0]

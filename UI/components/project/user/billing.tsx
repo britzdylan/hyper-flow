@@ -9,7 +9,7 @@ import {
   FormInput,
 } from '#components'
 import type UserSubscription from '#models/user_subscription'
-import { UserSettingsBase } from '#projectUI'
+import { UserSettingsBase } from '#ui/components/project/user/user-settings'
 
 function PaymentDetailsEmptyState() {
   return (

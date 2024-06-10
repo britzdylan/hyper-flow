@@ -1,5 +1,6 @@
 import { Button, NavigationMenu, NavigationMenuLink } from '#components'
-import { Logo } from '#projectUI'
+import { Logo } from '#ui/components/project/shared/logo'
+
 import env from '#start/env'
 
 import router from '@adonisjs/core/services/router'

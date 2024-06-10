@@ -1,5 +1,6 @@
 import { Icon } from '#components'
-import { Logo } from '#projectUI'
+import { Logo } from '#ui/components/project/shared/logo'
+
 
 export function DashboardFooter(): JSX.Element {
   return (

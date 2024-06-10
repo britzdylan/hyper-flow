@@ -1,7 +1,8 @@
 import { Button } from '#components'
 import { JsxElementProps } from '#ui/lib/types'
 import { PropsWithChildren } from 'adonisjsx'
-import { DashboardPageHeader } from '#projectUI'
+import { DashboardPageHeader } from '#ui/components/project/user/page-header'
+
 import { cn } from '#ui/lib/utils'
 import { HttpContext } from '@adonisjs/core/http'
 import { userSettingOptions } from '#ui/lib/constants'

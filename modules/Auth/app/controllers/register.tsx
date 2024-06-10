@@ -1,6 +1,10 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
-import { EmailVerificationPage, RegisterPage, UserRegisterForm } from '#projectUI'
+import {
+  EmailVerificationPage,
+  RegisterPage,
+  UserRegisterForm,
+} from '#ui/components/project/auth/register'
 import {
   emailAndPassword,
   emailAndPasswordStrict,

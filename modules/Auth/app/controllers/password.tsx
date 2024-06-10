@@ -5,7 +5,7 @@ import {
   PasswordResetRequestForm,
   PasswordResetRequestPage,
   PasswordResetPage,
-} from '#projectUI'
+} from '#ui/components/project/auth/password'
 import { emailVerification, passwordOnlyStrict } from '#modules/Auth/app/validators/auth'
 import User from '#models/user'
 import router from '@adonisjs/core/services/router'

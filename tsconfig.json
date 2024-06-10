@@ -67,9 +67,6 @@
       "#components": [
         "./ui/components/index.js"
       ],
-      "#projectUI": [
-        "./ui/components/project/index.js"
-      ],
       "#ui/*": [
         "./ui/*.js"
       ],

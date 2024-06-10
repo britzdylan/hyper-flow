@@ -2,7 +2,8 @@ import { HttpContext } from '@adonisjs/core/http'
 import type { JsxElementProps } from '#ui/lib/types'
 import type { PropsWithChildren } from 'adonisjsx'
 import { Root } from '#layouts/default'
-import { Logo } from '#components'
+import { Logo } from '#ui/components/project/shared/logo'
+
 import {
   AccountNavDropdownWithAvatar,
   CtxMenu,
