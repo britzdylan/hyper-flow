@@ -1,3 +1,4 @@
+import { Button } from '#primitives/button'
 import {
   Card,
   CardContent,
@@ -8,13 +9,13 @@ import {
 } from '#primitives/card'
 import { PropsWithChildren } from 'adonisjsx'
 
-export interface InputCard {
+export interface FormCard {
   title: string
   description: string
-  help: string
+  help?: string
 }
 
-export function InputCard({ children, ...props }: PropsWithChildren<InputCard>) {
+export function FormCard({ children, ...props }: PropsWithChildren<FormCard>) {
   const { title, description, help } = props
   return (
     <Card class="w-full">
@@ -23,10 +24,13 @@ export function InputCard({ children, ...props }: PropsWithChildren<InputCard>) 
         <CardDescription>{description}</CardDescription>
       </CardHeader>
 
-      <CardContent>{children}</CardContent>
+      <CardContent class="flex flex-col gap-4">{children}</CardContent>
 
       <CardFooter class="border-t border-border bg-secondary text-secondary-foreground font-medium p-6 py-4 justify-between">
         <small>{help}</small>
+        <Button size="sm" class="ml-auto" type="submit">
+          Save Changes
+        </Button>
       </CardFooter>
     </Card>
   )

@@ -1,7 +1,10 @@
 import { Button } from '#primitives/button'
 import { JsxElementProps } from '#ui/lib/types'
 import { PropsWithChildren } from 'adonisjsx'
-import { DashboardPageHeader } from '../project/dashboard/pageHeader.js'
+import { DashboardPageHeader } from '../page-header.js'
+import { cn } from '#ui/lib/utils'
+import router from '@adonisjs/core/services/router'
+import { HttpContext } from '@adonisjs/core/http'
 
 const userSettingOptions = [
   {
@@ -18,7 +21,12 @@ const userSettingOptions = [
   },
 ]
 
+function isActive(route: string, ctx: HttpContext) {
+  return route === ctx.request.url() ? '!text-background bg-foreground hover:!bg-foreground' : ''
+}
+
 export function UserSettingsBase({ children, ...props }: PropsWithChildren<JsxElementProps>) {
+  const ctx = HttpContext.getOrFail()
   return (
     <>
       <DashboardPageHeader>
@@ -31,7 +39,13 @@ export function UserSettingsBase({ children, ...props }: PropsWithChildren<JsxEl
               return (
                 <li>
                   <a href={item.route} title={item.title}>
-                    <Button class="w-full !justify-start !text-foreground" variant="ghost">
+                    <Button
+                      class={cn(
+                        'w-full !justify-start !text-foreground',
+                        isActive(item.route, ctx)
+                      )}
+                      variant="ghost"
+                    >
                       {item.title}
                     </Button>
                   </a>
