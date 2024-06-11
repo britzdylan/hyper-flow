@@ -15,10 +15,17 @@ import '#modules/Security/start/routes'
 
 import ErrorPage from '#pages/error'
 import Home from '#pages/home'
+import { DefaultDashboardLayout } from '#layouts/dashboard'
+import { DefaultLayout } from '#layouts/default'
+import { HttpContext } from '@adonisjs/core/http'
+import { middleware } from './kernel.js'
 
 router
-  .get('/dashboard', async () => {
-    return <h1>Hello dashboard</h1>
+  .get('/dashboard', async ({ jsx }) => {
+    return jsx(<></>, {
+      layout: DefaultDashboardLayout,
+      data: {},
+    })
   })
   .as('Auth_renderUserDashboard')
 
@@ -35,8 +42,16 @@ router
   })
   .as('500')
 
-router.get('/', ({ jsx }) => {
-  return jsx(Home, {
-    data: {},
+router.get('/', async (ctx: HttpContext) => {
+  const { auth } = ctx
+  let user = await auth.authenticate()
+
+  console.log(user)
+  // @ts-ignore
+  return ctx.jsx(Home, {
+    layout: DefaultLayout,
+    data: {
+      user,
+    },
   })
 })

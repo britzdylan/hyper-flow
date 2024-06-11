@@ -14,8 +14,9 @@ import {
 } from '#components'
 
 import { AccountNavDropdownLinks, SupportMenuLink } from '#ui/lib/constants'
+import { JsxElementProps } from '#ui/lib/types'
 
-interface AccountNavDropdownWithAvatar {
+interface AccountNavDropdownWithAvatar extends JsxElementProps {
   avatarUrl?: string
   fullName?: string
   email?: string
@@ -25,9 +26,10 @@ export function AccountNavDropdownWithAvatar({
   fullName = 'Dylan Britz',
   avatarUrl,
   email = 'Missing Email',
+  class: className,
 }: AccountNavDropdownWithAvatar) {
   return (
-    <DropdownMenu>
+    <DropdownMenu class={className}>
       <DropdownMenuTrigger>
         <Avatar>
           {avatarUrl ? (

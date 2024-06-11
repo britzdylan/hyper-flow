@@ -65,6 +65,7 @@ router
     router
       .post(`${userLogin.route}`, [AuthenticateController, 'userLogin'])
       .as(`${routeIdPrefix}userLogin`)
+      .use(middleware.guest())
 
     router
       .delete(`${userLogout.route}`, [AuthenticateController, 'userLogout'])

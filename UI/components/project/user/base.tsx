@@ -1,7 +1,7 @@
 import { Button } from '#components'
 import { JsxElementProps } from '#ui/lib/types'
 import { PropsWithChildren } from 'adonisjsx'
-import { DashboardPageHeader } from '#ui/components/project/user/page-header'
+import { DashboardPageHeader } from '#ui/components/project/shared/header'
 
 import { cn, isActive } from '#ui/lib/utils'
 import { HttpContext } from '@adonisjs/core/http'

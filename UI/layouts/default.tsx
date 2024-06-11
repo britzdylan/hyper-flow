@@ -1,3 +1,4 @@
+import { HttpContext } from '@adonisjs/core/http'
 import { Html, PropsWithChildren } from 'adonisjsx'
 import { viteAssets, viteReactRefresh } from 'adonisjsx'
 
