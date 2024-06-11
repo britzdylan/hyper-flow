@@ -1,6 +1,6 @@
 import { FormPropsCard } from '#ui/lib/types'
 import { FormInput, Form } from '#components'
-import { UserSettingsBase } from '#ui/components/project/user/user-settings'
+import { UserSettingsBase } from '#ui/components/project/user/base'
 
 import { FormCard } from '#ui/components/project/forms/card'
 
