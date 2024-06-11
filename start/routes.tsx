@@ -18,6 +18,7 @@ import Home from '#pages/home'
 import { DefaultDashboardLayout } from '#layouts/dashboard'
 import { DefaultLayout } from '#layouts/default'
 import { HttpContext } from '@adonisjs/core/http'
+import { middleware } from './kernel.js'
 
 router
   .get('/dashboard', async ({ jsx }) => {
@@ -41,16 +42,18 @@ router
   })
   .as('500')
 
-router.get('/', async (ctx: HttpContext) => {
-  const { auth } = ctx
-  let user = await auth.authenticate()
+router
+  .get('/', async (ctx: HttpContext) => {
+    const { auth } = ctx
+    let user = auth.user
 
-  console.log(user)
-  // @ts-ignore
-  return ctx.jsx(Home, {
-    layout: DefaultLayout,
-    data: {
-      user,
-    },
+    console.log(user)
+    // @ts-ignore
+    return ctx.jsx(Home, {
+      layout: DefaultLayout,
+      data: {
+        user,
+      },
+    })
   })
-})
+  .use(middleware.silentAuth())
