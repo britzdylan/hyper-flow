@@ -144,3 +144,19 @@ export const BillingConfig = {
     },
   ],
 }
+
+export const SecurityConfig = {
+  routeIdPrefix: 'Security_',
+  actions: {
+    renderSecuritySettingsPage: {
+      route: '/security',
+      event: false,
+      flash: false,
+    },
+    deleteUserAccount: {
+      route: '/account/delete',
+      event: false,
+      flash: false,
+    },
+  },
+}

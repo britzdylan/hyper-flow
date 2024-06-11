@@ -11,6 +11,7 @@ import router from '@adonisjs/core/services/router'
 import '#modules/Auth/start/routes'
 import '#modules/Profile/start/routes'
 import '#modules/Billing/start/routes'
+import '#modules/Security/start/routes'
 
 import ErrorPage from '#pages/error'
 import Home from '#pages/home'
