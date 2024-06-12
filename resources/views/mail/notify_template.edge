@@ -1,8 +1,6 @@
-<div class="max-w-screen-sm mx-auto flex flex-col gap-4 p-4">\
-    <h1 class="typeH1">{{ title }}</h1>
-    <p class="typeP"{{ description }}></p>
-    <a class="underline typeSmall">{{action }}</a>
-    @if(config.has('app.name'))
-        <small>This email was sent from {{ config('app.name')}}. If you did not request this email please ignore the email.</small>
-    @end
-</div>
+<h1 class="text-2xl font-black">{{ title }}</h1>
+<p>{{ description }}</p>
+<a target="_blank" href={{action}} class="underline">{{actionName}}</a>
+<br />
+<img height="32" src="https://img.logoipsum.com/282.svg" style="display:block;outline:none;border:none;text-decoration:none" width="32" />
+<small>If you didn't try to {{title}}, you can safely ignore this email.</small>
