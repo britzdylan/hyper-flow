@@ -15,7 +15,7 @@ import ModuleController from '#modules/index'
 
 export default class PasswordController extends ModuleController {
   public async renderForgotPasswordPage({ jsx }: HttpContext) {
-    this.emitEvent('renderForgotPasswordPage', 'event', null)
+    this.emitEvent('Auth', 'renderForgotPasswordPage', 'event', null)
 
     // @ts-ignore
     return jsx(PasswordResetRequestPage, {
@@ -35,7 +35,7 @@ export default class PasswordController extends ModuleController {
     if (passwordResetRequest.isExpired() || !(await passwordResetRequest.verifyToken(token))) {
       return jsx(InvalidUrl)
     }
-    this.emitEvent('renderPasswordResetPage', 'event', null)
+    this.emitEvent('Auth', 'renderPasswordResetPage', 'event', null)
 
     // @ts-ignore
     return jsx(PasswordResetPage, {
@@ -53,7 +53,7 @@ export default class PasswordController extends ModuleController {
     try {
       formData = await emailVerification.validate(request.all())
     } catch (error) {
-      this.emitEvent('userRequestPasswordReset', 'error', 'Invalid Email')
+      this.emitEvent('Auth', 'userRequestPasswordReset', 'error', 'Invalid Email')
 
       return this.renderPasswordResetRequestForm(error)
     }
@@ -66,9 +66,9 @@ export default class PasswordController extends ModuleController {
       newRequest.userId = user.id
       await newRequest.generateToken()
       await newRequest.save()
-      this.emitEvent('userRequestPasswordReset', 'event', user)
+      this.emitEvent('Auth', 'userRequestPasswordReset', 'event', { user, token: newRequest.token })
     } else {
-      this.emitEvent('userRequestPasswordReset', 'error', 'User not found')
+      this.emitEvent('Auth', 'userRequestPasswordReset', 'error', 'User not found')
     }
     this.showFlashMessage(
       session,
@@ -90,7 +90,7 @@ export default class PasswordController extends ModuleController {
     try {
       formData = await passwordOnlyStrict.validate(request.all())
     } catch (error) {
-      this.emitEvent('userUpdatePassword', 'error', 'Password Verification Failed')
+      this.emitEvent('Auth', 'userUpdatePassword', 'error', 'Password Verification Failed')
       return this.renderPasswordResetForm(error, token)
     }
 
@@ -100,7 +100,7 @@ export default class PasswordController extends ModuleController {
 
     user.merge({ password: formData.password })
     await user.save()
-    this.emitEvent('userUpdatePassword', 'event', user)
+    this.emitEvent('Auth', 'userUpdatePassword', 'event', user)
     this.showFlashMessage(session, 'userUpdatePassword', 'success', 'UserPasswordResetSuccess')
 
     response.header('HX-Reswap', 'none')

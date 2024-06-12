@@ -7,7 +7,7 @@ import ModuleController from '#modules/index'
 
 export default class AuthenticateController extends ModuleController {
   public async renderLoginPage({ jsx }: HttpContext) {
-    this.emitEvent('Auth:renderLoginPage', 'event', null)
+    this.emitEvent('Auth', 'renderLoginPage', 'event', null)
 
     // @ts-ignore
     return await jsx(LoginPage, {
@@ -25,7 +25,7 @@ export default class AuthenticateController extends ModuleController {
     const user = await User.verifyCredentials(email, password)
 
     await auth.use('web').login(user)
-    this.emitEvent('Auth:userLogin', 'event', user)
+    this.emitEvent('Auth', 'userLogin', 'event', user)
     this.showFlashMessage(session, 'userLogin', 'success', 'UserLoginSuccess')
 
     response.header(
@@ -37,7 +37,7 @@ export default class AuthenticateController extends ModuleController {
   public async userLogout({ auth, response, session }: HttpContext) {
     await auth.use('web').logout()
     this.showFlashMessage(session, 'userLogout', 'success', 'UserLogoutSuccess')
-    this.emitEvent('Auth:userLogout', 'event', null)
+    this.emitEvent('Auth', 'userLogout', 'event', null)
 
     response.header(
       'HX-Redirect',

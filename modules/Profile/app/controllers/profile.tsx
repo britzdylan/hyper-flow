@@ -11,7 +11,7 @@ export default class ProfileController extends ModuleController {
     const user = auth.user!
     const [profile] = await user.related('profile').query()
 
-    this.emitEvent('renderProfilePage', 'event', null)
+    this.emitEvent('Profile', 'renderProfilePage', 'event', null)
     // @ts-ignore
     return await jsx(ProfilePage, {
       layout: SubPageDashboardLayout,
@@ -41,7 +41,7 @@ export default class ProfileController extends ModuleController {
     try {
       profileData = await patchProfile.validate(data)
     } catch (error) {
-      this.emitEvent('patchProfile', 'error', null)
+      this.emitEvent('Profile', 'patchProfile', 'error', null)
 
       return await (
         <ProfilePatchForm
@@ -69,7 +69,7 @@ export default class ProfileController extends ModuleController {
     userProfile.merge({ ...profileData })
     await userProfile.save()
 
-    this.emitEvent('patchProfile', 'event', 'null')
+    this.emitEvent('Profile', 'patchProfile', 'event', 'null')
 
     this.showFlashMessage(session, 'patchProfile', 'success', 'ProfileUpdateSuccess')
 

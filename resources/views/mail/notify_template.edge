@@ -1,0 +1,8 @@
+<div class="max-w-screen-sm mx-auto flex flex-col gap-4 p-4">\
+    <h1 class="typeH1">{{ title }}</h1>
+    <p class="typeP"{{ description }}></p>
+    <a class="underline typeSmall">{{action }}</a>
+    @if(config.has('app.name'))
+        <small>This email was sent from {{ config('app.name')}}. If you did not request this email please ignore the email.</small>
+    @end
+</div>

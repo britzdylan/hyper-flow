@@ -113,7 +113,7 @@ export default class SubscriptionController extends ModuleController {
     const user = auth.user!
     const [billing] = await user.related('billing').query()
 
-    this.emitEvent('renderBillingSettings', 'event', null)
+    this.emitEvent('Billing', 'renderBillingSettings', 'event', null)
     //@ts-ignore
     return await jsx(BillingSettingsPage, {
       layout: SubPageDashboardLayout,
@@ -171,13 +171,13 @@ export default class SubscriptionController extends ModuleController {
         user,
         pid: request.qs().pid,
       })
-      this.emitEvent('Billing:getCheckoutUrl', 'event', checkout)
+      this.emitEvent('Billing', 'getCheckoutUrl', 'event', checkout)
 
       let url = checkout.data.attributes.url
 
       return response.header('HX-Redirect', url)
     } catch (error) {
-      this.emitEvent('Billing:getCheckoutUrl', 'error', error)
+      this.emitEvent('Billing', 'getCheckoutUrl', 'error', error)
       console.log(error)
       let title = 'Sorry something went wrong during checkout',
         desc = 'This matter has been reported and we will contact you within 48 hours.'
@@ -256,7 +256,7 @@ export default class SubscriptionController extends ModuleController {
       })
 
     if (deleteResponse == typeof Error) {
-      this.emitEvent('Billing:cancelSubscription', 'error', 'API Called failed')
+      this.emitEvent('Billing', 'cancelSubscription', 'error', 'API Called failed')
       this.showFlashMessage(
         session,
         'Billing:cancelSubscription',
@@ -264,7 +264,7 @@ export default class SubscriptionController extends ModuleController {
         'UserManualSubscriptionCancelationFailed'
       )
     } else {
-      this.emitEvent('Billing:cancelSubscription', 'event', deleteResponse)
+      this.emitEvent('Billing', 'cancelSubscription', 'event', deleteResponse)
       this.showFlashMessage(
         session,
         'Billing:cancelSubscription',

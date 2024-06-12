@@ -35,7 +35,7 @@ export function PasswordResetPage({ formUrl, formData }: FormProps): JSX.Element
 
 export function PasswordResetForm({ formUrl, formErrors }: FormProps): JSX.Element {
   return (
-    <Form name="passwordResetForm" id="passwordResetForm" hx-post={formUrl}>
+    <Form name="passwordResetForm" id="passwordResetForm" hx-patch={formUrl}>
       <FormInput
         label="New password"
         error={formErrors?.password()}

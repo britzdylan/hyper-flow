@@ -52,7 +52,7 @@ export const AuthConfig = {
     },
     userRequestPasswordReset: {
       route: '/forgot-password',
-      event: false,
+      event: true,
       flash: false,
     },
     renderPasswordResetPage: {

@@ -2,14 +2,21 @@ import { FlashMessages } from '#enum/FlashMessages'
 import { Session } from '@adonisjs/session'
 import emitter from '@adonisjs/core/services/emitter'
 import ErrorPage from '#pages/error'
+import { AuthConfig, BillingConfig, ProfileConfig } from './config.js'
+
 export default class ModuleController {
   static error_page = ErrorPage
 
   moduleConfig: any = {
-    actions: [],
+    actions: {
+      ...AuthConfig.actions,
+      ...BillingConfig.actions,
+      ...ProfileConfig.actions,
+    },
   }
 
   emitEvent(
+    prefix: string,
     actionName: keyof typeof this.moduleConfig.actions,
     eventType: 'event' | 'error',
     data: any
@@ -17,7 +24,7 @@ export default class ModuleController {
     const actionConfig = this.moduleConfig.actions[actionName]
 
     if (actionConfig && actionConfig.event) {
-      const emitString = `${String(actionName)}:${eventType}`
+      const emitString = `${prefix}:${String(actionName)}:${eventType}`
       // @ts-ignore
       emitter.emit(emitString, data)
     }

@@ -47,7 +47,6 @@ router
     const { auth } = ctx
     let user = auth.user
 
-    console.log(user)
     // @ts-ignore
     return ctx.jsx(Home, {
       layout: DefaultLayout,

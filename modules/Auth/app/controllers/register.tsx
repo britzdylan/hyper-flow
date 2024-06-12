@@ -53,13 +53,13 @@ export default class RegistersController extends ModuleController {
         user,
         pid: request.qs().pid,
       })
-      this.emitEvent('Auth:withNewSubscription', 'event', checkout)
+      this.emitEvent('Auth', 'withNewSubscription', 'event', checkout)
 
       let url = checkout.data.attributes.url
 
       return response.header('HX-Redirect', url)
     } catch (error) {
-      this.emitEvent('Auth:withNewSubscription', 'error', error)
+      this.emitEvent('Auth', 'withNewSubscription', 'error', error)
 
       let title = 'Sorry something went wrong during checkout',
         desc = 'This matter has been reported and we will contact you within 48 hours.'
@@ -70,7 +70,7 @@ export default class RegistersController extends ModuleController {
    * Renders the registration view.
    */
   public async renderRegisterPage({ jsx, request }: HttpContext) {
-    this.emitEvent('Auth:renderRegisterPage', 'event', null)
+    this.emitEvent('Auth', 'renderRegisterPage', 'event', null)
     const qs = request.qs()
     // @ts-ignore
     return await jsx(RegisterPage, {
@@ -104,7 +104,7 @@ export default class RegistersController extends ModuleController {
         : await emailAndPassword.validate(data)
     } catch (error) {
       console.log(error.messages)
-      this.emitEvent('Auth:createUser', 'error', error)
+      this.emitEvent('Auth', 'createUser', 'error', error)
 
       return await this.renderRegisterForm(data, error)
     }
@@ -120,7 +120,7 @@ export default class RegistersController extends ModuleController {
       return
     }
 
-    this.emitEvent('Auth:createUser', 'event', user)
+    this.emitEvent('Auth', 'createUser', 'event', user)
     this.showFlashMessage(session, 'createUser', 'success', 'UserRegisterSuccess')
 
     if (pid) {
@@ -161,7 +161,7 @@ export default class RegistersController extends ModuleController {
     const verified = user.verifyEmail(token)
 
     if (!verified) {
-      this.emitEvent('Auth:verifyUserEmail', 'error', user)
+      this.emitEvent('Auth', 'verifyUserEmail', 'error', user)
 
       return await jsx(InvalidUrl, {
         //move to local view
@@ -169,7 +169,7 @@ export default class RegistersController extends ModuleController {
       })
     }
     await user.save()
-    this.emitEvent('Auth:verifyUserEmail', 'event', user)
+    this.emitEvent('Auth', 'verifyUserEmail', 'event', user)
 
     this.showFlashMessage(session, 'verifyUserEmail', 'success', 'UserEmailVerified')
 
@@ -183,7 +183,7 @@ export default class RegistersController extends ModuleController {
    * Render  email verification view.
    */
   public async renderEmailVerificationPage({ jsx }: HttpContext) {
-    this.emitEvent('Auth:renderEmailVerificationPage', 'event', null)
+    this.emitEvent('Auth', 'renderEmailVerificationPage', 'event', null)
 
     // @ts-ignore
     return await jsx(EmailVerificationPage, {
@@ -203,7 +203,7 @@ export default class RegistersController extends ModuleController {
     const email = await request.validateUsing(emailVerification)
     let user = await User.findByOrFail('email', email)
     if (user.isVerified) {
-      this.emitEvent('Auth:requestEmailVerification', 'event', 'User is already verified')
+      this.emitEvent('Auth', 'requestEmailVerification', 'error', 'User is already verified')
       this.showFlashMessage(
         session,
         'requestEmailVerification',
@@ -215,7 +215,7 @@ export default class RegistersController extends ModuleController {
     }
     user.generateVerificationToken()
     user = await user.save()
-    this.emitEvent('Auth:requestEmailVerification', 'event', user)
+    this.emitEvent('Auth', 'requestEmailVerification', 'event', user)
 
     this.showFlashMessage(
       session,
