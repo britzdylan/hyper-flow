@@ -7,7 +7,7 @@ import router from '@adonisjs/core/services/router'
 
 export default class AccountController extends ModuleController {
   public async renderSecuritySettingsPage({ jsx }: HttpContext) {
-    this.emitEvent('renderSecuritySettingsPage', 'event', null)
+    this.emitEvent('Security', 'renderSecuritySettingsPage', 'event', null)
     // @ts-ignore
     return await jsx(SecuritySettingsPage, {
       layout: SubPageDashboardLayout,
@@ -22,6 +22,7 @@ export default class AccountController extends ModuleController {
 
     await user.delete()
     await auth.use('web').logout()
+    this.emitEvent('Security', 'deleteUserAccount', 'event', user)
 
     response.header(
       'HX-Redirect',

@@ -30,11 +30,11 @@ export const userSettingOptions = [
     route: '/settings',
   },
   {
-    title: 'Security',
-    route: '/settings/security',
-  },
-  {
     title: 'Billing',
     route: '/settings/billing',
+  },
+  {
+    title: 'Security',
+    route: '/settings/security',
   },
 ]
