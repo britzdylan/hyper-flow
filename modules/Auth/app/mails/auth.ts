@@ -4,7 +4,10 @@ import { ResetPasswordRequestEmail } from '#ui/emails/transactional'
 import router from '@adonisjs/core/services/router'
 import { BaseMail } from '@adonisjs/mail'
 
-interface IPasswordResetRequest {
+const appUrl = env.get('APP_URL')
+const appName = env.get('APP_NAME')
+
+interface IEmailClassParams {
   to: string
   token: string
 }
@@ -14,7 +17,7 @@ export class PasswordResetRequest extends BaseMail {
   token = ''
   subject = 'Your password reset request'
 
-  constructor({ to, token }: IPasswordResetRequest) {
+  constructor({ to, token }: IEmailClassParams) {
     super()
     this.to = to
     this.token = token
@@ -25,8 +28,6 @@ export class PasswordResetRequest extends BaseMail {
    * the email is sent or queued.
    */
   async prepare() {
-    const appUrl = env.get('APP_URL')
-    const appName = env.get('APP_NAME')
     const path = router
       .builder()
       .params({ token: this.token })
@@ -47,28 +48,72 @@ export class PasswordResetRequest extends BaseMail {
   }
 }
 
-// export class WelcomeVerifyEmail extends BaseMail {
-//   to = ''
-//   action = ''
-//   subject = 'Welcome to Hyper Flow, please verify your email.'
+export class WelcomeVerifyEmail extends BaseMail {
+  to = ''
+  token = ''
+  subject = 'Welcome to Hyper Flow, please verify your email.'
 
-//   constructor({ to, action }: IVerifyEmail) {
-//     super()
-//     this.to = to
-//     this.action = action
-//   }
+  constructor({ to, token }: IEmailClassParams) {
+    super()
+    this.to = to
+    this.token = token
+  }
 
-//   /**
-//    * The "prepare" method is called automatically when
-//    * the email is sent or queued.
-//    */
-//   prepare() {
-//     this.message.to(this.to)
-//     this.message.htmlView('mail/notify_template', {
-//       title: this.subject,
-//       description:
-//         'In order for us to finish setting up your account please verify your email, this is only to ensure not only yours but our privacy.',
-//       action: this.action,
-//     })
-//   }
-// }
+  /**
+   * The "prepare" method is called automatically when
+   * the email is sent or queued.
+   */
+  async prepare() {
+    const path = router
+      .builder()
+      .params({ token: this.token })
+      .make(`${AuthConfig.routeIdPrefix}verifyUserEmail`)
+    const finalUrl = appUrl + path
+    this.message.to(this.to)
+    this.message.html(
+      await ResetPasswordRequestEmail({
+        title: this.subject,
+        description: 'For protected privacy please verify your new account.',
+        action: finalUrl,
+        actionName: 'Verify my account',
+        appName,
+        appUrl,
+      })
+    )
+  }
+}
+
+export class ReVerifyEmail extends BaseMail {
+  to = ''
+  token = ''
+  subject = 'New email verification request'
+
+  constructor({ to, token }: IEmailClassParams) {
+    super()
+    this.to = to
+    this.token = token
+  }
+
+  /**
+   * The "prepare" method is called automatically when
+   * the email is sent or queued.
+   */
+  async prepare() {
+    const path = router
+      .builder()
+      .params({ token: this.token })
+      .make(`${AuthConfig.routeIdPrefix}verifyUserEmail`)
+    const finalUrl = appUrl + path
+    this.message.to(this.to)
+    this.message.html(
+      await ResetPasswordRequestEmail({
+        title: this.subject,
+        description: 'For protected privacy please verify your account.',
+        action: finalUrl,
+        actionName: 'Verify my account',
+        appName,
+        appUrl,
+      })
+    )
+  }
+}
