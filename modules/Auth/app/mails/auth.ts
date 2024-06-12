@@ -12,6 +12,12 @@ interface IEmailClassParams {
   token: string
 }
 
+// TODO: PasswordBeenUpdated
+// TODO: login fail attempts
+// TODO: new location login
+// TODO: magic links
+// TODO: welcome email
+
 export class PasswordResetRequest extends BaseMail {
   to = ''
   token = ''
