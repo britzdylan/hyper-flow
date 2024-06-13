@@ -35,7 +35,6 @@ export default class HttpExceptionHandler extends ExceptionHandler {
         title: 'Access Denied',
         desc: 'Invalid credentials please try again',
       }
-      ctx.session.flash('errors', ['Invalid Credentials'])
       ctx.response.header('HX-Reswap', 'none')
       ctx.response.header('HX-Trigger', `{"showError":${JSON.stringify(msg)}}`)
 

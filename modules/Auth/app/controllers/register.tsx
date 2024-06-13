@@ -93,7 +93,7 @@ export default class RegistersController extends ModuleController {
    */
 
   public async createUser(ctx: HttpContext): Promise<string | void> {
-    const { request, response, session, auth } = ctx
+    const { request, response, auth } = ctx
     const data = request.all()
     const { pid } = request.qs() as createUserQueryParams
     let userData

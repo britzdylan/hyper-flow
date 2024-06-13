@@ -18,12 +18,12 @@ router
       .as(`${routeIdPrefix}getCheckoutUrl`)
 
     router
-      .post(`${hookSubscription.route}`, [SubscriptionController, 'hookSubscription'])
-      .as(`${routeIdPrefix}hookSubscription`)
-
-    router
       .delete(`${cancelSubscription.route}`, [SubscriptionController, 'cancelSubscription'])
       .as(`${routeIdPrefix}cancelSubscription`)
       .prefix('settings')
   })
   .use(middleware.auth())
+
+router
+  .post(`${hookSubscription.route}`, [SubscriptionController, 'hookSubscription'])
+  .as(`${routeIdPrefix}hookSubscription`)

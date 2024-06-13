@@ -25,7 +25,7 @@ const shieldConfig = defineConfig({
     enabled: true,
     exceptRoutes: (ctx) => {
       // exempt all routes starting with /api/
-      return ctx.request.url().includes('/api/') || ctx.request.url().includes('/hook/')
+      return ctx.request.url().includes('/api/') || ctx.request.url().includes('/hooks/')
     },
     enableXsrfCookie: false,
     methods: ['POST', 'PUT', 'PATCH', 'DELETE'],

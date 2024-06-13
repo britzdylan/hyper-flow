@@ -7,7 +7,7 @@ import ModuleController from '#modules/index'
 import { BillingConfig } from '#modules/config'
 import { SubPageDashboardLayout } from '#layouts/dashboard'
 import { BillingSettingsPage } from '#ui/components/project/user/billing'
-
+import encryption from '@adonisjs/core/services/encryption'
 interface CheckoutData {
   email?: string
   name?: string
@@ -29,6 +29,7 @@ interface ProductOptions {
   receipt_link_url?: string
   receipt_button_text?: string
   enabled_variants?: string[]
+  redirect_url?: string
 }
 
 interface CheckoutUrlOptions {
@@ -39,6 +40,9 @@ interface CheckoutUrlOptions {
     checkout_data?: CheckoutData
     expires_at?: string
     preview: boolean
+  }
+  checkout_options: {
+    button_color: string
   }
   relationships: {
     store: {
@@ -63,9 +67,12 @@ export default class SubscriptionController extends ModuleController {
   private checkUrlOptions: CheckoutUrlOptions = {
     type: 'checkouts',
     attributes: {
-      preview: env.get('NODE_ENV') === 'development',
+      preview: false,
     },
     test_mode: env.get('NODE_ENV') === 'development',
+    checkout_options: {
+      button_color: '#000000',
+    },
     relationships: {
       store: {
         data: {
@@ -129,9 +136,9 @@ export default class SubscriptionController extends ModuleController {
     })
   }
 
-  public async generateCheckoutUrl({ user, pid }: { user: User; pid: string }) {
+  async generateCheckoutUrl({ user, pid }: { user: User; pid: string }) {
     let product_options = this.getProduct(pid)
-
+    let uid = encryption.encrypt(user.email)
     if (!product_options) {
       return new Error('Product ID does not exist')
     }
@@ -140,7 +147,13 @@ export default class SubscriptionController extends ModuleController {
       ...this.checkUrlOptions,
       attributes: {
         ...this.checkUrlOptions.attributes,
-        product_options: {},
+        product_options: {
+          redirect_url: `${env.get('APP_URL')}/auth/login?uid=${uid}`,
+          receipt_button_text: 'Back to Hyper Flow',
+          receipt_link_url: `${env.get('APP_URL')}/auth/login?uid=${uid}`,
+          receipt_thank_you_note: 'Thank you for choosing Hyper Flow',
+          enabled_variants: [pid],
+        },
         checkout_data: {
           custom: {
             userId: String(user.id),
@@ -186,6 +199,7 @@ export default class SubscriptionController extends ModuleController {
   }
 
   async hookSubscription({ request, response }: HttpContext) {
+    console.log('hehe works')
     const signature = request.header('X-Signature')
     if (!signature) {
       return response.status(200).send('ok')
