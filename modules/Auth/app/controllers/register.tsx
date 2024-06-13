@@ -119,8 +119,8 @@ export default class RegistersController extends ModuleController {
 
       return
     }
+    this.emitEvent('Auth', 'createUser', 'event', { user, token: user.emailVerificationToken })
 
-    this.emitEvent('Auth', 'createUser', 'event', user)
     this.showFlashMessage(session, 'createUser', 'success', 'UserRegisterSuccess')
 
     if (pid) {
@@ -215,8 +215,10 @@ export default class RegistersController extends ModuleController {
     }
     user.generateVerificationToken()
     user = await user.save()
-    this.emitEvent('Auth', 'requestEmailVerification', 'event', user)
-
+    this.emitEvent('Auth', 'requestEmailVerification', 'event', {
+      user,
+      token: user.emailVerificationToken,
+    })
     this.showFlashMessage(
       session,
       'requestEmailVerification',
