@@ -20,10 +20,6 @@ function Head() {
 }
 
 function Body({ children }: PropsWithChildren) {
-  // const ctx = HttpContext.get()
-  // let errors: errorObject = ctx?.session.flashMessages.get('notifyErrors')
-  // let alerts: errorObject = ctx?.session.flashMessages.get('notifyAlerts')
-
   return (
     <body class="bg-background relative flex flex-col min-h-screen font-sans text-foreground w-full">
       <div
@@ -43,9 +39,9 @@ function Root({ children }: PropsWithChildren) {
       <Body>{children}</Body>
       <div
         id="toast"
-        class="absolute bottom-10 right-10 max-w-96 w-full transition-all ease-in-out duration-150 hideToast"
+        class="absolute bottom-10 right-10 max-w-96 w-full transition-all ease-in-out duration-150 z-50 hideToast"
       >
-        <Alert>
+        <Alert variant="info">
           <AlertTitle id="toastTitle">This is a message for the user</AlertTitle>
           <AlertDescription id="toastDescription">
             You can add components to your app using the cli.
@@ -54,7 +50,7 @@ function Root({ children }: PropsWithChildren) {
       </div>
       <div
         id="error"
-        class="absolute bottom-10 right-10 max-w-96 w-full transition-all ease-in-out duration-150 hideToast"
+        class="absolute bottom-10 right-10 max-w-96 w-full transition-all ease-in-out duration-150 z-50 hideToast"
       >
         <Alert variant="destructive">
           <AlertTitle id="errorTitle">This is a message for the user</AlertTitle>

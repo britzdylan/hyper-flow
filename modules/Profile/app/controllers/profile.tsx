@@ -31,7 +31,7 @@ export default class ProfileController extends ModuleController {
   public async patchProfile({
     request,
     response,
-    session,
+
     auth,
   }: HttpContext): Promise<string | void> {
     const data = request.all()

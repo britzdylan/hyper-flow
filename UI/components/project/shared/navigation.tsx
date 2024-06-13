@@ -43,7 +43,7 @@ export function AccountNavDropdownWithAvatar({
         attrs={{
           'x-anchor.bottom-end': '$refs.dropDownTrigger',
         }}
-        class="min-w-[300px]"
+        class="w-56"
       >
         <DropdownMenuGroup>
           <DropdownMenuLabel>{email}</DropdownMenuLabel>

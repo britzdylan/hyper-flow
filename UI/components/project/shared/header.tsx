@@ -4,7 +4,6 @@ import { Logo } from '#ui/components/project/shared/logo'
 import env from '#start/env'
 
 import router from '@adonisjs/core/services/router'
-import { HttpContext } from '@adonisjs/core/http'
 import { JsxElementProps } from '#ui/lib/types'
 import { PropsWithChildren } from 'adonisjsx'
 import { AccountNavDropdownWithAvatar } from './navigation.js'

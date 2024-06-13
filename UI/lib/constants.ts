@@ -4,6 +4,11 @@ export const AccountNavDropdownLinks = [
     route: '/settings',
     icon: 'settings',
   },
+  {
+    title: 'Logout',
+    route: '/auth/logout',
+    icon: 'log-out',
+  },
 ]
 
 export const SupportMenuLink = [
