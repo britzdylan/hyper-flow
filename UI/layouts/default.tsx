@@ -25,11 +25,22 @@ function Body({ children }: PropsWithChildren) {
   // let alerts: errorObject = ctx?.session.flashMessages.get('notifyAlerts')
 
   return (
-    <body
-      id="page-body"
-      class="bg-background relative flex flex-col min-h-screen font-sans text-foreground w-full"
-    >
-      {children}
+    <body class="bg-background relative flex flex-col min-h-screen font-sans text-foreground w-full">
+      <div
+        class="bg-background relative flex flex-col min-h-screen font-sans text-foreground w-full"
+        id="page-body"
+      >
+        {children}
+      </div>
+    </body>
+  )
+}
+
+function Root({ children }: PropsWithChildren) {
+  return (
+    <html id="page" lang="en" hx-boost="true">
+      <Head />
+      <Body>{children}</Body>
       <div
         id="toast"
         class="absolute bottom-10 right-10 max-w-96 w-full transition-all ease-in-out duration-150 hideToast"
@@ -52,15 +63,6 @@ function Body({ children }: PropsWithChildren) {
           </AlertDescription>
         </Alert>
       </div>
-    </body>
-  )
-}
-
-function Root({ children }: PropsWithChildren) {
-  return (
-    <html id="page" lang="en" hx-boost="true">
-      <Head />
-      <Body>{children}</Body>
     </html>
   )
 }

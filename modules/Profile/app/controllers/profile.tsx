@@ -71,11 +71,13 @@ export default class ProfileController extends ModuleController {
 
     this.emitEvent('Profile', 'patchProfile', 'event', 'null')
 
-    this.showFlashMessage(session, 'patchProfile', 'success', 'ProfileUpdateSuccess')
-
     response.header('HX-Reswap', 'none')
-    response.header('HX-Trigger', 'showToast')
 
+    const msg = {
+      title: 'Profile Updated',
+      desc: 'Your changes have successfully been saved.',
+    }
+    response.header('HX-Trigger', `{"showToast":${JSON.stringify(msg)}}`)
     return
   }
 

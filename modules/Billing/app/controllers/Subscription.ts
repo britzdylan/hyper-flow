@@ -235,7 +235,7 @@ export default class SubscriptionController extends ModuleController {
     return response.status(200).send('ok')
   }
 
-  async cancelSubscription({ auth, session, response }: HttpContext) {
+  async cancelSubscription({ auth, response }: HttpContext) {
     const { id } = auth.user!
     const deleteResponse = await fetch(this.url + '/subscriptions/' + id, {
       method: 'DELETE',
@@ -257,23 +257,10 @@ export default class SubscriptionController extends ModuleController {
 
     if (deleteResponse == typeof Error) {
       this.emitEvent('Billing', 'cancelSubscription', 'error', 'API Called failed')
-      this.showFlashMessage(
-        session,
-        'Billing:cancelSubscription',
-        'error',
-        'UserManualSubscriptionCancelationFailed'
-      )
     } else {
       this.emitEvent('Billing', 'cancelSubscription', 'event', deleteResponse)
-      this.showFlashMessage(
-        session,
-        'Billing:cancelSubscription',
-        'success',
-        'UserManualSubscriptionCancelled'
-      )
-    }
 
-    response.header('HX-Reswap', 'none')
-    response.header('HX-Trigger', 'showToast')
+      response.header('HX-Reswap', 'none')
+    }
   }
 }

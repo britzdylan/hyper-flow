@@ -12,6 +12,7 @@ import router from '@adonisjs/core/services/router'
 import PasswordReset from '#models/passwordReset'
 import InvalidUrl from '#pages/invalidUrl'
 import ModuleController from '#modules/index'
+import { LoginForm, LoginPage } from '#ui/components/project/auth/authenticate'
 
 export default class PasswordController extends ModuleController {
   public async renderForgotPasswordPage({ jsx }: HttpContext) {
@@ -48,7 +49,7 @@ export default class PasswordController extends ModuleController {
     })
   }
 
-  public async userRequestPasswordReset({ request, auth, session, response }: HttpContext) {
+  public async userRequestPasswordReset({ request, auth, response }: HttpContext) {
     let formData, user
     try {
       formData = await emailVerification.validate(request.all())
@@ -70,15 +71,13 @@ export default class PasswordController extends ModuleController {
     } else {
       this.emitEvent('Auth', 'userRequestPasswordReset', 'error', 'User not found')
     }
-    this.showFlashMessage(
-      session,
-      'userRequestPasswordReset',
-      'success',
-      'UserPasswordResetRequested'
-    )
-
+    const msg = {
+      title: 'Password reset requested',
+      desc: 'We have sent you an email with further instructions.',
+    }
+    response.header('HX-Trigger', `{"showToast":${JSON.stringify(msg)}}`)
     response.header('HX-Reswap', 'none')
-    response.header('HX-Trigger', 'showToast')
+
     await auth.use('web').logout()
     return
   }
@@ -103,11 +102,24 @@ export default class PasswordController extends ModuleController {
     this.emitEvent('Auth', 'userUpdatePassword', 'event', user)
     this.showFlashMessage(session, 'userUpdatePassword', 'success', 'UserPasswordResetSuccess')
 
-    response.header('HX-Reswap', 'none')
-    response.header('HX-Trigger', 'showToast')
+    const msg = {
+      title: 'Password changed',
+      desc: 'You have successfully update your password.',
+    }
+    response.header('HX-Trigger', `{"showToast":${JSON.stringify(msg)}}`)
+    response.header('HX-Retarget', '#page-body')
+
     response.header(
-      'HX-Redirect',
+      'HX-Replace-Url',
       router.builder().make(`${AuthConfig.routeIdPrefix}renderLoginPage`)
+    )
+    return (
+      <LoginPage
+        formUrl={router.builder().make(`${AuthConfig.routeIdPrefix}userLogin`)}
+        formData={{
+          email: user.email,
+        }}
+      />
     )
   }
 

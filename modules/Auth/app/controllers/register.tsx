@@ -115,13 +115,15 @@ export default class RegistersController extends ModuleController {
       let toastMsg = this.getErrorToastMessage(error)
       console.log(error)
       response.header('HX-Reswap', 'none')
-      response.header('HX-Trigger', `{"showToast":"${toastMsg}"}`)
+      const msg = {
+        title: 'Oops something went wrong',
+        desc: toastMsg,
+      }
+      response.header('HX-Trigger', `{"showToast":${JSON.stringify(msg)}}`)
 
       return
     }
     this.emitEvent('Auth', 'createUser', 'event', { user, token: user.emailVerificationToken })
-
-    this.showFlashMessage(session, 'createUser', 'success', 'UserRegisterSuccess')
 
     if (pid) {
       await this.withNewSubscription(ctx, user)
