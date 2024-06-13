@@ -31,9 +31,13 @@ export default class HttpExceptionHandler extends ExceptionHandler {
   async handle(error: unknown, ctx: HttpContext) {
     console.log(error)
     if (error instanceof errors.E_INVALID_CREDENTIALS) {
+      const msg = {
+        title: 'Access Denied',
+        desc: 'Invalid credentials please try again',
+      }
       ctx.session.flash('errors', ['Invalid Credentials'])
       ctx.response.header('HX-Reswap', 'none')
-      ctx.response.header('HX-Trigger', 'showToast')
+      ctx.response.header('HX-Trigger', `{"showError":${JSON.stringify(msg)}}`)
 
       return
     }

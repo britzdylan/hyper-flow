@@ -87,19 +87,12 @@
       @apply text-sm font-medium leading-none;
     }
 
-    .mail.container {
-      @apply max-w-screen-sm mx-auto flex flex-col gap-4 p-4 w-full;
-    }
-    .mail > .logo {
-      @apply w-6 h-6 inline-flex;
+    .showToast {
+      @apply opacity-100 pointer-events-auto z-50 translate-y-0;
     }
 
-    .mail > .logo > img {
-      @apply w-full h-full;
-    }
-
-    .mail > * {
-      @apply block;
+    .hideToast {
+      @apply opacity-0 pointer-events-none -z-10 translate-y-10;
     }
   }
 }

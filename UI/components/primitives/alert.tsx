@@ -31,7 +31,7 @@ function AlertTitle({ children, ...props }: PropsWithChildren<JsxElementProps>):
   const { class: className, ...rest } = props
 
   return (
-    <h5 class={cn('mb-1 font-medium leading-none tracking-tight', className)} {...rest} safe>
+    <h5 class={cn('mb-1 font-medium leading-none tracking-tight', className)} {...rest}>
       {children}
     </h5>
   )
