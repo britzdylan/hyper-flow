@@ -1,4 +1,4 @@
-import { assert } from '@japa/assert'
+import { expect } from '@japa/expect'
 import app from '@adonisjs/core/services/app'
 import type { Config } from '@japa/runner/types'
 import { pluginAdonisJS } from '@japa/plugin-adonisjs'
@@ -12,7 +12,7 @@ import testUtils from '@adonisjs/core/services/test_utils'
  * Configure Japa plugins in the plugins array.
  * Learn more - https://japa.dev/docs/runner-config#plugins-optional
  */
-export const plugins: Config['plugins'] = [assert(), pluginAdonisJS(app)]
+export const plugins: Config['plugins'] = [expect(), pluginAdonisJS(app)]
 
 /**
  * Configure lifecycle function to run before and after all the

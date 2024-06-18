@@ -118,19 +118,20 @@ export default class SubscriptionController extends ModuleController {
 
   public async renderBillingSettings({ jsx, auth }: HttpContext) {
     const user = auth.user!
-    const [billing] = await user.related('billing').query()
-
-    this.emitEvent('Billing', 'renderBillingSettings', 'event', null)
+        this.emitEvent('Billing', 'renderBillingSettings', 'event', null)
+    // get sub data from LS via api
+    // upgrade with dialog and submit new variant to LS api
+    // show more info in UI
     //@ts-ignore
     return await jsx(BillingSettingsPage, {
       layout: SubPageDashboardLayout,
       data: {
-        billing,
+        billing: user.billing,
         current: {
           name: 'Hobby',
           description: '',
         },
-        manageLink: 'a',
+        manageLink: '/billing',
         upgradeLink: 'a',
       },
     })
